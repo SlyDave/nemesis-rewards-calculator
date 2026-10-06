@@ -1,0 +1,50 @@
+{
+  "name": "nemesis-rewards-calculator",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "scripts": {
+    "dev": "bun --bun nuxt dev",
+    "build": "bun --bun nuxt generate",
+    "preview": "bun --bun nuxt preview",
+    "postinstall": "bun run icons:generate && nuxt prepare",
+    "prepare": "git config core.hooksPath .githooks || exit 0",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "nuxt typecheck",
+    "test": "bun test",
+    "check": "bun run lint && bun run format:check && bun run typecheck && bun test",
+    "icons:generate": "bun run scripts/generate-fa-icons.ts",
+    "catalog:build": "bun run scripts/build-catalog.ts"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^4.11.1",
+    "nuxt": "~4.5.2"
+  },
+  "devDependencies": {
+    "@iconify-json/fa7-solid": "^1.2.0",
+    "@nuxt/eslint": "^1.17.0",
+    "@types/bun": "^1.4.2",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.8",
+    "prettier-plugin-tailwindcss": "^0.7.0",
+    "sharp": "^0.35.5",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.50.0",
+    "vue-tsc": "^3.3.11"
+  },
+  "optionalDependencies": {
+    "@fortawesome/pro-light-svg-icons": "^7.3.1",
+    "@fortawesome/pro-solid-svg-icons": "^7.3.1"
+  },
+  "trustedDependencies": [
+    "sharp",
+    "unrs-resolver"
+  ]
+}

@@ -1,0 +1,9 @@
+.nuxt
+.output
+node_modules
+bun.lock
+app/assets/icons/fa
+
+# Captured from Gamefound (scripts/capture-gamefound.js) and rebuilt by `bun run catalog:build`.
+data/gamefound.json
+app/data/catalog.json

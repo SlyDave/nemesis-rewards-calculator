@@ -1,0 +1,14 @@
+node_modules
+.nuxt
+.output
+.data
+dist
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Generated from the Font Awesome packages by `bun run icons:generate` (run on install).
+# Never committed: this repository is public and the Pro icon files are licensed, not open.
+app/assets/icons/fa

@@ -1,0 +1,247 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+/*
+ * The theme, taken from nemesisgames.eu: a black page, one accent colour that glows, wide
+ * capitals, and angular frames like the readouts of a ship's console.
+ *
+ * That site has two halves, and so does this theme. Nemesis is lit in teal (#398273 on the
+ * site, step 600 of `signal` here); Nemesis Lockdown in emergency red (#990500, step 700 of
+ * `breach`). The neutral is `void`: the lavender-grey the site sets its text in (#74758a,
+ * step 500), stretched into a scale that reaches black.
+ */
+@theme static {
+  --color-signal-50: #eefbf7;
+  --color-signal-100: #d3f4ea;
+  --color-signal-200: #a9e8d6;
+  --color-signal-300: #74d5bd;
+  --color-signal-400: #46bca1;
+  --color-signal-500: #3a9f88;
+  --color-signal-600: #398273;
+  --color-signal-700: #2b6559;
+  --color-signal-800: #244f47;
+  --color-signal-900: #1d3d38;
+  --color-signal-950: #0c2320;
+
+  --color-breach-50: #fff2f0;
+  --color-breach-100: #ffe1dd;
+  --color-breach-200: #ffc4bd;
+  --color-breach-300: #ff998e;
+  --color-breach-400: #fb6a5c;
+  --color-breach-500: #ee3e2e;
+  --color-breach-600: #cf2012;
+  --color-breach-700: #990500;
+  --color-breach-800: #7b0b06;
+  --color-breach-900: #5d0d09;
+  --color-breach-950: #340403;
+
+  --color-void-50: #f5f5f8;
+  --color-void-100: #e8e8ee;
+  --color-void-200: #d0d1dc;
+  --color-void-300: #b1b2c3;
+  --color-void-400: #9e9fb3;
+  --color-void-500: #74758a;
+  --color-void-600: #595a6d;
+  --color-void-700: #3e3f4e;
+  --color-void-800: #24252f;
+  --color-void-900: #14151b;
+  --color-void-950: #08080b;
+}
+
+/*
+ * The site's own typefaces, Prime and Baron Neue, are not ours to redistribute. These are
+ * their nearest open relatives: Jura for reading, Josefin Sans for the wide capitals. Named
+ * here, they are downloaded at build time and served by the site itself (@nuxt/fonts).
+ */
+@theme {
+  --font-sans: 'Jura', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Josefin Sans', 'Jura', ui-sans-serif, sans-serif;
+}
+
+/*
+ * There is no light mode — the Nemesis site has none — so these are stated once, on the
+ * `dark` class the page always carries (nuxt.config.ts). The accent is a brighter step than
+ * the site's own, which is a line colour there and too dim to read as text.
+ */
+.dark {
+  --ui-radius: 0.125rem;
+
+  --ui-primary: var(--ui-color-primary-400);
+
+  --ui-bg: #000;
+  --ui-bg-muted: var(--ui-color-neutral-950);
+  --ui-bg-elevated: var(--ui-color-neutral-900);
+  --ui-bg-accented: var(--ui-color-neutral-800);
+  --ui-bg-inverted: var(--ui-color-neutral-50);
+
+  --ui-border: var(--ui-color-neutral-800);
+  --ui-border-muted: var(--ui-color-neutral-900);
+  --ui-border-accented: var(--ui-color-neutral-700);
+
+  --ui-text-highlighted: var(--ui-color-neutral-50);
+  --ui-text: var(--ui-color-neutral-200);
+  --ui-text-toned: var(--ui-color-neutral-300);
+  --ui-text-muted: var(--ui-color-neutral-400);
+  --ui-text-dimmed: var(--ui-color-neutral-500);
+
+  /* The frames and their light: the site's own accent, as it uses it. */
+  --hud-line: var(--ui-color-primary-600);
+  --hud-glow: color-mix(in oklab, var(--ui-color-primary-400) 55%, transparent);
+  --hud-tint: color-mix(in oklab, var(--ui-color-primary-600) 14%, transparent);
+}
+
+/*
+ * Lockdown: the same steps, in red. Nuxt UI writes the primary palette onto :root from
+ * app.config.ts; this outranks it whenever the page is marked as Lockdown (useTheme), so
+ * every component follows without knowing there are two themes.
+ */
+:root[data-theme='lockdown'] {
+  --ui-color-primary-50: var(--color-breach-50);
+  --ui-color-primary-100: var(--color-breach-100);
+  --ui-color-primary-200: var(--color-breach-200);
+  --ui-color-primary-300: var(--color-breach-300);
+  --ui-color-primary-400: var(--color-breach-400);
+  --ui-color-primary-500: var(--color-breach-500);
+  --ui-color-primary-600: var(--color-breach-600);
+  --ui-color-primary-700: var(--color-breach-700);
+  --ui-color-primary-800: var(--color-breach-800);
+  --ui-color-primary-900: var(--color-breach-900);
+  --ui-color-primary-950: var(--color-breach-950);
+
+  --ui-primary: var(--color-breach-500);
+  --hud-line: var(--color-breach-700);
+  --hud-glow: color-mix(in oklab, var(--color-breach-500) 60%, transparent);
+  --hud-tint: color-mix(in oklab, var(--color-breach-700) 18%, transparent);
+}
+
+/*
+ * The page: black, lit from above by the accent, with the faint grid of the site's backdrop
+ * fading out towards the edges. All of it follows the theme through --hud-line.
+ */
+body {
+  min-height: 100dvh;
+  background-color: #000;
+  background-image:
+    radial-gradient(
+      ellipse 90% 55% at 50% -12%,
+      color-mix(in oklab, var(--hud-line) 42%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 100% 105%,
+      color-mix(in oklab, var(--hud-line) 20%, transparent),
+      transparent 70%
+    );
+  background-attachment: fixed;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.4s;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 30%, #000 20%, transparent 85%);
+}
+
+#__nuxt {
+  position: relative;
+  z-index: 1;
+}
+
+/* Wide capitals, as on the site's headings and its EXPLORE button. */
+@utility hud-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+
+@utility hud-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* Text lit by the accent, for the figures that matter. */
+@utility hud-glow {
+  text-shadow:
+    0 0 18px var(--hud-glow),
+    0 0 2px var(--hud-glow);
+}
+
+/*
+ * A framed panel with two corners cut off. The frame is the outer element's background
+ * showing round the inner one, since a clipped element cannot carry a border of its own.
+ */
+@utility hud-frame {
+  --hud-cut: 14px;
+  position: relative;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    var(--hud-line),
+    color-mix(in oklab, var(--hud-line) 30%, transparent) 30%,
+    color-mix(in oklab, var(--hud-line) 30%, transparent) 70%,
+    var(--hud-line)
+  );
+  clip-path: polygon(
+    var(--hud-cut) 0,
+    100% 0,
+    100% calc(100% - var(--hud-cut)),
+    calc(100% - var(--hud-cut)) 100%,
+    0 100%,
+    0 var(--hud-cut)
+  );
+}
+
+@utility hud-frame-body {
+  height: 100%;
+  background:
+    linear-gradient(180deg, var(--hud-tint), transparent 9rem),
+    color-mix(in oklab, var(--ui-color-neutral-950) 88%, transparent);
+  backdrop-filter: blur(6px);
+  clip-path: polygon(
+    var(--hud-cut) 0,
+    100% 0,
+    100% calc(100% - var(--hud-cut)),
+    calc(100% - var(--hud-cut)) 100%,
+    0 100%,
+    0 var(--hud-cut)
+  );
+}
+
+/* The pointed ends of the site's EXPLORE button. */
+@utility hud-chevron {
+  clip-path: polygon(
+    0.75rem 0,
+    calc(100% - 0.75rem) 0,
+    100% 50%,
+    calc(100% - 0.75rem) 100%,
+    0.75rem 100%,
+    0 50%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* A slim scrollbar in the accent, for the summary column that scrolls beside the choices. */
+@utility hud-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--hud-line) 70%, transparent) transparent;
+  overscroll-behavior: contain;
+}

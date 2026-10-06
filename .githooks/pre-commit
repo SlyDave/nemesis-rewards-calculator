@@ -1,0 +1,4 @@
+#!/bin/sh
+# Nothing is committed that the linter or the formatter would reject.
+# Installed by bun install, which sets core.hooksPath to this folder.
+bun run lint && bun run format:check

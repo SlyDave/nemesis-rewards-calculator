@@ -1,0 +1,6 @@
+# Git runs these with sh, which a CRLF checkout would break.
+.githooks/* text eol=lf
+
+# Captured from Gamefound and rebuilt by `bun run catalog:build`; collapsed in review.
+data/gamefound.json linguist-generated=true
+app/data/catalog.json linguist-generated=true

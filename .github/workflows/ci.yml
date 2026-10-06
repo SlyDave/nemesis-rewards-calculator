@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint, format, types, tests and build
+    runs-on: ubuntu-latest
+
+    env:
+      # Font Awesome Pro packages need this; see .npmrc. Without it (a fork's pull request,
+      # say) the icons fall back to Font Awesome Free and everything else still runs.
+      FONTAWESOME_PACKAGE_TOKEN: ${{ secrets.FONTAWESOME_PACKAGE_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run lint
+      - run: bun run format:check
+      - run: bun run typecheck
+
+      # Includes the check that the solver agrees with a brute-force search.
+      - run: bun test
+
+      # A full static build catches what dev mode and the type-check do not, such as a page
+      # that fails to pre-render.
+      - run: bun run build

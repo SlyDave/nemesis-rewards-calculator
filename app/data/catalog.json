@@ -1,0 +1,2201 @@
+{
+  "capturedAt": "2026-10-06T19:29:05.594Z",
+  "source": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards",
+  "campaignEnd": "2026-10-27T19:00:00Z",
+  "rates": {
+    "USD": 1.1204,
+    "GBP": 0.8472
+  },
+  "categories": [
+    {
+      "id": 19053,
+      "name": "Rewards",
+      "parentId": null,
+      "sortOrder": 0
+    },
+    {
+      "id": 19054,
+      "name": "Add-ons",
+      "parentId": null,
+      "sortOrder": 1
+    },
+    {
+      "id": 25953,
+      "name": "Nemesis Legacy Add-ons",
+      "parentId": null,
+      "sortOrder": 2
+    },
+    {
+      "id": 25921,
+      "name": "Bundles",
+      "parentId": null,
+      "sortOrder": 3
+    },
+    {
+      "id": 25922,
+      "name": "Nemesis Retaliation",
+      "parentId": null,
+      "sortOrder": 4
+    },
+    {
+      "id": 25923,
+      "name": "Nemesis Lockdown",
+      "parentId": null,
+      "sortOrder": 5
+    },
+    {
+      "id": 25926,
+      "name": "Nemesis",
+      "parentId": null,
+      "sortOrder": 6
+    },
+    {
+      "id": 26417,
+      "name": "Merchandise",
+      "parentId": null,
+      "sortOrder": 7
+    },
+    {
+      "id": 25950,
+      "name": "Pledges",
+      "parentId": 25926,
+      "sortOrder": 0
+    },
+    {
+      "id": 25951,
+      "name": "Pledges",
+      "parentId": 25922,
+      "sortOrder": 0
+    },
+    {
+      "id": 25952,
+      "name": "Pledges",
+      "parentId": 25923,
+      "sortOrder": 0
+    },
+    {
+      "id": 25960,
+      "name": "Gameplay",
+      "parentId": 25953,
+      "sortOrder": 0
+    },
+    {
+      "id": 25931,
+      "name": "Gameplay",
+      "parentId": 25926,
+      "sortOrder": 1
+    },
+    {
+      "id": 25938,
+      "name": "Gameplay",
+      "parentId": 25923,
+      "sortOrder": 1
+    },
+    {
+      "id": 25947,
+      "name": "Gameplay",
+      "parentId": 25922,
+      "sortOrder": 1
+    },
+    {
+      "id": 25946,
+      "name": "Cosmetic",
+      "parentId": 25922,
+      "sortOrder": 2
+    },
+    {
+      "id": 25961,
+      "name": "Cosmetic",
+      "parentId": 25953,
+      "sortOrder": 2
+    },
+    {
+      "id": 25937,
+      "name": "Cosmetic",
+      "parentId": 25923,
+      "sortOrder": 2
+    },
+    {
+      "id": 25929,
+      "name": "Cosmetic",
+      "parentId": 25926,
+      "sortOrder": 2
+    }
+  ],
+  "products": [
+    {
+      "id": 120364,
+      "name": "Nemesis Legacy Core Pledge (Special Edition)",
+      "price": 129,
+      "effectivePrice": 129,
+      "categoryId": 19053,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 2,
+      "abstract": "The complete Nemesis: Legacy Core experience with miniatures, all unlocked Stretch Goals, the Infinity Mode, and an included Recharge Pack to reset the campaign and play again.",
+      "image": "images/products/120364.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/120364",
+      "setItems": [
+        {
+          "id": 120365,
+          "qty": 1
+        },
+        {
+          "id": 125532,
+          "qty": 1
+        },
+        {
+          "id": 125536,
+          "qty": 1
+        },
+        {
+          "id": 127879,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 120365,
+      "name": "Nemesis Legacy Core Box (Special Edition)",
+      "price": 70,
+      "effectivePrice": 70,
+      "categoryId": 19053,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis Legacy Core Box with miniatures.",
+      "image": "images/products/120365.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/120365",
+      "setItems": [],
+      "finish": {
+        "sundrop": 33,
+        "painted": 124
+      }
+    },
+    {
+      "id": 125198,
+      "name": "Aftermath Expansion 2.0",
+      "price": 24,
+      "effectivePrice": 24,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 27,
+      "abstract": "Classic Nemesis Expansion - Aftermath. Also works with Nemesis Lockdown. Explore Nemesis ship or the Mars base again in search of clues and survival, to once again become the prey of something in the shadows.",
+      "image": "images/products/125198.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125198",
+      "setItems": [],
+      "finish": {
+        "sundrop": 7,
+        "painted": 15
+      }
+    },
+    {
+      "id": 125203,
+      "name": "Void Seeders Expansion",
+      "price": 32,
+      "effectivePrice": 32,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 28,
+      "abstract": "Do you want to know what it's like to be brainwashed by a Void Seeder? This is a new Alien race with its own mechanics, new nightmare fuel monster miniatures, and a totally new experience. It will work with classic Nemesis, Aftermath, and Lockdown.",
+      "image": "images/products/125203.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125203",
+      "setItems": [],
+      "finish": {
+        "sundrop": 11,
+        "painted": 25
+      }
+    },
+    {
+      "id": 125204,
+      "name": "Carnomorph Expansion",
+      "price": 37,
+      "effectivePrice": 37,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 29,
+      "abstract": "This expansion allows you to exchange the Intruder aliens with a different race - Carnomorphs. They come with their own mechanics, new nightmare monster miniatures, and a totally new experience. It will work with classic Nemesis, Aftermath, and Lockdown.",
+      "image": "images/products/125204.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125204",
+      "setItems": [],
+      "finish": {
+        "sundrop": 12,
+        "painted": 29
+      }
+    },
+    {
+      "id": 125205,
+      "name": "Medic Character Pack",
+      "price": 9,
+      "effectivePrice": 9,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 30,
+      "abstract": "New character set - The Medic. She can be a part of the original Nemesis crew, a part of the Aftermath investigators, or one of the Mars survivors.",
+      "image": "images/products/125205.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125205",
+      "setItems": [],
+      "finish": {
+        "sundrop": 1,
+        "painted": 2
+      }
+    },
+    {
+      "id": 125206,
+      "name": "Nemesis Terrain Expansion",
+      "price": 25,
+      "effectivePrice": 25,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 80,
+      "abstract": "This terrain expansion set will enhance your original Nemesis game experience! Visual expansion for the original Nemesis game - contains only visual enhancing components, does not contain additional gameplay mechanics.",
+      "image": "images/products/125206.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125206",
+      "setItems": [],
+      "finish": {
+        "sundrop": 14,
+        "painted": 29
+      }
+    },
+    {
+      "id": 125213,
+      "name": "Space Cats collection",
+      "price": 17,
+      "effectivePrice": 17,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 84,
+      "abstract": "Set of four collector cats with art cards. These models are purely collector's items and have no additional gameplay value. Who actually needs a miniature of a cat in a space suit? It's not like they are absolutely awesome, right?",
+      "image": "images/products/125213.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125213",
+      "setItems": [],
+      "finish": {
+        "sundrop": 3,
+        "painted": 8
+      }
+    },
+    {
+      "id": 125214,
+      "name": "Alien Kings",
+      "price": 31,
+      "effectivePrice": 31,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 79,
+      "abstract": "Set of alternative sculpts to each Alien race's Queens. These models are purely cosmetic/collector items and have no additional gameplay value.",
+      "image": "images/products/125214.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125214",
+      "setItems": [],
+      "finish": {
+        "sundrop": 5,
+        "painted": 19
+      }
+    },
+    {
+      "id": 125215,
+      "name": "Untold Stories #1",
+      "price": 8,
+      "effectivePrice": 8,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 31,
+      "abstract": "Co-op campaign book for the original Nemesis game. Experience a branching multi-mission co-op campaign filled with twists and difficult choices. Comic book written by Krzysztof Piskorski, with illustrations by Piotr Foksowicz and Alexander Chelyshev.",
+      "image": "images/products/125215.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125215",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125216,
+      "name": "Untold Stories #2",
+      "price": 8,
+      "effectivePrice": 8,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 32,
+      "abstract": "What really happened aboard Nemesis? Each of these stand-alone scenarios presents a different exciting retelling of the core game events. Designed to add a storytelling spin to standard semi-coop Nemesis games. Written by M. Cholewa and A. Betkiewicz.",
+      "image": "images/products/125216.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125216",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125217,
+      "name": "Nemesis Playmat",
+      "price": 20,
+      "effectivePrice": 20,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 82,
+      "abstract": "Double-sided playmat for the original Nemesis, with the ship's interior board. The playmat is 840x560mm and has stitched sides.",
+      "image": "images/products/125217.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125217",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125218,
+      "name": "Nemesis Dice Tray",
+      "price": 10,
+      "effectivePrice": 10,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 83,
+      "abstract": "A tray to roll your score - when you [roll a] die in space, no one can hear you scream!",
+      "image": "images/products/125218.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125218",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125220,
+      "name": "Nemesis Artbook",
+      "price": 15,
+      "effectivePrice": 15,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 85,
+      "abstract": "Art book is a mix of art used in the original Nemesis to design the game, gathered to help you get into the mood of the game!",
+      "image": "images/products/125220.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125220",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125221,
+      "name": "Nemesis Core Box Sleeves",
+      "price": 11,
+      "effectivePrice": 11,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 86,
+      "abstract": "Set of card sleeves to protect your classic Nemesis Core Box cards.",
+      "image": "images/products/125221.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125221",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125222,
+      "name": "Nemesis Add-ons Sleeves",
+      "price": 11,
+      "effectivePrice": 11,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 87,
+      "abstract": "Set of sleeves to protect your classic Nemesis add-ons. Contains enough to cover your cards in: Aftermath, Voidseeders, Carnomorphs, Medic Character.",
+      "image": "images/products/125222.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125222",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125224,
+      "name": "Nemesis Promo - Crawl Deck / Technical Corridors (2019)",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 34,
+      "abstract": "Originally available as part of Promo Pack A from Dice Tower 2019 Kickstarter Campaign. Adds 10 new cards deck to draw from every time a character moves into the Technical Corridors.",
+      "image": "images/products/125224.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125224",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125225,
+      "name": "Nemesis Promo - Feat Promo Cards (2020)",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 37,
+      "abstract": "A set of 5 promo cards originally available as part of the ManVsMeeple Season 3 Kickstarter.",
+      "image": "images/products/125225.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125225",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125226,
+      "name": "Nemesis Promo - Blood Tests Deck (2019)",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 35,
+      "abstract": "First available at Multigenre Fan Convention Pyrkon, where it was given as a reward for blood donation. Then as part of the Dice Tower 2020 Kickstarter Campaign. The Blood Test Deck will allow you to get another way of checking Contamination cards.",
+      "image": "images/products/125226.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125226",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125227,
+      "name": "Nemesis Promo - Achievement Cards (2019)",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 36,
+      "abstract": "Promo cards containing Achievements - special actions which become available to the players when they meet their requirements.",
+      "image": "images/products/125227.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125227",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125230,
+      "name": "Nemesis Plush Cat",
+      "price": 13,
+      "effectivePrice": 13,
+      "categoryId": 26417,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 8,
+      "abstract": "Have you ever wanted to hug Nemesis Space Cat? Now it's your chance! A Plush Cat without a tail is around 25cm tall.",
+      "image": "images/products/125230.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125230",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125232,
+      "name": "Nemesis CB + Void Seeders + Carnomorphs Acrylic Upgrade",
+      "price": 17,
+      "effectivePrice": 17,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 78,
+      "abstract": "Replace your cardboard tokens with high-quality acrylic ones! This product includes acrylic tokens for the OG Nemesis, the Void Seeders Expansion, and the Carnomorphs expansion. This set involves a high-quality bag to fit all the tokens.",
+      "image": "images/products/125232.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125232",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125233,
+      "name": "Nemesis Constructs Pack",
+      "price": 30,
+      "effectivePrice": 30,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 81,
+      "abstract": "This pack features 3D-designed models, i.e., computers, engines, and technical corridors for Nemesis and Nemesis Lockdown with all expansions.",
+      "image": "images/products/125233.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125233",
+      "setItems": [],
+      "finish": {
+        "sundrop": 9,
+        "painted": 35
+      }
+    },
+    {
+      "id": 125234,
+      "name": "Space Cat Hoodie",
+      "price": 30,
+      "effectivePrice": 30,
+      "categoryId": 26417,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 5,
+      "abstract": "A hoodie with the Space Cat and Awaken Realms logotype - to show your allegiance!",
+      "image": "images/products/125234.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125234",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125235,
+      "name": "BIG BOX Nemesis",
+      "price": 69,
+      "effectivePrice": 69,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 76,
+      "abstract": "Give the original Nemesis collection a proper home. The Nemesis Big Box is a dedicated storage solution created to consolidate your game and its additional content into one organized package.",
+      "image": "images/products/125235.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125235",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125236,
+      "name": "Nemesis Lockdown Stretch Goals",
+      "price": 43,
+      "effectivePrice": 43,
+      "categoryId": 25938,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 38,
+      "abstract": "Nemesis Lockdown all unlocked Stretch Goals from the KS campaign, including Untold Stories #3. This add-on does NOT include the Lockdown Core Box!",
+      "image": "images/products/125236.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125236",
+      "setItems": [],
+      "finish": {
+        "sundrop": 9,
+        "painted": 39
+      }
+    },
+    {
+      "id": 125237,
+      "name": "Nemesis Lockdown Cats",
+      "price": 8,
+      "effectivePrice": 8,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 73,
+      "abstract": "Set of alternative sculpts to each Alien race's cat from Lockdown. These models are purely cosmetic/collector's items and have no additional gameplay value.",
+      "image": "images/products/125237.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125237",
+      "setItems": [],
+      "finish": {
+        "sundrop": 3,
+        "painted": 5
+      }
+    },
+    {
+      "id": 125238,
+      "name": "Nemesis Lockdown Kings",
+      "price": 13,
+      "effectivePrice": 13,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 72,
+      "abstract": "Set of alternative sculpts to each Alien race's Queens from Lockdown. These models are purely cosmetic/collector's items and have no additional gameplay value.",
+      "image": "images/products/125238.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125238",
+      "setItems": [],
+      "finish": {
+        "sundrop": 3,
+        "painted": 8
+      }
+    },
+    {
+      "id": 125239,
+      "name": "Nemesis Lockdown Playmat",
+      "price": 20,
+      "effectivePrice": 20,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 71,
+      "abstract": "High-quality double-sided neoprene playmat for the Nemesis Lockdown with the Mars research facility.",
+      "image": "images/products/125239.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125239",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125240,
+      "name": "Nemesis Lockdown Artbook",
+      "price": 15,
+      "effectivePrice": 15,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 74,
+      "abstract": "Artbook with the art selection from the Nemesis Lockdown boardgame.",
+      "image": "images/products/125240.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125240",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125241,
+      "name": "Nemesis Lockdown - Dice Tower Promo Cards (2021)",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25938,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 39,
+      "abstract": "Set of 5 completely new Achievements for your adventures in Nemesis Lockdown. Those mini-quests will help you achieve your objective, allow you to survive, or derail your opponents' plans. The choice is yours!",
+      "image": "images/products/125241.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125241",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125242,
+      "name": "Nemesis Lockdown - Core Box & Stretch Goals Sleeves",
+      "price": 16,
+      "effectivePrice": 16,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 75,
+      "abstract": "Set of card sleeves to protect your Nemesis Lockdown Corebox and SG cards.",
+      "image": "images/products/125242.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125242",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125244,
+      "name": "Nemesis Lockdown Acrylic Pack & Stretch Goals Acrylic Upgrade",
+      "price": 14,
+      "effectivePrice": 14,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 70,
+      "abstract": "Replace your cardboard tokens with high-quality acrylic ones! This product involves acrylic tokens for the Lockdown Core Box and Stretch Goals (Nightstalkers &. Chytrids). This set involves a high-quality bag to fit all the tokens.",
+      "image": "images/products/125244.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125244",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125245,
+      "name": "Space Racoon Hoodie",
+      "price": 30,
+      "effectivePrice": 30,
+      "categoryId": 26417,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 6,
+      "abstract": "A hoodie with the Space Racoon and Awaken Realms logotype - to show your allegiance!",
+      "image": "images/products/125245.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125245",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125246,
+      "name": "BIG BOX Nemesis Lockdown",
+      "price": 69,
+      "effectivePrice": 69,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 68,
+      "abstract": "A dedicated storage solution designed to bring your Lockdown collection together and make all that content easier to organize, store, and get back to the table.",
+      "image": "images/products/125246.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125246",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125249,
+      "name": "The Sangrevores - a new enemy race",
+      "price": 39,
+      "effectivePrice": 39,
+      "categoryId": 25947,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 41,
+      "abstract": "An enemy race for Nemesis Retaliation. Your team of well-trained and equipped Marines can now face new, demanding enemies led by a powerful King!",
+      "image": "images/products/125249.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125249",
+      "setItems": [],
+      "finish": {
+        "sundrop": 17,
+        "painted": 45
+      }
+    },
+    {
+      "id": 125250,
+      "name": "The Xyrians - a new enemy race",
+      "price": 15,
+      "effectivePrice": 15,
+      "categoryId": 25947,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 42,
+      "abstract": "An enemy race for Nemesis Retaliation. Your team of well-trained and equipped Marines can now face new, demanding enemies!\n",
+      "image": "images/products/125250.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125250",
+      "setItems": [],
+      "finish": {
+        "sundrop": 2,
+        "painted": 7
+      }
+    },
+    {
+      "id": 125251,
+      "name": "Support Squad Expansion",
+      "price": 14,
+      "effectivePrice": 14,
+      "categoryId": 25947,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 43,
+      "abstract": "An optional add-on that introduces two new characters to Nemesis Retaliation - the UAV Operator and Sharpshooter!",
+      "image": "images/products/125251.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125251",
+      "setItems": [],
+      "finish": {
+        "sundrop": 2,
+        "painted": 8
+      }
+    },
+    {
+      "id": 125252,
+      "name": "Terrain Pack for Nemesis Retaliation",
+      "price": 34,
+      "effectivePrice": 34,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 54,
+      "abstract": "Expand your set with completely new elements that will enrich your Nemesis Retaliation adventure! A pack of additional doors, eggs, robots, corpses, and other elements that add more to your experience.",
+      "image": "images/products/125252.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125252",
+      "setItems": [],
+      "finish": {
+        "sundrop": 15,
+        "painted": 35
+      }
+    },
+    {
+      "id": 125253,
+      "name": "Alternative Queen miniature",
+      "price": 8,
+      "effectivePrice": 8,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 52,
+      "abstract": "Expand your Nemesis Retaliation set with an alternative Queen miniature that replaces the one from the Core Box.",
+      "image": "images/products/125253.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125253",
+      "setItems": [],
+      "finish": {
+        "sundrop": 1,
+        "painted": 4
+      }
+    },
+    {
+      "id": 125254,
+      "name": "Nemesis Retaliation Cats",
+      "price": 17,
+      "effectivePrice": 17,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 56,
+      "abstract": "Set of high-quality cat miniatures for each alien race from Retaliation. These models are purely cosmetic/collector's items without additional gameplay value.",
+      "image": "images/products/125254.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125254",
+      "setItems": [],
+      "finish": {
+        "sundrop": 4,
+        "painted": 8
+      }
+    },
+    {
+      "id": 125255,
+      "name": "Nemesis Retaliation New Kings & Queen",
+      "price": 22,
+      "effectivePrice": 22,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 53,
+      "abstract": "Set of alternative sculpts to each alien race's Kings and Queen from Retaliation. These models are purely cosmetic/collector's items without additional gameplay value.",
+      "image": "images/products/125255.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125255",
+      "setItems": [],
+      "finish": {
+        "sundrop": 5,
+        "painted": 12
+      }
+    },
+    {
+      "id": 125256,
+      "name": "The Classic Crew Expansion",
+      "price": 13,
+      "effectivePrice": 13,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 51,
+      "abstract": "The old Crew is back! A set of 12 crewmembers from classic Nemesis and Lockdown compatible with Nemesis Retaliation.",
+      "image": "images/products/125256.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125256",
+      "setItems": [],
+      "finish": {
+        "sundrop": 9,
+        "painted": 25
+      }
+    },
+    {
+      "id": 125257,
+      "name": "Acrylic Pack for Nemesis Retaliation",
+      "price": 12,
+      "effectivePrice": 12,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 48,
+      "abstract": "Replace your Core Box cardboard tokens with high-quality acrylic ones!",
+      "image": "images/products/125257.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125257",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125258,
+      "name": "Acrylic Pack for Nemesis Retaliation (Stretch Goals)",
+      "price": 7,
+      "effectivePrice": 7,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 49,
+      "abstract": "Replace your Stretch Goals cardboard tokens with high-quality acrylic ones! This product includes acrylic tokens for the Neoflesh Cult breed.",
+      "image": "images/products/125258.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125258",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125259,
+      "name": "Acrylic Pack for Nemesis Retaliation (Add-ons)",
+      "price": 7,
+      "effectivePrice": 7,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 50,
+      "abstract": "Replace your cardboard tokens from retaliation add-ons with high-quality acrylic ones! This product includes acrylic tokens for the Xyrians and Sangrevores breeds.",
+      "image": "images/products/125259.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125259",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125260,
+      "name": "Untold Stories #4",
+      "price": 8,
+      "effectivePrice": 8,
+      "categoryId": 25947,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 44,
+      "abstract": "The 4th part of the acclaimed graphic novel provides new scenarios for Nemesis Retaliation.",
+      "image": "images/products/125260.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125260",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125261,
+      "name": "Nemesis Retaliation Sleeves",
+      "price": 11,
+      "effectivePrice": 11,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 58,
+      "abstract": "Set of card sleeves to protect your Nemesis Retaliation cards. Covers both the Core Box and Stretch Goals.",
+      "image": "images/products/125261.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125261",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125262,
+      "name": "Nemesis Retaliation Sleeves (add-ons)",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 59,
+      "abstract": "Set of card sleeves to protect your Nemesis Retaliation cards. Covers all the Add-ons offered during the original crowdfunding campaign.",
+      "image": "images/products/125262.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125262",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125263,
+      "name": "Nemesis Retaliation Playmat",
+      "price": 20,
+      "effectivePrice": 20,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 55,
+      "abstract": "Two-sided, High-quality neoprene mat dedicated to Nemesis Retaliation.",
+      "image": "images/products/125263.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125263",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125264,
+      "name": "Nemesis Retaliation Artbook",
+      "price": 14,
+      "effectivePrice": 14,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 57,
+      "abstract": "A premium, hard-cover album containing the best of Nemesis Retaliation artwork, designed to help you get into the mood of the game.",
+      "image": "images/products/125264.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125264",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125265,
+      "name": "Space Platypus Plushie",
+      "price": 13,
+      "effectivePrice": 13,
+      "categoryId": 26417,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 9,
+      "abstract": "Plush Platypus can now become your new best friend! ",
+      "image": "images/products/125265.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125265",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125266,
+      "name": "Space Platypus Hoodie",
+      "price": 30,
+      "effectivePrice": 30,
+      "categoryId": 26417,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 7,
+      "abstract": "A hoodie with the Space Platypus and Awaken Realms logotype - to show your allegiance! ",
+      "image": "images/products/125266.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125266",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125267,
+      "name": "Nemesis Retaliation Dice Tower Promo Cards",
+      "price": 4,
+      "effectivePrice": 4,
+      "categoryId": 25947,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 45,
+      "abstract": "The Exertion mini-expansion is a promo pack made available through the \"Dice Tower\" 2025 GF campaign. It features a deck of 8 cards that players will draw 2 cards from and keep 1, the first time their health reaches a set point. ",
+      "image": "images/products/125267.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125267",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125268,
+      "name": "BIG BOX Nemesis Retaliation",
+      "price": 69,
+      "effectivePrice": 69,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 46,
+      "abstract": "The Nemesis: Retaliation Big Box is designed as a centralized storage solution for your Retaliation collection, helping keep its game content and additional components organized and ready for the next mission.",
+      "image": "images/products/125268.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125268",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125507,
+      "name": "Nemesis OG pledge (Special Edition) with miniatures",
+      "price": 109,
+      "effectivePrice": 109,
+      "categoryId": 25950,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 13,
+      "abstract": "The classic Nemesis experience with miniatures, including the Core Box and Stretch Goals with Aftermath and Voidseeders. The essential package for entering the original game.",
+      "image": "images/products/125507.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125507",
+      "setItems": [
+        {
+          "id": 125508,
+          "qty": 1
+        },
+        {
+          "id": 125509,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125508,
+      "name": "Nemesis Core Box (Special Edition)",
+      "price": 59,
+      "effectivePrice": 59,
+      "categoryId": 25926,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "The classic Nemesis experience with miniatures, including the Core Box.",
+      "image": "images/products/125508.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125508",
+      "setItems": [],
+      "finish": {
+        "sundrop": 30,
+        "painted": 75
+      }
+    },
+    {
+      "id": 125509,
+      "name": "Nemesis Stretch Goals (Special Edition)",
+      "price": 50,
+      "effectivePrice": 50,
+      "categoryId": 25926,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Aftermath + Void Seeders",
+      "image": "images/products/125509.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125509",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125510,
+      "name": "Nemesis OG: Collector's Pledge",
+      "price": 201,
+      "effectivePrice": 195,
+      "categoryId": 25950,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 12,
+      "abstract": "The Core Pledge upgraded for a more premium table presence with acrylic components, playmat, 3D terrain, and the Constructs Pack.",
+      "image": "images/products/125510.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125510",
+      "setItems": [
+        {
+          "id": 125508,
+          "qty": 1
+        },
+        {
+          "id": 125509,
+          "qty": 1
+        },
+        {
+          "id": 125232,
+          "qty": 1
+        },
+        {
+          "id": 125217,
+          "qty": 1
+        },
+        {
+          "id": 125206,
+          "qty": 1
+        },
+        {
+          "id": 125233,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125511,
+      "name": "Nemesis OG: Captain's Pledge",
+      "price": 241,
+      "effectivePrice": 229,
+      "categoryId": 25950,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 11,
+      "abstract": "The choice for players who want gameplay content for the original Nemesis, including Carnomorphs, the Medic, all promos, both Untold Stories campaigns, plus Terrain and Constructs.",
+      "image": "images/products/125511.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125511",
+      "setItems": [
+        {
+          "id": 125508,
+          "qty": 1
+        },
+        {
+          "id": 125509,
+          "qty": 1
+        },
+        {
+          "id": 125204,
+          "qty": 1
+        },
+        {
+          "id": 125205,
+          "qty": 1
+        },
+        {
+          "id": 125206,
+          "qty": 1
+        },
+        {
+          "id": 125233,
+          "qty": 1
+        },
+        {
+          "id": 125513,
+          "qty": 1
+        },
+        {
+          "id": 125215,
+          "qty": 1
+        },
+        {
+          "id": 125216,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125512,
+      "name": "Nemesis OG: Intruder Pledge",
+      "price": 435,
+      "effectivePrice": 399,
+      "categoryId": 25950,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 10,
+      "abstract": "The BIG package for the original Nemesis, combining gameplay content, premium upgrades, accessories, collectibles, PVC cards, and merchandise in one pledge.",
+      "image": "images/products/125512.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125512",
+      "setItems": [
+        {
+          "id": 125508,
+          "qty": 1
+        },
+        {
+          "id": 125509,
+          "qty": 1
+        },
+        {
+          "id": 125204,
+          "qty": 1
+        },
+        {
+          "id": 125205,
+          "qty": 1
+        },
+        {
+          "id": 125206,
+          "qty": 1
+        },
+        {
+          "id": 125233,
+          "qty": 1
+        },
+        {
+          "id": 125232,
+          "qty": 1
+        },
+        {
+          "id": 125217,
+          "qty": 1
+        },
+        {
+          "id": 125218,
+          "qty": 1
+        },
+        {
+          "id": 125220,
+          "qty": 1
+        },
+        {
+          "id": 125221,
+          "qty": 1
+        },
+        {
+          "id": 125222,
+          "qty": 1
+        },
+        {
+          "id": 125513,
+          "qty": 1
+        },
+        {
+          "id": 125230,
+          "qty": 1
+        },
+        {
+          "id": 125214,
+          "qty": 1
+        },
+        {
+          "id": 125213,
+          "qty": 1
+        },
+        {
+          "id": 125215,
+          "qty": 1
+        },
+        {
+          "id": 125216,
+          "qty": 1
+        },
+        {
+          "id": 125234,
+          "qty": 1
+        },
+        {
+          "id": 128007,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125513,
+      "name": "Nemesis All Promos Bundle",
+      "price": 16,
+      "effectivePrice": 15,
+      "categoryId": 25931,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 33,
+      "abstract": "Bundle of ALL promos for Nemesis OG.",
+      "image": "images/products/125513.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125513",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125514,
+      "name": "Nemesis Lockdown (Special Edition) with miniatures",
+      "price": 115,
+      "effectivePrice": 115,
+      "categoryId": 25952,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 20,
+      "abstract": "The complete Nemesis: Lockdown Core experience with miniatures, including the Core Box and all Stretch Goals. Everything you need to descend into the facility on Mars.",
+      "image": "images/products/125514.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125514",
+      "setItems": [
+        {
+          "id": 125515,
+          "qty": 1
+        },
+        {
+          "id": 125516,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125515,
+      "name": "Nemesis Lockdown Core Box (Special Edition)",
+      "price": 72,
+      "effectivePrice": 72,
+      "categoryId": 25923,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis: Lockdown standalone expansion INCLUDING the Stretch Goals from the KS campaign. Nemesis: Lockdown offers a 1-5 player semi or full co-op experience that takes around 90-120 minutes and offers great replayability!",
+      "image": "images/products/125515.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125515",
+      "setItems": [],
+      "finish": {
+        "sundrop": 35,
+        "painted": 85
+      }
+    },
+    {
+      "id": 125516,
+      "name": "Nemesis Lockdown Stretch Goals (Special Edition)",
+      "price": 43,
+      "effectivePrice": 43,
+      "categoryId": 25923,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis Lockdown all unlocked Stretch Goals from the KS campaign, including Untold Stories #3. This add-on does NOT include the Lockdown Core Box!",
+      "image": "images/products/125516.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125516",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125519,
+      "name": "Nemesis Lockdown Collector's Pledge",
+      "price": 149,
+      "effectivePrice": 145,
+      "categoryId": 25952,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 19,
+      "abstract": "The Core Pledge upgraded with a playmat and acrylic components, including the Stretch Goal acrylic upgrade, for a more premium table presence.",
+      "image": "images/products/125519.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125519",
+      "setItems": [
+        {
+          "id": 125515,
+          "qty": 1
+        },
+        {
+          "id": 125516,
+          "qty": 1
+        },
+        {
+          "id": 125239,
+          "qty": 1
+        },
+        {
+          "id": 125244,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125522,
+      "name": "Nemesis Lockdown: Martian Pledge",
+      "price": 253,
+      "effectivePrice": 235,
+      "categoryId": 25952,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 18,
+      "abstract": "The Nemesis: Lockdown package, combining the Core Box and Stretch Goals with premium upgrades, promos, accessories, collectibles, sleeves, PVC cards, and merchandise available for the game.",
+      "image": "images/products/125522.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125522",
+      "setItems": [
+        {
+          "id": 125515,
+          "qty": 1
+        },
+        {
+          "id": 125516,
+          "qty": 1
+        },
+        {
+          "id": 125239,
+          "qty": 1
+        },
+        {
+          "id": 125244,
+          "qty": 1
+        },
+        {
+          "id": 125237,
+          "qty": 1
+        },
+        {
+          "id": 125238,
+          "qty": 1
+        },
+        {
+          "id": 125240,
+          "qty": 1
+        },
+        {
+          "id": 125241,
+          "qty": 1
+        },
+        {
+          "id": 125242,
+          "qty": 1
+        },
+        {
+          "id": 125245,
+          "qty": 1
+        },
+        {
+          "id": 128008,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125523,
+      "name": "Nemesis Retaliation (Special Edition) with miniatures",
+      "price": 109,
+      "effectivePrice": 109,
+      "categoryId": 25951,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 17,
+      "abstract": "This gets you one copy of Nemesis Retaliation (with miniatures) plus all unlocked Stretch Goals. You can choose the language version of the game and the version of the miniatures.",
+      "image": "images/products/125523.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125523",
+      "setItems": [
+        {
+          "id": 125525,
+          "qty": 1
+        },
+        {
+          "id": 125526,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125525,
+      "name": "Nemesis Retaliation Core Box (Special Edition)",
+      "price": 60,
+      "effectivePrice": 60,
+      "categoryId": 25922,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis Retaliation Core Box with miniatures.",
+      "image": "images/products/125525.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125525",
+      "setItems": [],
+      "finish": {
+        "sundrop": 26,
+        "painted": 125
+      }
+    },
+    {
+      "id": 125526,
+      "name": "Nemesis Retaliation Stretch Goals (Special Edition)",
+      "price": 49,
+      "effectivePrice": 49,
+      "categoryId": 25947,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 40,
+      "abstract": "Nemesis Retaliation all unlocked Stretch Goals from the GF campaign. Contains Gamefound Exclusive Bioenhancement Expert character.\nThis add-on does NOT include the Retaliation Core Box!",
+      "image": "images/products/125526.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125526",
+      "setItems": [],
+      "finish": {
+        "sundrop": 13,
+        "painted": 59
+      }
+    },
+    {
+      "id": 125527,
+      "name": "Nemesis Retaliation: Collector's Pledge",
+      "price": 182,
+      "effectivePrice": 175,
+      "categoryId": 25951,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 16,
+      "abstract": "This pledge contains the Nemesis Retaliation Core Box with High-quality miniatures and Stretch Goals, together with the Terrain Pack, Acrylic Pack, and Retaliation Playmat.",
+      "image": "images/products/125527.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125527",
+      "setItems": [
+        {
+          "id": 125525,
+          "qty": 1
+        },
+        {
+          "id": 125526,
+          "qty": 1
+        },
+        {
+          "id": 125252,
+          "qty": 1
+        },
+        {
+          "id": 125257,
+          "qty": 1
+        },
+        {
+          "id": 125258,
+          "qty": 1
+        },
+        {
+          "id": 125263,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125528,
+      "name": "Nemesis Retaliation: Military Pledge",
+      "price": 223,
+      "effectivePrice": 209,
+      "categoryId": 25951,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 15,
+      "abstract": "This pledge involves most of the gameplay content for Nemesis Retaliation, together with the Nemesis Retaliation Terrain Pack.",
+      "image": "images/products/125528.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125528",
+      "setItems": [
+        {
+          "id": 125525,
+          "qty": 1
+        },
+        {
+          "id": 125526,
+          "qty": 1
+        },
+        {
+          "id": 125250,
+          "qty": 1
+        },
+        {
+          "id": 125249,
+          "qty": 1
+        },
+        {
+          "id": 125251,
+          "qty": 1
+        },
+        {
+          "id": 125252,
+          "qty": 1
+        },
+        {
+          "id": 125260,
+          "qty": 1
+        },
+        {
+          "id": 125267,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125529,
+      "name": "Nemesis Retaliation: Veteran Pledge",
+      "price": 401,
+      "effectivePrice": 369,
+      "categoryId": 25951,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 14,
+      "abstract": "This pledge level provides all the Nemesis Retaliation stuff we offered during the original crowdfunding campaign! This pledge does NOT include the premium PVC cards.",
+      "image": "images/products/125529.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125529",
+      "setItems": [
+        {
+          "id": 125525,
+          "qty": 1
+        },
+        {
+          "id": 125526,
+          "qty": 1
+        },
+        {
+          "id": 125250,
+          "qty": 1
+        },
+        {
+          "id": 125249,
+          "qty": 1
+        },
+        {
+          "id": 125251,
+          "qty": 1
+        },
+        {
+          "id": 125252,
+          "qty": 1
+        },
+        {
+          "id": 125260,
+          "qty": 1
+        },
+        {
+          "id": 125257,
+          "qty": 1
+        },
+        {
+          "id": 125258,
+          "qty": 1
+        },
+        {
+          "id": 125259,
+          "qty": 1
+        },
+        {
+          "id": 125263,
+          "qty": 1
+        },
+        {
+          "id": 125264,
+          "qty": 1
+        },
+        {
+          "id": 125253,
+          "qty": 1
+        },
+        {
+          "id": 125261,
+          "qty": 1
+        },
+        {
+          "id": 125262,
+          "qty": 1
+        },
+        {
+          "id": 125265,
+          "qty": 1
+        },
+        {
+          "id": 125266,
+          "qty": 1
+        },
+        {
+          "id": 125267,
+          "qty": 1
+        },
+        {
+          "id": 125254,
+          "qty": 1
+        },
+        {
+          "id": 125255,
+          "qty": 1
+        },
+        {
+          "id": 125256,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125532,
+      "name": "Nemesis Legacy Stretch Goals (Special Edition)",
+      "price": 29,
+      "effectivePrice": 29,
+      "categoryId": 19053,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis Legacy Stretch Goals with miniatures.",
+      "image": "images/products/125532.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125532",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125533,
+      "name": "Nemesis Legacy Core Box (Standard Edition)",
+      "price": 40,
+      "effectivePrice": 40,
+      "categoryId": 19053,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis Legacy Core Box with standees.",
+      "image": "images/products/125533.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125533",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125534,
+      "name": "Nemesis Legacy Stretch Goals (Standard Edition)",
+      "price": 20,
+      "effectivePrice": 20,
+      "categoryId": 19053,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Nemesis Legacy Stretch Goals with standees.",
+      "image": "images/products/125534.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125534",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125535,
+      "name": "Nemesis Legacy Core Pledge (Standard Edition)",
+      "price": 89,
+      "effectivePrice": 89,
+      "categoryId": 19053,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 1,
+      "abstract": "The complete Nemesis: Legacy Core experience with standees, all unlocked Stretch Goals, the Infinity Mode, and an included Recharge Pack to reset the campaign and play again.",
+      "image": "images/products/125535.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125535",
+      "setItems": [
+        {
+          "id": 125533,
+          "qty": 1
+        },
+        {
+          "id": 125534,
+          "qty": 1
+        },
+        {
+          "id": 125536,
+          "qty": 1
+        },
+        {
+          "id": 127879,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125536,
+      "name": "Nemesis Legacy Recharge Pack",
+      "price": 5,
+      "effectivePrice": 5,
+      "categoryId": 25960,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 24,
+      "abstract": "Once you've completed the campaign, a Recharge Pack allows you to replace every component that has been permanently altered during your journey, restoring the game to its original state and making it ready for another complete playthrough.",
+      "image": "images/products/125536.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125536",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125537,
+      "name": "Zenith of Ruin Recharge Pack",
+      "price": 3.5,
+      "effectivePrice": 3.5,
+      "categoryId": 25960,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 25,
+      "abstract": "Once you complete the Zenith of Ruin campaign, a Recharge Pack will allow you to replace every component that has been permanently altered during your journey, restoring the campaign to its original state and making it ready for another playthrough.",
+      "image": "images/products/125537.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125537",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125540,
+      "name": "Nemesis Legacy Artbook",
+      "price": 15,
+      "effectivePrice": 15,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 65,
+      "abstract": "A premium, hard-cover album containing the best of Nemesis Legacy artwork, designed to help you get into the mood of the game.",
+      "image": "images/products/125540.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125540",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125545,
+      "name": "Secret Add-on",
+      "price": 35,
+      "effectivePrice": 35,
+      "categoryId": 25960,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 23,
+      "abstract": "The content of this add-on will be revealed during Day 1 of the campaign.",
+      "image": "images/products/125545.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125545",
+      "setItems": [],
+      "finish": {
+        "sundrop": 18,
+        "painted": 49
+      }
+    },
+    {
+      "id": 125546,
+      "name": "Zenith of Ruin - a Prequel Campaign Expansion",
+      "price": 65,
+      "effectivePrice": 65,
+      "categoryId": 25960,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 21,
+      "abstract": "A full prequel campaign expansion to Nemesis: Legacy. Follow the battered crew of the Crown Argo as they face a threat that is terrifying for a very different reason: this time, the enemy is not only the Intruders.",
+      "image": "images/products/125546.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125546",
+      "setItems": [],
+      "finish": {
+        "sundrop": 17,
+        "painted": 55
+      }
+    },
+    {
+      "id": 125547,
+      "name": "Nemesis Legacy Crew Logs",
+      "price": 10,
+      "effectivePrice": 10,
+      "categoryId": 25960,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 22,
+      "abstract": "Add a layer of personal ambition to your Nemesis: Legacy campaign.\n\nEach player receives their own Achievement Sheet, tied to a specific agenda. Across the entire campaign, you’ll be given personal goals to pursue alongside the group’s main objectives.",
+      "image": "images/products/125547.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125547",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125548,
+      "name": "Terrain Pack for Nemesis Legacy",
+      "price": 39,
+      "effectivePrice": 39,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 63,
+      "abstract": "Expand your set with completely new elements that will enrich your Nemesis Legacy adventure! A pack of additional doors, vents, item piles, and other elements that add more to your experience. ",
+      "image": "images/products/125548.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125548",
+      "setItems": [],
+      "finish": {
+        "sundrop": 15,
+        "painted": 45
+      }
+    },
+    {
+      "id": 125550,
+      "name": "Acrylic Pack for Nemesis Legacy",
+      "price": 17,
+      "effectivePrice": 17,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 60,
+      "abstract": "Replace your cardboard Intruder, Secure, and Item Pile tokens from the Legacy Core Box with high-quality acrylic ones! \nThis item is not essential for gameplay, but adds immersion and table presence to the game!",
+      "image": "images/products/125550.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125550",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125551,
+      "name": "Acrylic Pack for Nemesis Legacy (Stretch Goals)",
+      "price": 7,
+      "effectivePrice": 7,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 61,
+      "abstract": "Replace your cardboard Stretch Goals tokens with high-quality acrylic ones! \nThis item is not essential for gameplay, but adds immersion and table presence to the game!",
+      "image": "images/products/125551.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125551",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125552,
+      "name": "Acrylic Pack for Nemesis Legacy (Add-ons)",
+      "price": 12,
+      "effectivePrice": 12,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 62,
+      "abstract": "Replace your cardboard tokens from the Legacy add-ons with high-quality acrylic ones! \nThis item is not essential for gameplay, but adds immersion and table presence to the game!",
+      "image": "images/products/125552.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125552",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125555,
+      "name": "Nemesis Legacy Playmats Set",
+      "price": 20,
+      "effectivePrice": 20,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 64,
+      "abstract": "A set of high-quality playmats to help organize the space around your playerboards.",
+      "image": "images/products/125555.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125555",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 125557,
+      "name": "Nemesis Legacy Collector's Pledge",
+      "price": 212,
+      "effectivePrice": 205,
+      "categoryId": 19053,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 0,
+      "abstract": "The Special Edition upgraded with acrylic components, 3D terrain, and playmats for those who want a more premium table presence without adding extra gameplay content.",
+      "image": "images/products/125557.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125557",
+      "setItems": [
+        {
+          "id": 120365,
+          "qty": 1
+        },
+        {
+          "id": 125532,
+          "qty": 1
+        },
+        {
+          "id": 125536,
+          "qty": 1
+        },
+        {
+          "id": 127879,
+          "qty": 1
+        },
+        {
+          "id": 125550,
+          "qty": 1
+        },
+        {
+          "id": 125551,
+          "qty": 1
+        },
+        {
+          "id": 125548,
+          "qty": 1
+        },
+        {
+          "id": 125555,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125558,
+      "name": "Nemesis Legacy Salvation Pledge",
+      "price": 281.5,
+      "effectivePrice": 269,
+      "categoryId": 19053,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 3,
+      "abstract": "The choice for players who want all Nemesis: Legacy gameplay content: the Special Edition & Zenith of Ruin Prequel Campaign Expansion with respective Recharge Packs, Crew Logs, the SECRET add-on, and the Terrain Pack.",
+      "image": "images/products/125558.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125558",
+      "setItems": [
+        {
+          "id": 120365,
+          "qty": 1
+        },
+        {
+          "id": 125532,
+          "qty": 1
+        },
+        {
+          "id": 125536,
+          "qty": 1
+        },
+        {
+          "id": 127879,
+          "qty": 1
+        },
+        {
+          "id": 125546,
+          "qty": 1
+        },
+        {
+          "id": 125537,
+          "qty": 1
+        },
+        {
+          "id": 125545,
+          "qty": 1
+        },
+        {
+          "id": 125547,
+          "qty": 1
+        },
+        {
+          "id": 125548,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 125606,
+      "name": "4 x Core Pledge (Nemesis OG + Lockdown + Retaliation + Legacy)",
+      "price": 462,
+      "effectivePrice": 419,
+      "categoryId": 19053,
+      "isSet": true,
+      "buyable": true,
+      "listOrder": 4,
+      "abstract": "The complete entry point into the Nemesis series. This bundle includes the Core Pledge for Nemesis, Nemesis: Lockdown, Nemesis: Retaliation, and Nemesis: Legacy, each with miniatures and its included Stretch Goal content.",
+      "image": "images/products/125606.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125606",
+      "setItems": [
+        {
+          "id": 120365,
+          "qty": 1
+        },
+        {
+          "id": 125532,
+          "qty": 1
+        },
+        {
+          "id": 125536,
+          "qty": 1
+        },
+        {
+          "id": 127879,
+          "qty": 1
+        },
+        {
+          "id": 125525,
+          "qty": 1
+        },
+        {
+          "id": 125526,
+          "qty": 1
+        },
+        {
+          "id": 125515,
+          "qty": 1
+        },
+        {
+          "id": 125516,
+          "qty": 1
+        },
+        {
+          "id": 125508,
+          "qty": 1
+        },
+        {
+          "id": 125509,
+          "qty": 1
+        }
+      ],
+      "finish": null
+    },
+    {
+      "id": 127879,
+      "name": "Infinity Mode",
+      "price": 24,
+      "effectivePrice": 24,
+      "categoryId": 19053,
+      "isSet": false,
+      "buyable": false,
+      "listOrder": -1,
+      "abstract": "Turn Nemesis: Legacy into a highly replayable standalone experience. Play co-op or semi-coop, build your crew, tackle one-shot scenarios, and use dedicated Mission, Event, and Objective decks, even before starting the campaign.",
+      "image": "images/products/127879.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/127879",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 128007,
+      "name": "Nemesis OG: Premium Synthetic Cards",
+      "price": 19,
+      "effectivePrice": 19,
+      "categoryId": 25929,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 77,
+      "abstract": "Premium PVC cards for the Captain, Scout, Soldier, Scientist, Pilot, and Mechanic, together with the Contamination deck and Blood Test promo cards. It also covers the Medic Character Pack and all five playable characters from Aftermath.\n\n",
+      "image": "images/products/128007.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/128007",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 128008,
+      "name": "Nemesis Lockdown: Premium Synthetic Cards",
+      "price": 18,
+      "effectivePrice": 18,
+      "categoryId": 25937,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 69,
+      "abstract": "Premium PVC Action Cards for all six Core Box characters: Survivor, Janitor, Lab Rat, Sentry, Xenobiologist, and Hacker. Together with the complete Contamination deck and the Android, Pilot, and Bounty Hunter compatibility cards from the Stretch Goals.\n\n",
+      "image": "images/products/128008.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/128008",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 128009,
+      "name": "Nemesis Retaliation: Premium Synthetic Cards",
+      "price": 20,
+      "effectivePrice": 20,
+      "categoryId": 25946,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 47,
+      "abstract": "Premium PVC cards that upgrade the Action Cards for Officer, Recon, HGO, Combat Engineer, Contractor, and Medical Support, with the Contamination and Infection deck. It also includes the Bioenhancement Expert, Contractor, UAV Operator, and Sharpshooter.\n\n",
+      "image": "images/products/128009.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/128009",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 128018,
+      "name": "SAM - Support and Maintenace Robot add-on",
+      "price": 8,
+      "effectivePrice": 8,
+      "categoryId": 25960,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 26,
+      "abstract": "Bring an extra pair of mechanical hands into Infinity Mode. SAM (Support and Maintenance) Robot can assist with reconnaissance, cargo hauling, technical tasks, and combat support, giving your crew another useful tool when things inevitably go wrong.",
+      "image": "images/products/128018.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/128018",
+      "setItems": [],
+      "finish": {
+        "sundrop": 1,
+        "painted": 2
+      }
+    },
+    {
+      "id": 128436,
+      "name": "Nemesis Legacy Sleeves (Core Box + Stretch Goals)",
+      "price": 15,
+      "effectivePrice": 15,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 66,
+      "abstract": "Set of card sleeves to protect your Nemesis Legacy Corebox and Stretch Goals cards.",
+      "image": "images/products/128436.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/128436",
+      "setItems": [],
+      "finish": null
+    },
+    {
+      "id": 128437,
+      "name": "Nemesis Legacy Sleeves (Core Box + Stretch Goals + Add-ons)",
+      "price": 21,
+      "effectivePrice": 21,
+      "categoryId": 25961,
+      "isSet": false,
+      "buyable": true,
+      "listOrder": 67,
+      "abstract": "Set of card sleeves to protect your Nemesis Legacy Corebox, Stretch Goals, and add-on cards.",
+      "image": "images/products/128437.webp",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/128437",
+      "setItems": [],
+      "finish": null
+    }
+  ]
+}
