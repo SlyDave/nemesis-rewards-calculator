@@ -5,9 +5,11 @@ import type { Cents, Preferences } from './types'
  * The gift for returning backers.
  *
  * Anyone who has pledged for Nemesis before — on Kickstarter or Gamefound, in a campaign, a
- * pledge manager or a late pledge — can add the SAM Robot Pack to their Legacy pledge for
- * nothing; for everyone else it is an add-on at its listed price (campaign Update #6).
- * Gamefound knows a returning backer by the email address of the earlier pledge.
+ * pledge manager or a late pledge — gets the SAM Robot Pack for nothing (campaign Update #6).
+ * It is the same product everyone else buys as an add-on; for a returning backer the pledge
+ * manager adds it by itself, so it is not something to put in the cart, and it is taken to
+ * ship free with the rest. Gamefound knows a returning backer by the email address of the
+ * earlier pledge.
  */
 export const RETURNING_BACKER_GIFT = 128018
 

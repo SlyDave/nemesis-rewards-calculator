@@ -29,6 +29,7 @@ export interface CartLine {
   readonly product: Product
   /** What this visitor pays for it, which for a returning backer's gift is nothing. */
   readonly price: Cents
+  /** A gift is not added to the cart by hand: the pledge manager adds it. */
   readonly isGift: boolean
   readonly group: CartGroup
   readonly contents: readonly ContentLine[]
@@ -201,7 +202,10 @@ export const buildQuote = (preferences: Preferences): Quote => {
     savings: listTotal - itemsTotal,
     finishTotal,
     shippingTotal,
-    unpricedShipping: lines.filter((line) => line.shipping === null).map((line) => line.product),
+    // A gift is taken to travel free with the rest, so it is not one of these.
+    unpricedShipping: lines
+      .filter((line) => line.shipping === null && !line.isGift)
+      .map((line) => line.product),
     waves: describeWaves(preferences.shipping, {
       legacy: games.has('legacy'),
       older: games.has('og') || games.has('lockdown') || games.has('retaliation'),

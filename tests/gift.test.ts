@@ -1,6 +1,10 @@
 import { describe, expect, test } from 'bun:test'
 
-import { decodePreferences, encodePreferences } from '../app/domain/preferences'
+import {
+  DEFAULT_PREFERENCES,
+  decodePreferences,
+  encodePreferences,
+} from '../app/domain/preferences'
 import { buildQuote } from '../app/domain/quote'
 import { describeExtra } from '../app/domain/selection'
 
@@ -28,6 +32,20 @@ describe('the returning backer’s gift', () => {
     expect(quote.itemsTotal).toBe(12900)
     expect(quote.listTotal).toBe(12900 + 800)
     expect(quote.savings).toBe(800)
+  })
+
+  test('ships free, so it is not among the add-ons still waiting for a shipping price', () => {
+    const gifted = buildQuote(preferencesWith({ ...plain, returningBacker: true }))
+    expect(gifted.unpricedShipping).toEqual([])
+
+    // Bought, it is an add-on like any other.
+    const bought = buildQuote(preferencesWith({ ...plain, overrides: { [SAM]: true } }))
+    expect(bought.unpricedShipping.map((product) => product.id)).toEqual([SAM])
+  })
+
+  test('is off until the visitor says they have backed before', () => {
+    expect(DEFAULT_PREFERENCES.returningBacker).toBe(false)
+    expect(sam(buildQuote(DEFAULT_PREFERENCES))).toBeUndefined()
   })
 
   test('is an ordinary add-on for anyone else', () => {

@@ -26,8 +26,8 @@ const outcome = computed<string>(() => {
     return `Otherwise it is an add-on at ${format(gift.effectivePrice)}, under Expansions.`
   }
   return preferences.value.lines.legacy
-    ? 'It is in your cart below, at no charge.'
-    : 'It plays in Nemesis Legacy, so it is only added with Legacy — or tick it under Expansions to take it anyway.'
+    ? 'It is listed in your order below at no charge — there is nothing to add to your cart for it.'
+    : 'It plays in Nemesis Legacy, so it is only listed with Legacy — or tick it under Expansions to count it anyway.'
 })
 </script>
 
@@ -57,7 +57,8 @@ const outcome = computed<string>(() => {
       <div class="min-w-0 text-xs text-muted">
         <p>
           <span class="font-semibold text-highlighted">Free gift: the SAM Robot Pack.</span>
-          Returning Nemesis backers can add it to their pledge for nothing. {{ outcome }}
+          Returning Nemesis backers get it for nothing: the pledge manager adds it to your pledge by
+          itself, and it ships with the rest at no extra cost. {{ outcome }}
         </p>
         <p class="mt-2">
           Gamefound recognises you by the email address of your earlier pledge, so pledge with the

@@ -19,6 +19,11 @@ const itemCount = computed<number>(() =>
   props.quote.lines.reduce((count, line) => count + line.contents.length, 0),
 )
 
+/** What there is to add to the cart: every line but a gift, which adds itself. */
+const cartLineCount = computed<number>(
+  () => props.quote.lines.filter((line) => !line.isGift).length,
+)
+
 const pledgeCount = computed<number>(
   () => props.quote.lines.filter((line) => line.shipping !== null).length,
 )
@@ -62,8 +67,8 @@ const rateNote = computed<string | null>(() => {
           {{ format(quote.total) }}
         </p>
         <p class="mt-3 text-sm text-muted">
-          {{ plural(itemCount, 'item') }} in {{ plural(quote.lines.length, 'cart line') }} — the
-          cheapest way to get everything you asked for.
+          {{ plural(itemCount, 'item') }} in {{ plural(cartLineCount, 'cart line') }} — the cheapest
+          way to get everything you asked for.
         </p>
       </div>
 

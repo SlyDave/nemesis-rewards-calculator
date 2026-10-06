@@ -3,8 +3,8 @@ import type { CartLine } from '~/domain/quote'
 
 const props = defineProps<{
   line: CartLine
-  /** Its place in the list, from 1. */
-  position: number
+  /** Its place among the things to add, from 1; null for a gift, which is not added by hand. */
+  position: number | null
 }>()
 
 const { format } = useMoney()
@@ -41,8 +41,14 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
         <span
           class="absolute -top-1.5 -left-1.5 grid size-6 place-items-center bg-primary hud-label text-xs text-inverted"
           aria-hidden="true"
-          >{{ position }}</span
         >
+          <UIcon
+            v-if="position === null"
+            name="i-fa-value"
+            class="size-3.5"
+          />
+          <template v-else>{{ position }}</template>
+        </span>
       </div>
 
       <div class="flex min-w-0 flex-1 flex-col gap-2">
@@ -69,7 +75,7 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
           />
           <UBadge
             v-if="line.isGift"
-            label="Returning backer gift"
+            label="Returning backer gift · nothing to add"
             icon="i-fa-robot"
             color="primary"
             variant="subtle"
