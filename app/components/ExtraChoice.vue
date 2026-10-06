@@ -59,10 +59,13 @@ const noteFor = (item: ExtraItem): { description?: string } =>
       isEmpty ? 'opacity-55' : '',
     ]"
   >
-    <div class="flex items-center gap-2 py-2.5 pr-3 pl-3">
+    <!-- Tall enough for a label that runs to two lines, so every card is the same height
+         whether its own does or not. Where the cards sit in one wide column no label wraps,
+         and they are left at their natural height. -->
+    <div class="flex min-h-18 items-start gap-2 px-3 py-2.5 lg:min-h-0 xl:min-h-18">
       <label
         :for="switchId"
-        class="flex min-w-0 flex-1 cursor-pointer items-center gap-3"
+        class="flex min-w-0 flex-1 cursor-pointer items-start gap-3"
       >
         <UIcon
           :name="icon"
@@ -86,6 +89,7 @@ const noteFor = (item: ExtraItem): { description?: string } =>
         color="neutral"
         variant="ghost"
         size="xs"
+        class="-mt-0.5 shrink-0"
         @click="isOpen = !isOpen"
       />
 
