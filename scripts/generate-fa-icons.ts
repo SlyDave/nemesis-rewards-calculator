@@ -181,10 +181,16 @@ if (!isIconifySet(free)) {
   throw new Error(`${FREE_ICONS} is not an Iconify icon set`)
 }
 
+/** Pro icons this list names that the installed Pro packages do not have. */
+const notInPro: string[] = []
+
 const draw = (source: IconSource): string | null => {
   const pro = proPackages[source.style]?.[source.pro]
   if (hasPro && isProDefinition(pro)) {
     return fromPro(pro)
+  }
+  if (hasPro) {
+    notInPro.push(source.pro)
   }
   const icon = free.icons[source.free]
   if (icon === undefined) {
@@ -215,6 +221,12 @@ const family = hasPro
   ? 'Font Awesome Pro'
   : 'Font Awesome Free (the Pro packages are not installed; see .env.example)'
 console.log(`wrote ${String(written)} icons to ${OUT_DIR} from ${family}`)
+
+// A misspelt Pro name would otherwise pass unnoticed behind its Free stand-in.
+if (notInPro.length > 0) {
+  console.error(`not in Font Awesome Pro, drawn from Free instead: ${notInPro.join(', ')}`)
+  process.exitCode = 1
+}
 
 if (missing.length > 0) {
   console.error(`no icon found for: ${missing.join(', ')}`)

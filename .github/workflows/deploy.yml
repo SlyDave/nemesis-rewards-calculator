@@ -23,8 +23,10 @@ jobs:
     env:
       # Font Awesome Pro packages need this; see .npmrc.
       FONTAWESOME_PACKAGE_TOKEN: ${{ secrets.FONTAWESOME_PACKAGE_TOKEN }}
-      # GitHub Pages serves a project site under the repository's name.
-      NUXT_APP_BASE_URL: /${{ github.event.repository.name }}/
+      # The site has its own domain (public/CNAME), so it is served from the root. Without
+      # one, GitHub Pages serves a project site under the repository's name and this would
+      # be /${{ github.event.repository.name }}/ instead.
+      NUXT_APP_BASE_URL: /
 
     steps:
       - uses: actions/checkout@v7

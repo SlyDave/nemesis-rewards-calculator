@@ -119,6 +119,9 @@ update `app/domain/shipping.ts` to match.
 
 ## Deployment
 
-Pushing to `main` builds the site and publishes it to GitHub Pages
-(`.github/workflows/deploy.yml`). The repository's Pages source must be set to
-**GitHub Actions**.
+The site is at [nemesis.slydave.com](https://nemesis.slydave.com/).
+
+Pushing to `main` builds it and publishes it to GitHub Pages
+(`.github/workflows/deploy.yml`). The repository's Pages source is set to **GitHub Actions**,
+with `nemesis.slydave.com` as its custom domain; the domain's DNS has a `CNAME` record
+pointing at `slydave.github.io`.

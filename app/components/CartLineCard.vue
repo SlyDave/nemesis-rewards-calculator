@@ -12,7 +12,7 @@ const { app } = useRuntimeConfig()
 
 const IMAGE_SIZE = 640
 
-/** The stored images live under the site's base path, which GitHub Pages sets to the repo name. */
+/** The stored images live under the site's base path, wherever it is deployed. */
 const imageUrl = computed<string | null>(() =>
   props.line.product.image === null ? null : `${app.baseURL}${props.line.product.image}`,
 )

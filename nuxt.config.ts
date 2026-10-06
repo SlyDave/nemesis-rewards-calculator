@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 const SITE_NAME = 'Nemesis Rewards Calculator'
+const SITE_URL = 'https://nemesis.slydave.com/'
 const SITE_DESCRIPTION =
   'Find the cheapest combination of Nemesis Legacy pledges and add-ons on Gamefound for exactly what you want — with shipping, VAT and currency.'
 
@@ -31,8 +32,8 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   app: {
-    // GitHub Pages serves the site under the repository name; the deploy workflow sets
-    // NUXT_APP_BASE_URL to match.
+    // Served from the root of its own domain. The base path can still be moved with
+    // NUXT_APP_BASE_URL (the deploy workflow sets it), and everything follows.
     head: {
       // No `data-theme` here: anything listed is put back to this value when the page
       // hydrates, which would undo the script below. No attribute means Nemesis.
@@ -44,6 +45,7 @@ export default defineNuxtConfig({
         { property: 'og:title', content: SITE_NAME },
         { property: 'og:description', content: SITE_DESCRIPTION },
         { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: SITE_URL },
       ],
       // Puts back the theme chosen on the last visit before anything is painted, so a
       // Lockdown visitor never sees a flash of teal. The key is useTheme's.
