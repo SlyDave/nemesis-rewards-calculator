@@ -46,6 +46,11 @@ export interface Preferences {
   readonly edition: Edition
   readonly lines: Readonly<Record<GameLine, boolean>>
   readonly extras: Readonly<Record<ExtraTag, boolean>>
+  /**
+   * Single items picked out against their category's switch, by Gamefound product id: true
+   * to take one whose category is off, false to leave one whose category is on.
+   */
+  readonly overrides: Readonly<Record<number, boolean>>
   readonly finish: Finish
   readonly shipping: ShippingMode
   readonly includeTax: boolean

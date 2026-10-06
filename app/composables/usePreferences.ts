@@ -1,3 +1,4 @@
+import { REQUIREMENTS, findRequirement } from '~/domain/classification'
 import { destinationFor, findDestination } from '~/domain/destinations'
 import {
   DEFAULT_PREFERENCES,
@@ -5,6 +6,7 @@ import {
   decodePreferences,
   encodePreferences,
 } from '~/domain/preferences'
+import { isOnByDefault } from '~/domain/selection'
 
 import type { CurrencyCode, ExtraTag, GameLine, Preferences } from '~/domain/types'
 
@@ -16,7 +18,10 @@ interface PreferencesStore {
   readonly preferences: Readonly<Ref<Preferences>>
   readonly update: (changes: Partial<Preferences>) => void
   readonly setLine: (line: GameLine, included: boolean) => void
+  /** Asks for all of a category or none of it, forgetting any items picked out within it. */
   readonly setExtra: (tag: ExtraTag, included: boolean) => void
+  /** Picks one item out, whatever its category's switch says. */
+  readonly setItem: (id: number, wanted: boolean) => void
   readonly setAllExtras: (included: boolean) => void
   readonly setCurrency: (currency: CurrencyCode) => void
   readonly reset: () => void
@@ -37,14 +42,36 @@ export const usePreferences = (): PreferencesStore => {
       update({ lines: { ...preferences.value.lines, [line]: included } })
     },
     setExtra: (tag, included) => {
-      update({ extras: { ...preferences.value.extras, [tag]: included } })
+      const inCategory = new Set(
+        REQUIREMENTS.filter((requirement) => requirement.tag === tag).map(({ id }) => id),
+      )
+      update({
+        extras: { ...preferences.value.extras, [tag]: included },
+        overrides: Object.fromEntries(
+          Object.entries(preferences.value.overrides).filter(([id]) => !inCategory.has(Number(id))),
+        ),
+      })
+    },
+    setItem: (id, wanted) => {
+      const requirement = findRequirement(id)
+      if (requirement === undefined) {
+        return
+      }
+      const { [id]: _previous, ...others } = preferences.value.overrides
+      // Only a pick that goes against the switch needs remembering.
+      update({
+        overrides:
+          wanted === isOnByDefault(requirement, { ...preferences.value, overrides: others })
+            ? others
+            : { ...others, [id]: wanted },
+      })
     },
     setAllExtras: (included) => {
       const extras = { ...preferences.value.extras }
       for (const { tag } of EXTRAS) {
         extras[tag] = included
       }
-      update({ extras })
+      update({ extras, overrides: {} })
     },
     setCurrency: (currency) => {
       if (currency !== 'GBP') {

@@ -2,11 +2,10 @@ import { describe, expect, test } from 'bun:test'
 
 import {
   DEFAULT_PREFERENCES,
-  countExtras,
   decodePreferences,
   encodePreferences,
-  wantedRequirements,
 } from '../app/domain/preferences'
+import { describeExtra, wantedRequirements } from '../app/domain/selection'
 
 import { ALL_EXTRAS, ALL_LINES, preferencesWith, seededRandom } from './support'
 
@@ -44,9 +43,9 @@ describe('what is wanted', () => {
 
 describe('counting what a switch stands for', () => {
   test('counts across the included games', () => {
-    expect(countExtras(preferencesWith({ lines: ['legacy'] })).hoodie).toBe(0)
-    expect(countExtras(preferencesWith({ lines: ALL_LINES })).hoodie).toBe(3)
-    expect(countExtras(preferencesWith({ lines: ALL_LINES })).playmat).toBe(4)
+    expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'hoodie').size).toBe(0)
+    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'hoodie').size).toBe(3)
+    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'playmat').size).toBe(4)
   })
 })
 

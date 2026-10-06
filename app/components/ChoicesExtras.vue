@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { EXTRAS, countExtras } from '~/domain/preferences'
+import { EXTRAS } from '~/domain/preferences'
+import { describeExtra } from '~/domain/selection'
 
-const { preferences, setExtra, setAllExtras } = usePreferences()
+const { preferences, setExtra, setItem, setAllExtras } = usePreferences()
 
-const counts = computed(() => countExtras(preferences.value))
-
-const hintFor = (count: number): string => {
-  if (count === 0) {
-    return 'None for your games'
-  }
-  return count === 1 ? '1 item' : `${String(count)} items`
-}
+const categories = computed(() =>
+  EXTRAS.map((extra) => ({ ...extra, category: describeExtra(preferences.value, extra.tag) })),
+)
 </script>
 
 <template>
@@ -35,18 +31,20 @@ const hintFor = (count: number): string => {
       />
     </template>
 
-    <p class="mb-4 text-xs text-muted">Each switch applies to every game you’ve included.</p>
+    <p class="mb-4 text-xs text-muted">
+      Each switch takes everything in its category, for every game you’ve included. Open one to pick
+      single items instead.
+    </p>
 
-    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-      <ChoiceSwitch
-        v-for="{ tag, label, icon } in EXTRAS"
+    <div class="grid grid-cols-1 items-start gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+      <ExtraChoice
+        v-for="{ tag, label, icon, category } in categories"
         :key="tag"
-        :model-value="preferences.extras[tag]"
         :label="label"
-        :hint="hintFor(counts[tag])"
         :icon="icon"
-        :idle="counts[tag] === 0"
-        @update:model-value="setExtra(tag, $event)"
+        :category="category"
+        @toggle="setExtra(tag, category.state !== 'on')"
+        @pick="setItem"
       />
     </div>
   </HudPanel>

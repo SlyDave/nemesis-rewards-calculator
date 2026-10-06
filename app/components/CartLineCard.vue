@@ -49,9 +49,9 @@ const isDiscounted = computed<boolean>(
 
       <div class="flex min-w-0 flex-1 flex-col gap-2">
         <div class="flex items-start justify-between gap-3">
-          <h3 class="text-sm leading-snug font-semibold text-highlighted sm:text-base">
+          <h4 class="text-sm leading-snug font-semibold text-highlighted sm:text-base">
             {{ line.product.name }}
-          </h3>
+          </h4>
           <p class="shrink-0 text-right text-base font-bold text-highlighted sm:text-lg">
             <s
               v-if="isDiscounted"

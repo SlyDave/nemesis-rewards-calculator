@@ -1,14 +1,15 @@
 import { buyableProducts, getProduct, leavesOf } from './catalog'
 import { findRequirement, lineOf, providedBy } from './classification'
 import { destinationFor } from './destinations'
-import { wantedRequirements } from './preferences'
+import { EXTRAS } from './preferences'
+import { wantedRequirements } from './selection'
 import { describeWaves, shippingOf } from './shipping'
 import { solve } from './solver'
 
 import type { Product } from './catalog'
 import type { Destination } from './destinations'
 import type { Offer } from './solver'
-import type { Cents, Finish, Preferences } from './types'
+import type { Cents, Finish, GameLine, Preferences, Tag } from './types'
 
 /** One item inside something in the cart. */
 export interface ContentLine {
@@ -20,8 +21,12 @@ export interface ContentLine {
 }
 
 /** One thing to add to the Gamefound cart. */
+/** Where a cart line is listed: under one of the games, or after them all. */
+export type CartGroup = GameLine | 'other'
+
 export interface CartLine {
   readonly product: Product
+  readonly group: CartGroup
   readonly contents: readonly ContentLine[]
   /** The published shipping price, or null for add-ons, which have none yet. */
   readonly shipping: Cents | null
@@ -100,6 +105,54 @@ const contentsOf = (
 
 const sum = (values: readonly Cents[]): Cents => values.reduce((total, value) => total + value, 0)
 
+/** The games in the order the cart lists them, then whatever belongs to none of them. */
+const CART_GROUPS: readonly CartGroup[] = ['legacy', 'retaliation', 'lockdown', 'og', 'other']
+
+/** Within a game: the pledge first, then the extras in the order of their switches. */
+const CATEGORY_ORDER: readonly Tag[] = ['core', ...EXTRAS.map(({ tag }) => tag)]
+
+const MERCHANDISE: ReadonlySet<Tag> = new Set<Tag>(['hoodie', 'plush'])
+
+/** The category of a single item, whether it is a requirement itself or stands in for some. */
+const tagOf = (leaf: Product): Tag | undefined =>
+  providedBy(leaf.id)
+    .map((id) => findRequirement(id)?.tag)
+    .find((tag) => tag !== undefined)
+
+/**
+ * The game a product is listed under: the first one it has anything of, so the four-game
+ * bundle heads the list with Legacy. Merchandise bought on its own belongs to none.
+ */
+const groupOf = (product: Product): CartGroup => {
+  const leaves = leavesOf(product)
+  const isAllMerchandise = leaves.every((leaf) => {
+    const tag = tagOf(leaf)
+    return tag !== undefined && MERCHANDISE.has(tag)
+  })
+  if (isAllMerchandise) {
+    return 'other'
+  }
+  const games = new Set(leaves.map((leaf) => lineOf(leaf.id)))
+  return CART_GROUPS.find((group) => group !== 'other' && games.has(group)) ?? 'other'
+}
+
+/** A product's category: a pledge if it holds any core item, else that of its contents. */
+const categoryOf = (product: Product): number => {
+  const tags = leavesOf(product).map(tagOf)
+  const tag = tags.includes('core') ? 'core' : tags.find((candidate) => candidate !== undefined)
+  return tag === undefined ? CATEGORY_ORDER.length : CATEGORY_ORDER.indexOf(tag)
+}
+
+/** By game, then by category, then by name. */
+const byCartOrder = (a: Product, b: Product): number => {
+  const steps = [
+    CART_GROUPS.indexOf(groupOf(a)) - CART_GROUPS.indexOf(groupOf(b)),
+    categoryOf(a) - categoryOf(b),
+    a.name.localeCompare(b.name, 'en', { numeric: true }),
+  ]
+  return steps.find((step) => step !== 0) ?? 0
+}
+
 export const buildQuote = (preferences: Preferences): Quote => {
   const destination = destinationFor(preferences.destination)
   const wanted = wantedRequirements(preferences)
@@ -112,11 +165,12 @@ export const buildQuote = (preferences: Preferences): Quote => {
 
   const lines: readonly CartLine[] = (solution?.offerIds ?? [])
     .map((id) => getProduct(id))
-    .sort((a, b) => a.listOrder - b.listOrder)
+    .sort(byCartOrder)
     .map((product) => {
       const contents = contentsOf(product, wanted, preferences)
       return {
         product,
+        group: groupOf(product),
         contents,
         shipping: shippingOf(product, destination.region, preferences.shipping),
         finish: sum(contents.map((content) => content.finish)),

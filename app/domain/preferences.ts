@@ -1,4 +1,4 @@
-import { REQUIREMENTS, isOffered } from './classification'
+import { findRequirement } from './classification'
 import { DEFAULT_DESTINATION, findDestination } from './destinations'
 
 import type {
@@ -92,6 +92,7 @@ export const DEFAULT_PREFERENCES: Preferences = {
     dicetray: false,
     plush: false,
   },
+  overrides: {},
   finish: 'plain',
   shipping: 'split',
   includeTax: true,
@@ -100,61 +101,15 @@ export const DEFAULT_PREFERENCES: Preferences = {
   currency: 'EUR',
 }
 
-/** The ids of everything the preferences ask for. */
-export const wantedRequirements = (preferences: Preferences): ReadonlySet<number> =>
-  new Set(
-    REQUIREMENTS.filter(
-      (requirement) =>
-        isOffered(requirement, preferences.lines) &&
-        (requirement.tag === 'core' || preferences.extras[requirement.tag]) &&
-        (requirement.needs === undefined || preferences.extras[requirement.needs]) &&
-        (requirement.edition === undefined || requirement.edition === preferences.edition),
-    ).map((requirement) => requirement.id),
-  )
-
-const NONE_OF_EACH: Readonly<Record<ExtraTag, number>> = {
-  gameplay: 0,
-  acrylic: 0,
-  playmat: 0,
-  artbook: 0,
-  synthetic: 0,
-  sleeves: 0,
-  terrain: 0,
-  untold: 0,
-  promo: 0,
-  bigbox: 0,
-  sculpts: 0,
-  cats: 0,
-  hoodie: 0,
-  dicetray: 0,
-  plush: 0,
-}
-
-/**
- * How many items each extra's switch stands for, given the games that are included — and,
- * for the extras that only serve the gameplay expansions, whether those are.
- */
-export const countExtras = (preferences: Preferences): Readonly<Record<ExtraTag, number>> => {
-  const counts: Record<ExtraTag, number> = { ...NONE_OF_EACH }
-  for (const requirement of REQUIREMENTS) {
-    if (
-      requirement.tag !== 'core' &&
-      isOffered(requirement, preferences.lines) &&
-      (requirement.needs === undefined || preferences.extras[requirement.needs])
-    ) {
-      counts[requirement.tag] += 1
-    }
-  }
-  return counts
-}
-
 /*
  * The preferences as a short string, for the address bar and for remembering between visits:
  * the on/off and either/or choices packed into one number, then the destination, the currency
- * and any corrected tax rate — "9x2k-GB-GBP-20".
+ * and any corrected tax rate — "9x2k-GB-GBP-20". Where single items have been picked out
+ * against their category, two more parts list them, taken then left — "…-2oo8.2onz-2oo4".
  */
 
 const SEPARATOR = '-'
+const LIST_SEPARATOR = '.'
 const RADIX = 36
 const MAX_TAX_RATE = 100
 
@@ -175,12 +130,46 @@ export const encodePreferences = (preferences: Preferences): string => {
     bits = bits * 2 + (flag ? 1 : 0)
   }
   const packed = bits * FINISH_BASE + FINISHES.indexOf(preferences.finish)
-  return [
+  const parts = [
     packed.toString(RADIX),
     preferences.destination,
     preferences.currency,
     preferences.taxRate === null ? '' : String(preferences.taxRate),
-  ].join(SEPARATOR)
+  ]
+
+  const picks = Object.entries(preferences.overrides)
+  if (picks.length > 0) {
+    const list = (wanted: boolean): string =>
+      picks
+        .filter(([, value]) => value === wanted)
+        .map(([id]) => Number(id))
+        .sort((a, b) => a - b)
+        .map((id) => id.toString(RADIX))
+        .join(LIST_SEPARATOR)
+    parts.push(list(true), list(false))
+  }
+  return parts.join(SEPARATOR)
+}
+
+/**
+ * Reads one of the lists of picked-out items; null if it is not a list of numbers. Ids the
+ * catalogue no longer has, or that are not extras, are dropped rather than refused: a link
+ * should outlive a product being withdrawn.
+ */
+const decodeList = (text: string | undefined): readonly number[] | null => {
+  if (text === undefined || text === '') {
+    return []
+  }
+  const parts = text.split(LIST_SEPARATOR)
+  if (!parts.every((part) => /^[0-9a-z]+$/.test(part))) {
+    return null
+  }
+  return parts
+    .map((part) => Number.parseInt(part, RADIX))
+    .filter((id) => {
+      const requirement = findRequirement(id)
+      return requirement !== undefined && requirement.tag !== 'core'
+    })
 }
 
 const isCurrency = (value: string): value is CurrencyCode =>
@@ -188,12 +177,15 @@ const isCurrency = (value: string): value is CurrencyCode =>
 
 /** Reads a string written by encodePreferences; null for anything else. */
 export const decodePreferences = (code: string): Preferences | null => {
-  const [packedText, destination, currency, taxText, ...surplus] = code.split(SEPARATOR)
+  const [packedText, destination, currency, taxText, takenText, leftText, ...surplus] =
+    code.split(SEPARATOR)
   if (
     packedText === undefined ||
     destination === undefined ||
     currency === undefined ||
     taxText === undefined ||
+    // The two lists of picked-out items come together or not at all.
+    (takenText === undefined) !== (leftText === undefined) ||
     surplus.length > 0
   ) {
     return null
@@ -223,8 +215,12 @@ export const decodePreferences = (code: string): Preferences | null => {
     extras[tag] = next()
   }
 
+  const taken = decodeList(takenText)
+  const left = decodeList(leftText)
   const taxRate = taxText === '' ? null : Number(taxText)
   if (
+    taken === null ||
+    left === null ||
     finish === undefined ||
     edition === undefined ||
     shipping === undefined ||
@@ -236,5 +232,24 @@ export const decodePreferences = (code: string): Preferences | null => {
     return null
   }
 
-  return { edition, lines, extras, finish, shipping, includeTax, destination, taxRate, currency }
+  const overrides: Record<number, boolean> = {}
+  for (const id of left) {
+    overrides[id] = false
+  }
+  for (const id of taken) {
+    overrides[id] = true
+  }
+
+  return {
+    edition,
+    lines,
+    extras,
+    overrides,
+    finish,
+    shipping,
+    includeTax,
+    destination,
+    taxRate,
+    currency,
+  }
 }

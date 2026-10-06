@@ -16,17 +16,18 @@ An unofficial fan-made tool. Not affiliated with, or endorsed by, Awaken Realms 
 It is a static site: every page is rendered to HTML at build time, and all the working-out
 happens in the browser. There is no server.
 
-| Part                                    | Where                                                    |
-| --------------------------------------- | -------------------------------------------------------- |
-| The catalogue, as captured              | `data/gamefound.json`                                    |
-| The catalogue, as shipped, and images   | `app/data/catalog.json`, `public/images/products/`       |
-| What each product _is_ (which switch)   | `app/domain/classification.ts`                           |
-| The shipping table                      | `app/domain/shipping.ts`                                 |
-| Destinations and tax rates              | `app/domain/destinations.ts`                             |
-| The search for the best combination     | `app/domain/solver.ts`                                   |
-| Turning a combination into a full quote | `app/domain/quote.ts`                                    |
-| The page                                | `app/pages/index.vue`, `app/components/`                 |
-| The four themes, one per game           | `app/assets/css/main.css`, `app/composables/useTheme.ts` |
+| Part                                       | Where                                                    |
+| ------------------------------------------ | -------------------------------------------------------- |
+| The catalogue, as captured                 | `data/gamefound.json`                                    |
+| The catalogue, as shipped, and images      | `app/data/catalog.json`, `public/images/products/`       |
+| What each product _is_ (which switch)      | `app/domain/classification.ts`                           |
+| What the switches and single picks ask for | `app/domain/selection.ts`                                |
+| The shipping table                         | `app/domain/shipping.ts`                                 |
+| Destinations and tax rates                 | `app/domain/destinations.ts`                             |
+| The search for the best combination        | `app/domain/solver.ts`                                   |
+| Turning a combination into a full quote    | `app/domain/quote.ts`                                    |
+| The page                                   | `app/pages/index.vue`, `app/components/`                 |
+| The four themes, one per game              | `app/assets/css/main.css`, `app/composables/useTheme.ts` |
 
 ### The search
 

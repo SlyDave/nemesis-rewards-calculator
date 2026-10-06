@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 
-import { countExtras, wantedRequirements } from '../app/domain/preferences'
+import { describeExtra, wantedRequirements } from '../app/domain/selection'
 import { buildQuote } from '../app/domain/quote'
 
 import { ALL_LINES, preferencesWith } from './support'
@@ -43,9 +43,9 @@ describe('the Classic Crew', () => {
   })
 
   test('is counted under its switch only when it is on offer', () => {
-    expect(countExtras(preferencesWith({ lines: ['legacy'] })).sculpts).toBe(1)
+    expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'sculpts').size).toBe(1)
     // Alien Kings, Lockdown Kings, and Retaliation's Queen and Kings: no Classic Crew.
-    expect(countExtras(preferencesWith({ lines: ALL_LINES })).sculpts).toBe(4)
+    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'sculpts').size).toBe(4)
   })
 
   test('goes in the cart as an add-on for Legacy with one classic game', () => {

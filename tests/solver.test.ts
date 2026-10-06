@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 
-import { wantedRequirements } from '../app/domain/preferences'
+import { REQUIREMENTS } from '../app/domain/classification'
+import { wantedRequirements } from '../app/domain/selection'
 import { offersFor } from '../app/domain/quote'
 import { compareCosts, solve } from '../app/domain/solver'
 
@@ -153,6 +154,24 @@ describe('solve, against the real catalogue', () => {
           edition: chance(0.5) ? 'standard' : 'special',
           shipping: chance(0.5) ? 'split' : 'single',
         }),
+      )
+    }
+  })
+
+  test('random combinations with single items picked out against their switches', () => {
+    const random = seededRandom(8524)
+    const chance = (probability: number): boolean => random() < probability
+    const extraIds = REQUIREMENTS.filter((requirement) => requirement.tag !== 'core').map(
+      (requirement) => requirement.id,
+    )
+    for (let run = 0; run < 80; run += 1) {
+      const lines = ALL_LINES.filter(() => chance(0.7))
+      const overrides = Object.fromEntries(
+        extraIds.filter(() => chance(0.15)).map((id) => [id, chance(0.5)]),
+      )
+      check(
+        `picked run ${String(run)}: ${lines.join('+')}`,
+        preferencesWith({ lines, extras: ALL_EXTRAS.filter(() => chance(0.4)), overrides }),
       )
     }
   })
