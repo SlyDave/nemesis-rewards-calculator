@@ -110,7 +110,9 @@ const noteFor = (item: ExtraItem): { description?: string } =>
           class="min-w-0"
           @update:model-value="emit('pick', item.id, $event === true)"
         />
-        <span class="shrink-0 text-xs text-muted">{{ format(item.price) }}</span>
+        <span class="shrink-0 text-xs text-muted">{{
+          item.price === 0 ? 'Free' : format(item.price)
+        }}</span>
       </li>
     </ul>
   </div>

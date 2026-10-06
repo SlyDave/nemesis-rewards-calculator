@@ -151,7 +151,7 @@ const rateNote = computed<string | null>(() => {
               name="i-fa-savings"
               class="size-4 text-primary"
             />
-            Bundle saving
+            Saving
           </p>
           <p
             class="mt-1 text-xl font-semibold"

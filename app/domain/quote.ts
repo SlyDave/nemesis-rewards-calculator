@@ -1,6 +1,7 @@
 import { buyableProducts, getProduct, leavesOf } from './catalog'
 import { findRequirement, lineOf, providedBy } from './classification'
 import { destinationFor } from './destinations'
+import { isGift, priceFor } from './gift'
 import { EXTRAS } from './preferences'
 import { wantedRequirements } from './selection'
 import { describeWaves, shippingOf } from './shipping'
@@ -26,6 +27,9 @@ export type CartGroup = GameLine | 'other'
 
 export interface CartLine {
   readonly product: Product
+  /** What this visitor pays for it, which for a returning backer's gift is nothing. */
+  readonly price: Cents
+  readonly isGift: boolean
   readonly group: CartGroup
   readonly contents: readonly ContentLine[]
   /** The published shipping price, or null for add-ons, which have none yet. */
@@ -36,7 +40,7 @@ export interface CartLine {
 /** The best combination for a set of preferences, and what it comes to. All sums in euro cents. */
 export interface Quote {
   readonly lines: readonly CartLine[]
-  /** What the cart's contents list for, before the campaign's bundle discounts. */
+  /** What the cart's contents list for, before bundle discounts and any gift. */
   readonly listTotal: Cents
   /** What they cost. */
   readonly itemsTotal: Cents
@@ -77,7 +81,7 @@ export const offersFor = (preferences: Preferences): readonly Offer[] => {
   return buyableProducts.map((product) => ({
     id: product.id,
     cost: {
-      price: product.effectivePrice,
+      price: priceFor(product, preferences),
       items: 1,
       shipping: shippingOf(product, region, preferences.shipping) ?? 0,
     },
@@ -170,6 +174,8 @@ export const buildQuote = (preferences: Preferences): Quote => {
       const contents = contentsOf(product, wanted, preferences)
       return {
         product,
+        price: priceFor(product, preferences),
+        isGift: isGift(product.id, preferences),
         group: groupOf(product),
         contents,
         shipping: shippingOf(product, destination.region, preferences.shipping),
@@ -178,7 +184,7 @@ export const buildQuote = (preferences: Preferences): Quote => {
     })
 
   const listTotal = sum(lines.map((line) => line.product.price))
-  const itemsTotal = sum(lines.map((line) => line.product.effectivePrice))
+  const itemsTotal = sum(lines.map((line) => line.price))
   const finishTotal = sum(lines.map((line) => line.finish))
   const shippingTotal = sum(lines.map((line) => line.shipping ?? 0))
 

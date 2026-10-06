@@ -43,6 +43,8 @@ export type RegionId =
 
 /** Everything the visitor chooses. */
 export interface Preferences {
+  /** Whether the visitor has backed Nemesis before, which makes the SAM Robot Pack free. */
+  readonly returningBacker: boolean
   readonly edition: Edition
   readonly lines: Readonly<Record<GameLine, boolean>>
   readonly extras: Readonly<Record<ExtraTag, boolean>>

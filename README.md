@@ -52,6 +52,8 @@ everything separately.
 - **Shipping** is the campaign's shipping table, typed out from the image it is published as.
 - **VAT** is charged on rewards and shipping at the destination's standard rate, for the
   places the campaign collects it. The rate can be corrected on the page.
+- **Returning backers** get the SAM Robot Pack free (campaign Update #6). With that switch on
+  it is added to a Legacy order at no charge; otherwise it is an ordinary add-on.
 - **Currency**: everything is in euros, as Gamefound charges it. Dollars and pounds use the
   European Central Bank's daily reference rate, fetched by the browser from
   [Frankfurter](https://frankfurter.dev), falling back to the rate captured with the catalogue.

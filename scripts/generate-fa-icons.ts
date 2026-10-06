@@ -92,6 +92,9 @@ const ICONS: Readonly<Record<string, IconSource>> = {
   alien: light('faAlien8bit', 'skull'),
   'planet-ringed': light('faPlanetRinged', 'globe'),
 
+  // The returning backer's gift.
+  robot: light('faRobot'),
+
   // The games.
   legacy: light('faDna'),
   og: light('faStarship', 'rocket'),

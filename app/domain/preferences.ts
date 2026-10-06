@@ -73,6 +73,7 @@ const SHIPPING_MODES: readonly ShippingMode[] = ['split', 'single']
 export const CURRENCIES: readonly CurrencyCode[] = ['EUR', 'USD', 'GBP']
 
 export const DEFAULT_PREFERENCES: Preferences = {
+  returningBacker: false,
   edition: 'special',
   lines: { legacy: true, retaliation: false, lockdown: false, og: false },
   extras: {
@@ -120,6 +121,7 @@ const flags = (preferences: Preferences): readonly boolean[] => [
   preferences.includeTax,
   ...LINES.map(({ line }) => preferences.lines[line]),
   ...EXTRAS.map(({ tag }) => preferences.extras[tag]),
+  preferences.returningBacker,
 ]
 
 const FINISH_BASE = FINISHES.length
@@ -214,6 +216,7 @@ export const decodePreferences = (code: string): Preferences | null => {
   for (const { tag } of EXTRAS) {
     extras[tag] = next()
   }
+  const returningBacker = next()
 
   const taken = decodeList(takenText)
   const left = decodeList(leftText)
@@ -241,6 +244,7 @@ export const decodePreferences = (code: string): Preferences | null => {
   }
 
   return {
+    returningBacker,
     edition,
     lines,
     extras,

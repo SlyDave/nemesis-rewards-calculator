@@ -20,6 +20,7 @@ onMounted(() => {
 
     <main class="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
       <div class="grid min-w-0 grid-cols-1 gap-6 lg:col-span-6">
+        <ChoicesBacker />
         <ChoicesGames />
         <ChoicesExtras />
         <ChoicesDelivery />

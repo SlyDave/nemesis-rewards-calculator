@@ -1,5 +1,6 @@
 import { getProduct } from './catalog'
 import { REQUIREMENTS, goesWith } from './classification'
+import { isGift, priceFor } from './gift'
 import { EXTRAS, LINES } from './preferences'
 
 import type { Requirement } from './classification'
@@ -45,6 +46,10 @@ export const isOnByDefault = (requirement: Requirement, preferences: Preferences
   if (requirement.tag === 'core') {
     return true
   }
+  // A returning backer's gift is taken without being asked for, where its game is.
+  if (isGift(requirement.id, preferences) && goesWith(requirement, preferences.lines)) {
+    return true
+  }
   return (
     preferences.extras[requirement.tag] &&
     isInScope(requirement, preferences) &&
@@ -78,6 +83,7 @@ export type CategoryState = 'on' | 'off' | 'some'
 export interface ExtraItem {
   readonly id: number
   readonly name: string
+  /** What it costs this visitor: nothing, for a returning backer's gift. */
   readonly price: Cents
   readonly wanted: boolean
   /**
@@ -125,7 +131,7 @@ export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCat
         item: {
           id: requirement.id,
           name: product.name,
-          price: product.effectivePrice,
+          price: priceFor(product, preferences),
           wanted: isWanted(requirement, preferences),
           passedOver: reasonPassedOver(requirement, preferences),
         },

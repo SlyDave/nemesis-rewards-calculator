@@ -21,9 +21,7 @@ const isBundle = computed<boolean>(() => props.line.contents.length > 1)
 const bonusCount = computed<number>(
   () => props.line.contents.filter((content) => !content.wanted).length,
 )
-const isDiscounted = computed<boolean>(
-  () => props.line.product.effectivePrice < props.line.product.price,
-)
+const isDiscounted = computed<boolean>(() => props.line.price < props.line.product.price)
 </script>
 
 <template>
@@ -58,7 +56,7 @@ const isDiscounted = computed<boolean>(
               class="block text-xs font-normal text-dimmed"
               >{{ format(line.product.price) }}</s
             >
-            {{ format(line.product.effectivePrice) }}
+            {{ line.price === 0 ? 'Free' : format(line.price) }}
           </p>
         </div>
 
@@ -66,6 +64,14 @@ const isDiscounted = computed<boolean>(
           <UBadge
             :label="line.shipping === null ? 'Add-on' : 'Pledge'"
             :color="line.shipping === null ? 'neutral' : 'primary'"
+            variant="subtle"
+            size="sm"
+          />
+          <UBadge
+            v-if="line.isGift"
+            label="Returning backer gift"
+            icon="i-fa-robot"
+            color="primary"
             variant="subtle"
             size="sm"
           />
