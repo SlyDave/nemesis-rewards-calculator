@@ -20,9 +20,11 @@ export interface Requirement {
   readonly tag: Tag
   /**
    * For the rare item whose usefulness depends on more than its own game being included.
-   * Without this, an item is on offer exactly when its game is.
+   * Without this, an item goes with exactly its own game.
    */
   readonly when?: (lines: LineSelection) => boolean
+  /** Said beside such an item when its switch passes it over, in place of naming its game. */
+  readonly whenNote?: string
   /** A second switch that must also be on, for extras that only serve other extras. */
   readonly needs?: ExtraTag
   /** For the Legacy core, which comes with standees or with miniatures. */
@@ -106,7 +108,13 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('retaliation', 'promo', 125267),
   ...extra('retaliation', 'terrain', 125252),
   ...extra('retaliation', 'sculpts', 125253, 125255), // Alternative Queen, Kings & Queen
-  { id: 125256, line: 'retaliation', tag: 'sculpts', when: needsClassicCrew }, // Classic Crew
+  {
+    id: 125256, // Classic Crew
+    line: 'retaliation',
+    tag: 'sculpts',
+    when: needsClassicCrew,
+    whenNote: 'Only needed for Retaliation or Legacy without both Nemesis OG and Lockdown',
+  },
   ...extra('retaliation', 'cats', 125254),
   ...extra('retaliation', 'acrylic', 125257, 125258), // Core Box, Stretch Goals
   ...forExpansions('retaliation', 'acrylic', 125259), // Add-ons
@@ -147,8 +155,12 @@ const requirementsById: ReadonlyMap<number, Requirement> = new Map(
 
 export const findRequirement = (id: number): Requirement | undefined => requirementsById.get(id)
 
-/** Whether an item is on offer at all for the games that are included. */
-export const isOffered = (requirement: Requirement, lines: LineSelection): boolean =>
+/**
+ * Whether an item goes with the games that are included. For a game's own contents that
+ * decides whether they are wanted at all; for an extra it is only what its switch reaches
+ * for by default, since any extra can be bought without its game.
+ */
+export const goesWith = (requirement: Requirement, lines: LineSelection): boolean =>
   requirement.when?.(lines) ?? lines[requirement.line]
 
 /** The requirements one single item satisfies. */

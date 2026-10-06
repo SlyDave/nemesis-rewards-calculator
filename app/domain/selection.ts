@@ -1,6 +1,6 @@
 import { getProduct } from './catalog'
-import { REQUIREMENTS, isOffered } from './classification'
-import { LINES } from './preferences'
+import { REQUIREMENTS, goesWith } from './classification'
+import { EXTRAS, LINES } from './preferences'
 
 import type { Requirement } from './classification'
 import type { Cents, ExtraTag, GameLine, Preferences } from './types'
@@ -8,10 +8,20 @@ import type { Cents, ExtraTag, GameLine, Preferences } from './types'
 /**
  * What the preferences come to, item by item.
  *
- * A category's switch asks for everything in it. Beneath that, any single item can be picked
- * out — taken though its category is off, or left though it is on — and those picks win over
- * the switch (`Preferences.overrides`).
+ * A game's switch asks for its core pledge. An extra's switch asks for everything in its
+ * category that goes with the games included — or for all of the category, where nothing in
+ * it does: a dice tray needs no game. Beneath the switch, any single item can be picked out,
+ * whatever game it belongs to: taken though the switch would not, or left though it would.
+ * Those picks win (`Preferences.overrides`).
  */
+
+/**
+ * Whether a category's switch reaches an item. It reaches what goes with the included games,
+ * and failing any such item in the category, everything in it.
+ */
+const isInScope = (requirement: Requirement, preferences: Preferences): boolean =>
+  goesWith(requirement, preferences.lines) ||
+  !REQUIREMENTS.some((other) => other.tag === requirement.tag && goesWith(other, preferences.lines))
 
 /**
  * Whether a game has anything asked for in a category. It is what the accessories wait on:
@@ -23,9 +33,12 @@ const hasAny = (line: GameLine, tag: ExtraTag, preferences: Preferences): boolea
       candidate.line === line &&
       candidate.tag === tag &&
       candidate.needs === undefined &&
-      isOffered(candidate, preferences.lines) &&
-      (preferences.overrides[candidate.id] ?? preferences.extras[tag]),
+      (preferences.overrides[candidate.id] ??
+        (preferences.extras[tag] && isInScope(candidate, preferences))),
   )
+
+const isWaiting = (requirement: Requirement, preferences: Preferences): boolean =>
+  requirement.needs !== undefined && !hasAny(requirement.line, requirement.needs, preferences)
 
 /** Whether an extra follows from its category's switch alone, before any picking out. */
 export const isOnByDefault = (requirement: Requirement, preferences: Preferences): boolean => {
@@ -34,23 +47,28 @@ export const isOnByDefault = (requirement: Requirement, preferences: Preferences
   }
   return (
     preferences.extras[requirement.tag] &&
-    (requirement.needs === undefined || hasAny(requirement.line, requirement.needs, preferences))
+    isInScope(requirement, preferences) &&
+    !isWaiting(requirement, preferences)
   )
 }
 
-const isWanted = (requirement: Requirement, preferences: Preferences): boolean =>
-  requirement.tag === 'core' ||
-  (preferences.overrides[requirement.id] ?? isOnByDefault(requirement, preferences))
+const isWanted = (requirement: Requirement, preferences: Preferences): boolean => {
+  if (requirement.tag === 'core') {
+    // A game's own contents come with the game, in the edition chosen, and not otherwise.
+    return (
+      goesWith(requirement, preferences.lines) &&
+      (requirement.edition === undefined || requirement.edition === preferences.edition)
+    )
+  }
+  return preferences.overrides[requirement.id] ?? isOnByDefault(requirement, preferences)
+}
 
 /** The ids of everything the preferences ask for. */
 export const wantedRequirements = (preferences: Preferences): ReadonlySet<number> =>
   new Set(
-    REQUIREMENTS.filter(
-      (requirement) =>
-        isOffered(requirement, preferences.lines) &&
-        (requirement.edition === undefined || requirement.edition === preferences.edition) &&
-        isWanted(requirement, preferences),
-    ).map((requirement) => requirement.id),
+    REQUIREMENTS.filter((requirement) => isWanted(requirement, preferences)).map(
+      (requirement) => requirement.id,
+    ),
   )
 
 /** All of a category, none of it, or some. */
@@ -63,32 +81,45 @@ export interface ExtraItem {
   readonly price: Cents
   readonly wanted: boolean
   /**
-   * The category this item is an accessory to, when nothing in that is asked for. Such an
-   * item stays out unless it is picked, and does not count against its category being "all".
+   * Why the switch passes this item over, for one it does: it belongs to a game that is not
+   * included, or serves a category with nothing asked for. Such an item stays out unless it
+   * is picked, and does not count against its category being "all". Null for the rest.
    */
-  readonly waitsFor: ExtraTag | null
+  readonly passedOver: string | null
 }
 
 export interface ExtraCategory {
-  /** Everything in the category for the games that are included. */
+  /** Everything in the category, for every game. */
   readonly items: readonly ExtraItem[]
   readonly state: CategoryState
   readonly wantedCount: number
-  /** How many items the switch stands for: all of them, less any still waiting. */
+  /** How many items the switch stands for: all of them, less those it passes over. */
   readonly size: number
 }
 
+const gameName = (line: GameLine): string =>
+  LINES.find((entry) => entry.line === line)?.label ?? line
+
+const categoryName = (tag: ExtraTag): string =>
+  (EXTRAS.find((entry) => entry.tag === tag)?.label ?? tag).toLowerCase()
+
 const lineOrder = (line: GameLine): number => LINES.findIndex((entry) => entry.line === line)
+
+const reasonPassedOver = (requirement: Requirement, preferences: Preferences): string | null => {
+  if (!isInScope(requirement, preferences)) {
+    return requirement.whenNote ?? `For ${gameName(requirement.line)}, which is not included`
+  }
+  if (requirement.needs !== undefined && isWaiting(requirement, preferences)) {
+    return `For the ${categoryName(requirement.needs)}, which are not included`
+  }
+  return null
+}
 
 /** A category as the page shows it: its items, and how much of it is asked for. */
 export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCategory => {
-  const items = REQUIREMENTS.filter(
-    (requirement) => requirement.tag === tag && isOffered(requirement, preferences.lines),
-  )
+  const items = REQUIREMENTS.filter((requirement) => requirement.tag === tag)
     .map((requirement) => {
       const product = getProduct(requirement.id)
-      const isWaiting =
-        requirement.needs !== undefined && !hasAny(requirement.line, requirement.needs, preferences)
       return {
         line: requirement.line,
         item: {
@@ -96,7 +127,7 @@ export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCat
           name: product.name,
           price: product.effectivePrice,
           wanted: isWanted(requirement, preferences),
-          waitsFor: isWaiting ? (requirement.needs ?? null) : null,
+          passedOver: reasonPassedOver(requirement, preferences),
         },
       }
     })
@@ -106,7 +137,7 @@ export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCat
     })
     .map(({ item }) => item)
 
-  const counted = items.filter((item) => item.waitsFor === null || item.wanted)
+  const counted = items.filter((item) => item.passedOver === null || item.wanted)
   const wantedCount = items.filter((item) => item.wanted).length
 
   let state: CategoryState = 'some'

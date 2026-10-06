@@ -43,7 +43,7 @@ describe('what is wanted', () => {
 
 describe('counting what a switch stands for', () => {
   test('counts across the included games', () => {
-    expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'hoodie').size).toBe(0)
+    expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'playmat').size).toBe(1)
     expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'hoodie').size).toBe(3)
     expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'playmat').size).toBe(4)
   })

@@ -1,7 +1,7 @@
 /** The four games the campaign sells. Everything in the catalogue belongs to one of them. */
 export type GameLine = 'legacy' | 'og' | 'lockdown' | 'retaliation'
 
-/** One per "Include …" switch. */
+/** One per extras switch. */
 export type ExtraTag =
   | 'gameplay'
   | 'acrylic'

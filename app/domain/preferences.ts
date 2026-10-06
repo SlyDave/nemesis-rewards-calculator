@@ -20,25 +20,25 @@ export const LINES: readonly {
 }[] = [
   {
     line: 'legacy',
-    label: 'Include Nemesis Legacy',
+    label: 'Nemesis Legacy',
     description: 'The new campaign game this crowdfunding is for.',
     icon: 'i-fa-legacy',
   },
   {
     line: 'retaliation',
-    label: 'Include Nemesis Retaliation',
+    label: 'Nemesis Retaliation',
     description: 'Core Box and Stretch Goals, with miniatures.',
     icon: 'i-fa-retaliation',
   },
   {
     line: 'lockdown',
-    label: 'Include Nemesis Lockdown',
+    label: 'Nemesis Lockdown',
     description: 'Core Box and Stretch Goals, with miniatures.',
     icon: 'i-fa-lockdown',
   },
   {
     line: 'og',
-    label: 'Include Nemesis OG',
+    label: 'Nemesis OG',
     description: 'The original, with Aftermath and Void Seeders.',
     icon: 'i-fa-og',
   },
@@ -50,21 +50,21 @@ export const EXTRAS: readonly {
   readonly label: string
   readonly icon: string
 }[] = [
-  { tag: 'gameplay', label: 'Include Gameplay Expansions', icon: 'i-fa-gameplay' },
-  { tag: 'acrylic', label: 'Include Acrylic Packs', icon: 'i-fa-acrylic' },
-  { tag: 'playmat', label: 'Include Playmat(s)', icon: 'i-fa-playmat' },
-  { tag: 'artbook', label: 'Include Artbook(s)', icon: 'i-fa-artbook' },
-  { tag: 'synthetic', label: 'Include Synthetic Cards', icon: 'i-fa-synthetic' },
-  { tag: 'sleeves', label: 'Include Sleeves', icon: 'i-fa-sleeves' },
-  { tag: 'terrain', label: 'Include Terrain Pack(s)', icon: 'i-fa-terrain' },
-  { tag: 'untold', label: 'Include Untold Stories', icon: 'i-fa-untold' },
-  { tag: 'promo', label: 'Include Promo Cards', icon: 'i-fa-promo' },
-  { tag: 'bigbox', label: 'Include BIG BOX(es)', icon: 'i-fa-bigbox' },
-  { tag: 'sculpts', label: 'Include Alternative Sculpts', icon: 'i-fa-sculpts' },
-  { tag: 'cats', label: 'Include Cats', icon: 'i-fa-cats' },
-  { tag: 'hoodie', label: 'Include Hoodies', icon: 'i-fa-hoodie' },
-  { tag: 'dicetray', label: 'Include Dice Tray', icon: 'i-fa-dicetray' },
-  { tag: 'plush', label: 'Include Plushes', icon: 'i-fa-plush' },
+  { tag: 'gameplay', label: 'Expansions', icon: 'i-fa-gameplay' },
+  { tag: 'acrylic', label: 'Acrylic Packs', icon: 'i-fa-acrylic' },
+  { tag: 'playmat', label: 'Playmat(s)', icon: 'i-fa-playmat' },
+  { tag: 'artbook', label: 'Artbook(s)', icon: 'i-fa-artbook' },
+  { tag: 'synthetic', label: 'Synthetic Cards', icon: 'i-fa-synthetic' },
+  { tag: 'sleeves', label: 'Sleeves', icon: 'i-fa-sleeves' },
+  { tag: 'terrain', label: 'Terrain Pack(s)', icon: 'i-fa-terrain' },
+  { tag: 'untold', label: 'Untold Stories', icon: 'i-fa-untold' },
+  { tag: 'promo', label: 'Promo Cards', icon: 'i-fa-promo' },
+  { tag: 'bigbox', label: 'BIG BOX(es)', icon: 'i-fa-bigbox' },
+  { tag: 'sculpts', label: 'Alternative Sculpts', icon: 'i-fa-sculpts' },
+  { tag: 'cats', label: 'Cats', icon: 'i-fa-cats' },
+  { tag: 'hoodie', label: 'Hoodies', icon: 'i-fa-hoodie' },
+  { tag: 'dicetray', label: 'Dice Tray', icon: 'i-fa-dicetray' },
+  { tag: 'plush', label: 'Plushes', icon: 'i-fa-plush' },
 ]
 
 const EDITIONS: readonly Edition[] = ['standard', 'special']

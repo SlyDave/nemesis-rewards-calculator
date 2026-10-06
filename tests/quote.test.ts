@@ -34,8 +34,8 @@ describe('the best combination', () => {
     expect(quote.itemsTotal).toBe(8900)
   })
 
-  test('is nothing when no game is included', () => {
-    const quote = buildQuote(preferencesWith({ lines: [], extras: ALL_EXTRAS }))
+  test('is nothing when nothing is asked for', () => {
+    const quote = buildQuote(preferencesWith({ lines: [] }))
     expect(quote.lines).toEqual([])
     expect(quote.total).toBe(0)
   })

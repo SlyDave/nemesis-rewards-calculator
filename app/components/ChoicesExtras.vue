@@ -32,8 +32,9 @@ const categories = computed(() =>
     </template>
 
     <p class="mb-4 text-xs text-muted">
-      Each switch takes everything in its category, for every game you’ve included. Open one to pick
-      single items instead.
+      Each switch takes what goes with the games you’ve included — or its whole category, where
+      nothing in it belongs to one of them. Open a switch to pick any single item, with or without
+      its game.
     </p>
 
     <div class="grid grid-cols-1 items-start gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">

@@ -49,7 +49,7 @@ const rateNote = computed<string | null>(() => {
       v-if="quote.lines.length === 0"
       class="py-6 text-center text-sm text-muted"
     >
-      Include at least one game to see what to order.
+      Switch on a game or an extra to see what to order.
     </div>
 
     <template v-else>

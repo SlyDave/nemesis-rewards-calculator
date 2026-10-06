@@ -57,11 +57,11 @@ describe('picking single items out of a category', () => {
     expect(quote.itemsTotal).toBe(12900 + 1700 + 2000)
   })
 
-  test('ignores a pick for a game that is not included', () => {
-    const wanted = wantedRequirements(
-      preferencesWith({ lines: ['og'], overrides: { 125550: true } }),
-    )
-    expect(wanted.has(LEGACY_ACRYLIC)).toBe(false)
+  test('takes an item picked for a game that is not included', () => {
+    const preferences = preferencesWith({ lines: ['og'], overrides: { [LEGACY_ACRYLIC]: true } })
+    expect(wantedRequirements(preferences).has(LEGACY_ACRYLIC)).toBe(true)
+    // The original game's own acrylics are untouched by it.
+    expect(wantedRequirements(preferences).has(125232)).toBe(false)
   })
 })
 
@@ -70,7 +70,7 @@ describe('accessories for the expansions', () => {
     const without = describeExtra(preferencesWith({ extras: ['acrylic'] }), 'acrylic')
     const waiting = without.items.find((item) => item.id === LEGACY_ACRYLIC_ADD_ONS)
     expect(waiting?.wanted).toBe(false)
-    expect(waiting?.waitsFor).toBe('gameplay')
+    expect(waiting?.passedOver).toContain('expansions')
     // Left waiting, it does not stop the category counting as all of it.
     expect(without.state).toBe('on')
   })

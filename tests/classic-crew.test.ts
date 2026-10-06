@@ -31,7 +31,6 @@ describe('the Classic Crew', () => {
   })
 
   test('is not wanted without a newer game to play it in', () => {
-    expect(isWanted([])).toBe(false)
     expect(isWanted(['og'])).toBe(false)
     expect(isWanted(['lockdown'])).toBe(false)
     expect(isWanted(['og', 'lockdown'])).toBe(false)

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/** One of the "Include …" switches: an icon, what it includes, and the switch itself. */
+/** One of the switches: an icon, what it includes, and the switch itself. */
 defineProps<{
   label: string
   icon: string

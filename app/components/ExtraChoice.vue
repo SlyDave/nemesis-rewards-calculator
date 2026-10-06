@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { EXTRAS } from '~/domain/preferences'
-
 import type { ExtraCategory, ExtraItem } from '~/domain/selection'
 
 /**
- * One of the "Include …" extras: a switch for the whole category, and beneath it, opened on
+ * One of the extras: a switch for the whole category, and beneath it, opened on
  * request, every item in the category to be picked or left one by one.
  */
 const props = defineProps<{
@@ -33,25 +31,19 @@ const plural = (count: number): string => (count === 1 ? '1 item' : `${String(co
 const hint = computed<string>(() => {
   const { state, wantedCount, size } = props.category
   if (isEmpty.value) {
-    return 'None for your games'
+    return 'Nothing on sale'
   }
   return state === 'some' ? `${String(wantedCount)} of ${plural(size)}` : plural(size)
 })
 
-/** "Include Gameplay Expansions" -> "gameplay expansions", to name what an accessory waits on. */
-const nameOf = (tag: string): string =>
-  (EXTRAS.find((extra) => extra.tag === tag)?.label ?? tag).replace(/^Include /, '').toLowerCase()
-
-/** The small print under an item that is only there for another category's sake. */
+/** The small print under an item the switch passes over: whose it is, and that it can be had. */
 const noteFor = (item: ExtraItem): { description?: string } =>
-  item.waitsFor === null
-    ? {}
-    : { description: `For the ${nameOf(item.waitsFor)}, so left out unless you tick it` }
+  item.passedOver === null ? {} : { description: `${item.passedOver}. Tick it to take it anyway.` }
 </script>
 
 <template>
   <div
-    class="border transition-colors"
+    class="@container border transition-colors"
     :class="[
       category.state === 'off'
         ? 'border-default bg-elevated/40 hover:border-accented'
@@ -59,13 +51,13 @@ const noteFor = (item: ExtraItem): { description?: string } =>
       isEmpty ? 'opacity-55' : '',
     ]"
   >
-    <!-- Tall enough for a label that runs to two lines, so every card is the same height
-         whether its own does or not. Where the cards sit in one wide column no label wraps,
-         and they are left at their natural height. -->
-    <div class="flex min-h-18 items-start gap-2 px-3 py-2.5 lg:min-h-0 xl:min-h-18">
+    <!-- Every label fits on one line at the widths the cards normally come in, so they are
+         all the same height: a label and its count. Only in a card too narrow for the longest
+         label is room kept for a second line, so that the rest still match the one that wraps. -->
+    <div class="flex items-start gap-1.5 px-3 py-2.5 @max-[16.5rem]:min-h-18">
       <label
         :for="switchId"
-        class="flex min-w-0 flex-1 cursor-pointer items-start gap-3"
+        class="flex min-w-0 flex-1 cursor-pointer items-start gap-2.5"
       >
         <UIcon
           :name="icon"
