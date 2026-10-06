@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+# Nothing here writes to the repository, whatever the repository's default is.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -16,14 +20,19 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      # Font Awesome Pro packages need this; see .npmrc. Without it (a fork's pull request,
-      # say) the icons fall back to Font Awesome Free and everything else still runs.
+      # Font Awesome Pro packages need this; see .npmrc. A pull request from a fork is not
+      # given secrets, so there the icons fall back to Font Awesome Free and everything else
+      # still runs.
       FONTAWESOME_PACKAGE_TOKEN: ${{ secrets.FONTAWESOME_PACKAGE_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v7
+      # Actions are pinned to a commit, not a tag that can be moved; Dependabot keeps the
+      # pins current (.github/dependabot.yml).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version: 1.4.2
 

@@ -26,7 +26,7 @@ export type Edition = 'standard' | 'special'
 export type ShippingMode = 'split' | 'single'
 export type Finish = 'plain' | 'sundrop' | 'painted'
 export type CurrencyCode = 'EUR' | 'USD' | 'GBP'
-export type ThemeName = 'nemesis' | 'lockdown'
+export type ThemeName = 'nemesis' | 'lockdown' | 'retaliation' | 'legacy'
 
 /** The rows of the campaign's shipping table. */
 export type RegionId =

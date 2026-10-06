@@ -26,7 +26,7 @@ happens in the browser. There is no server.
 | The search for the best combination     | `app/domain/solver.ts`                                   |
 | Turning a combination into a full quote | `app/domain/quote.ts`                                    |
 | The page                                | `app/pages/index.vue`, `app/components/`                 |
-| The Nemesis and Lockdown themes         | `app/assets/css/main.css`, `app/composables/useTheme.ts` |
+| The four themes, one per game           | `app/assets/css/main.css`, `app/composables/useTheme.ts` |
 
 ### The search
 
@@ -54,6 +54,12 @@ everything separately.
 - **Currency**: everything is in euros, as Gamefound charges it. Dollars and pounds use the
   European Central Bank's daily reference rate, fetched by the browser from
   [Frankfurter](https://frankfurter.dev), falling back to the rate captured with the catalogue.
+
+## Security
+
+There is no server, no accounts and nothing collected; the one secret, the Font Awesome token,
+never reaches the repository or the built site. [SECURITY.md](SECURITY.md) has the detail and
+how to report a problem.
 
 ## Development
 

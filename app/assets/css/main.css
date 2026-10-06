@@ -5,10 +5,15 @@
  * The theme, taken from nemesisgames.eu: a black page, one accent colour that glows, wide
  * capitals, and angular frames like the readouts of a ship's console.
  *
- * That site has two halves, and so does this theme. Nemesis is lit in teal (#398273 on the
- * site, step 600 of `signal` here); Nemesis Lockdown in emergency red (#990500, step 700 of
- * `breach`). The neutral is `void`: the lavender-grey the site sets its text in (#74758a,
- * step 500), stretched into a scale that reaches black.
+ * That site has two halves, and this theme starts from them. Nemesis is lit in teal (#398273
+ * on the site, step 600 of `signal` here); Nemesis Lockdown in emergency red (#990500, step
+ * 700 of `breach`). The neutral is `void`: the lavender-grey the site sets its text in
+ * (#74758a, step 500), stretched into a scale that reaches black.
+ *
+ * The two newer games have no half of that site, so theirs are taken from their box art as
+ * Gamefound shows it. Retaliation is `frost`: the pale blue mist the marines walk out of
+ * (#a0d3ea, step 300). Legacy is `ember`: the fires and rust under its grey sky (#dbb086 and
+ * #b65b49, around steps 300 and 600).
  */
 @theme static {
   --color-signal-50: #eefbf7;
@@ -34,6 +39,30 @@
   --color-breach-800: #7b0b06;
   --color-breach-900: #5d0d09;
   --color-breach-950: #340403;
+
+  --color-frost-50: #f0f9fd;
+  --color-frost-100: #dcf1fa;
+  --color-frost-200: #bfe4f4;
+  --color-frost-300: #a0d3ea;
+  --color-frost-400: #74bfe0;
+  --color-frost-500: #4fa3c9;
+  --color-frost-600: #3d85a8;
+  --color-frost-700: #336a86;
+  --color-frost-800: #2c566c;
+  --color-frost-900: #27475a;
+  --color-frost-950: #142a37;
+
+  --color-ember-50: #fdf5ef;
+  --color-ember-100: #fae6d5;
+  --color-ember-200: #f3caa8;
+  --color-ember-300: #e9ab7a;
+  --color-ember-400: #df8a54;
+  --color-ember-500: #d06b3a;
+  --color-ember-600: #b4532f;
+  --color-ember-700: #923f27;
+  --color-ember-800: #753424;
+  --color-ember-900: #5f2d21;
+  --color-ember-950: #33150e;
 
   --color-void-50: #f5f5f8;
   --color-void-100: #e8e8ee;
@@ -114,6 +143,46 @@
   --hud-tint: color-mix(in oklab, var(--color-breach-700) 18%, transparent);
 }
 
+/* Retaliation: the same steps again, in the ice blue of its box. */
+:root[data-theme='retaliation'] {
+  --ui-color-primary-50: var(--color-frost-50);
+  --ui-color-primary-100: var(--color-frost-100);
+  --ui-color-primary-200: var(--color-frost-200);
+  --ui-color-primary-300: var(--color-frost-300);
+  --ui-color-primary-400: var(--color-frost-400);
+  --ui-color-primary-500: var(--color-frost-500);
+  --ui-color-primary-600: var(--color-frost-600);
+  --ui-color-primary-700: var(--color-frost-700);
+  --ui-color-primary-800: var(--color-frost-800);
+  --ui-color-primary-900: var(--color-frost-900);
+  --ui-color-primary-950: var(--color-frost-950);
+
+  --ui-primary: var(--color-frost-400);
+  --hud-line: var(--color-frost-600);
+  --hud-glow: color-mix(in oklab, var(--color-frost-300) 55%, transparent);
+  --hud-tint: color-mix(in oklab, var(--color-frost-600) 16%, transparent);
+}
+
+/* Legacy: embers, in panels tinted the grey of the smoke on its box rather than the accent. */
+:root[data-theme='legacy'] {
+  --ui-color-primary-50: var(--color-ember-50);
+  --ui-color-primary-100: var(--color-ember-100);
+  --ui-color-primary-200: var(--color-ember-200);
+  --ui-color-primary-300: var(--color-ember-300);
+  --ui-color-primary-400: var(--color-ember-400);
+  --ui-color-primary-500: var(--color-ember-500);
+  --ui-color-primary-600: var(--color-ember-600);
+  --ui-color-primary-700: var(--color-ember-700);
+  --ui-color-primary-800: var(--color-ember-800);
+  --ui-color-primary-900: var(--color-ember-900);
+  --ui-color-primary-950: var(--color-ember-950);
+
+  --ui-primary: var(--color-ember-400);
+  --hud-line: var(--color-ember-600);
+  --hud-glow: color-mix(in oklab, var(--color-ember-400) 55%, transparent);
+  --hud-tint: color-mix(in oklab, #596668 18%, transparent);
+}
+
 /*
  * The page: black, lit from above by the accent, with the faint grid of the site's backdrop
  * fading out towards the edges. All of it follows the theme through --hud-line.
@@ -137,22 +206,22 @@ body {
   transition: background-color 0.4s;
 }
 
+/*
+ * The grid sits behind everything by its own negative layer. Lifting the app above it
+ * instead would also lift it above the menus and tooltips Nuxt UI attaches to the body,
+ * which then open underneath the page.
+ */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   pointer-events: none;
   background-image:
     linear-gradient(rgb(255 255 255 / 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 0.03) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(ellipse 75% 65% at 50% 30%, #000 20%, transparent 85%);
-}
-
-#__nuxt {
-  position: relative;
-  z-index: 1;
 }
 
 /* Wide capitals, as on the site's headings and its EXPLORE button. */

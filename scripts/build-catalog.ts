@@ -79,6 +79,8 @@ const isCapturedProduct = (value: unknown): value is CapturedProduct =>
   typeof value['price'] === 'number' &&
   typeof value['effectivePrice'] === 'number' &&
   typeof value['url'] === 'string' &&
+  // The page links to these; nothing but a Gamefound address may come out of a capture.
+  value['url'].startsWith('https://gamefound.com/') &&
   Array.isArray(value['setItems']) &&
   Array.isArray(value['options'])
 

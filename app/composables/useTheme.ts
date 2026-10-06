@@ -3,7 +3,9 @@ import type { ThemeName } from '~/domain/types'
 /** Also read by the script in nuxt.config.ts that sets the theme before the first paint. */
 export const THEME_STORAGE_KEY = 'nemesis-rewards:theme'
 
-const isTheme = (value: unknown): value is ThemeName => value === 'nemesis' || value === 'lockdown'
+const THEMES: readonly ThemeName[] = ['nemesis', 'lockdown', 'retaliation', 'legacy']
+
+const isTheme = (value: unknown): value is ThemeName => THEMES.some((theme) => theme === value)
 
 interface ThemeStore {
   readonly theme: Readonly<Ref<ThemeName>>
@@ -11,7 +13,7 @@ interface ThemeStore {
 }
 
 /**
- * Nemesis or Lockdown. The theme is an attribute on the page's root element, which the
+ * One theme per game. The theme is an attribute on the page's root element, which the
  * stylesheet keys its colours on (assets/css/main.css); this keeps it, the visitor's last
  * choice, and whatever shows the choice, in step.
  */

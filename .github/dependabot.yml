@@ -1,0 +1,8 @@
+version: 2
+
+updates:
+  # The workflows pin each action to a commit; this moves the pins when an action is released.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

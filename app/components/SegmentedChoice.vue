@@ -9,6 +9,8 @@ const props = defineProps<{
   /** What the choice is, for screen readers; the visible label is the caller's. */
   label: string
   disabled?: boolean
+  /** Lets the options run to two rows on a narrow screen, for when there are many. */
+  wrap?: boolean
 }>()
 
 const chosen = defineModel<T>({ required: true })
@@ -25,8 +27,8 @@ const choose = (option: T): void => {
     role="radiogroup"
     :aria-label="label"
     :aria-disabled="disabled"
-    class="flex gap-1 border border-default bg-elevated/40 p-1"
-    :class="disabled ? 'opacity-50' : ''"
+    class="gap-1 border border-default bg-elevated/40 p-1"
+    :class="[disabled ? 'opacity-50' : '', wrap ? 'grid grid-cols-2 sm:flex' : 'flex']"
   >
     <button
       v-for="option in options"

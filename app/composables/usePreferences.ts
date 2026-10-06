@@ -1,4 +1,4 @@
-import { findDestination } from '~/domain/destinations'
+import { destinationFor, findDestination } from '~/domain/destinations'
 import {
   DEFAULT_PREFERENCES,
   EXTRAS,
@@ -9,6 +9,7 @@ import {
 import type { CurrencyCode, ExtraTag, GameLine, Preferences } from '~/domain/types'
 
 const STORAGE_KEY = 'nemesis-rewards:preferences'
+const UK = 'GB'
 const QUERY_KEY = 'c'
 
 interface PreferencesStore {
@@ -17,6 +18,7 @@ interface PreferencesStore {
   readonly setLine: (line: GameLine, included: boolean) => void
   readonly setExtra: (tag: ExtraTag, included: boolean) => void
   readonly setAllExtras: (included: boolean) => void
+  readonly setCurrency: (currency: CurrencyCode) => void
   readonly reset: () => void
 }
 
@@ -43,6 +45,17 @@ export const usePreferences = (): PreferencesStore => {
         extras[tag] = included
       }
       update({ extras })
+    },
+    setCurrency: (currency) => {
+      if (currency !== 'GBP') {
+        update({ currency })
+        return
+      }
+      // Someone paying in pounds is paying UK VAT: switch it on, at the UK's rate. A rate is
+      // only stored when it differs from the destination's own, as in the tax panel.
+      const ukRate = destinationFor(UK).taxRate
+      const ownRate = destinationFor(preferences.value.destination).taxRate
+      update({ currency, includeTax: true, taxRate: ownRate === ukRate ? null : ukRate })
     },
     reset: () => {
       // The destination and currency are about the visitor, not the order, so they stay.

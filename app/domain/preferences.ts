@@ -1,4 +1,4 @@
-import { REQUIREMENTS } from './classification'
+import { REQUIREMENTS, isOffered } from './classification'
 import { DEFAULT_DESTINATION, findDestination } from './destinations'
 
 import type {
@@ -105,7 +105,7 @@ export const wantedRequirements = (preferences: Preferences): ReadonlySet<number
   new Set(
     REQUIREMENTS.filter(
       (requirement) =>
-        preferences.lines[requirement.line] &&
+        isOffered(requirement, preferences.lines) &&
         (requirement.tag === 'core' || preferences.extras[requirement.tag]) &&
         (requirement.needs === undefined || preferences.extras[requirement.needs]) &&
         (requirement.edition === undefined || requirement.edition === preferences.edition),
@@ -139,7 +139,7 @@ export const countExtras = (preferences: Preferences): Readonly<Record<ExtraTag,
   for (const requirement of REQUIREMENTS) {
     if (
       requirement.tag !== 'core' &&
-      preferences.lines[requirement.line] &&
+      isOffered(requirement, preferences.lines) &&
       (requirement.needs === undefined || preferences.extras[requirement.needs])
     ) {
       counts[requirement.tag] += 1

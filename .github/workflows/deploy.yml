@@ -5,10 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# The least each job needs: the build only reads; publishing is granted to the deploy job.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # One deployment at a time; a newer push waits for the one in flight rather than cancelling it.
 concurrency:
@@ -25,13 +24,17 @@ jobs:
       FONTAWESOME_PACKAGE_TOKEN: ${{ secrets.FONTAWESOME_PACKAGE_TOKEN }}
       # The site has its own domain (public/CNAME), so it is served from the root. Without
       # one, GitHub Pages serves a project site under the repository's name and this would
-      # be /${{ github.event.repository.name }}/ instead.
+      # be that name between slashes instead.
       NUXT_APP_BASE_URL: /
 
     steps:
-      - uses: actions/checkout@v7
+      # Actions are pinned to a commit, not a tag that can be moved; Dependabot keeps the
+      # pins current (.github/dependabot.yml).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version: 1.4.2
 
@@ -42,7 +45,7 @@ jobs:
 
       - run: bun run build
 
-      - uses: actions/upload-pages-artifact@v5
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: .output/public
 
@@ -51,10 +54,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
+    permissions:
+      pages: write
+      id-token: write
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

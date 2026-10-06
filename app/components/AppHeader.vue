@@ -5,11 +5,13 @@ import { CURRENCIES } from '~/domain/preferences'
 import type { CurrencyCode, ThemeName } from '~/domain/types'
 
 const { theme, setTheme } = useTheme()
-const { preferences, update, reset } = usePreferences()
+const { preferences, setCurrency, reset } = usePreferences()
 
 const THEMES: readonly { value: ThemeName; label: string; icon: string }[] = [
   { value: 'nemesis', label: 'Nemesis', icon: 'i-fa-alien' },
   { value: 'lockdown', label: 'Lockdown', icon: 'i-fa-planet-ringed' },
+  { value: 'retaliation', label: 'Retaliation', icon: 'i-fa-retaliation' },
+  { value: 'legacy', label: 'Legacy', icon: 'i-fa-legacy' },
 ]
 
 const CURRENCY_OPTIONS = CURRENCIES.map((code) => ({
@@ -24,14 +26,12 @@ const chosenTheme = computed<ThemeName>({
 
 const currency = computed<CurrencyCode>({
   get: () => preferences.value.currency,
-  set: (value) => {
-    update({ currency: value })
-  },
+  set: setCurrency,
 })
 </script>
 
 <template>
-  <header class="flex flex-col gap-5 py-6 sm:py-8 lg:flex-row lg:items-end lg:justify-between">
+  <header class="flex flex-col gap-5 py-6 sm:py-8">
     <div>
       <p
         class="font-display text-3xl leading-none font-light tracking-[0.5em] text-highlighted uppercase sm:text-4xl"
@@ -48,12 +48,13 @@ const currency = computed<CurrencyCode>({
     </div>
 
     <div class="flex flex-wrap items-end gap-3">
-      <div class="min-w-72 flex-1 sm:flex-none">
+      <div class="w-full md:w-auto md:min-w-[40rem]">
         <p class="mb-1.5 hud-label text-[0.65rem] text-muted">Style</p>
         <SegmentedChoice
           v-model="chosenTheme"
           :options="THEMES"
           label="Style"
+          wrap
         />
       </div>
       <div class="min-w-56 flex-1 sm:flex-none">

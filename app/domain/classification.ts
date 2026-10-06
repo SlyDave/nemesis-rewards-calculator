@@ -10,11 +10,19 @@ import type { Edition, ExtraTag, GameLine, Tag } from './types'
  * heard of, which is the cue to classify it here.
  */
 
+/** Which of the games are included. */
+export type LineSelection = Readonly<Record<GameLine, boolean>>
+
 /** Something a visitor can want: one single item, identified by its Gamefound product id. */
 export interface Requirement {
   readonly id: number
   readonly line: GameLine
   readonly tag: Tag
+  /**
+   * For the rare item whose usefulness depends on more than its own game being included.
+   * Without this, an item is on offer exactly when its game is.
+   */
+  readonly when?: (lines: LineSelection) => boolean
   /** A second switch that must also be on, for extras that only serve other extras. */
   readonly needs?: ExtraTag
   /** For the Legacy core, which comes with standees or with miniatures. */
@@ -33,6 +41,14 @@ const forExpansions = (
   tag: ExtraTag,
   ...ids: readonly number[]
 ): readonly Requirement[] => ids.map((id) => ({ id, line, tag, needs: 'gameplay' }))
+
+/**
+ * The Classic Crew is the twelve characters of the original game and of Lockdown, as
+ * miniatures to play them in the newer games. Whoever includes both of those games has all
+ * twelve already; anyone with only one of them, or neither, is short of some.
+ */
+const needsClassicCrew = (lines: LineSelection): boolean =>
+  (lines.retaliation || lines.legacy) && !(lines.og && lines.lockdown)
 
 export const REQUIREMENTS: readonly Requirement[] = [
   // --- Nemesis Legacy ---------------------------------------------------------------------
@@ -89,7 +105,8 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('retaliation', 'untold', 125260),
   ...extra('retaliation', 'promo', 125267),
   ...extra('retaliation', 'terrain', 125252),
-  ...extra('retaliation', 'sculpts', 125253, 125255, 125256), // Queen, Kings, Classic Crew
+  ...extra('retaliation', 'sculpts', 125253, 125255), // Alternative Queen, Kings & Queen
+  { id: 125256, line: 'retaliation', tag: 'sculpts', when: needsClassicCrew }, // Classic Crew
   ...extra('retaliation', 'cats', 125254),
   ...extra('retaliation', 'acrylic', 125257, 125258), // Core Box, Stretch Goals
   ...forExpansions('retaliation', 'acrylic', 125259), // Add-ons
@@ -129,6 +146,10 @@ const requirementsById: ReadonlyMap<number, Requirement> = new Map(
 )
 
 export const findRequirement = (id: number): Requirement | undefined => requirementsById.get(id)
+
+/** Whether an item is on offer at all for the games that are included. */
+export const isOffered = (requirement: Requirement, lines: LineSelection): boolean =>
+  requirement.when?.(lines) ?? lines[requirement.line]
 
 /** The requirements one single item satisfies. */
 export const providedBy = (leafId: number): readonly number[] => PROVIDES[leafId] ?? [leafId]
