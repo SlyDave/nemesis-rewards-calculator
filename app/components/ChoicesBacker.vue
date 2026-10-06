@@ -20,15 +20,12 @@ const isReturning = computed<boolean>({
   },
 })
 
-/** What becomes of the gift, given the rest of the choices. */
-const outcome = computed<string>(() => {
-  if (!preferences.value.returningBacker) {
-    return `Otherwise it is an add-on at ${format(gift.effectivePrice)}, under Expansions.`
-  }
-  return preferences.value.lines.legacy
-    ? 'It is listed in your order below at no charge — there is nothing to add to your cart for it.'
-    : 'It plays in Nemesis Legacy, so it is only listed with Legacy — or tick it under Expansions to count it anyway.'
-})
+/** What the pack is to someone who is not a returning backer; nothing more to say to one who is. */
+const otherwise = computed<string | null>(() =>
+  preferences.value.returningBacker
+    ? null
+    : `Otherwise it is an add-on at ${format(gift.effectivePrice)}, under Expansions.`,
+)
 </script>
 
 <template>
@@ -57,8 +54,9 @@ const outcome = computed<string>(() => {
       <div class="min-w-0 text-xs text-muted">
         <p>
           <span class="font-semibold text-highlighted">Free gift: the SAM Robot Pack.</span>
-          Returning Nemesis backers get it for nothing: the pledge manager adds it to your pledge by
-          itself, and it ships with the rest at no extra cost. {{ outcome }}
+          Returning Nemesis backers get it for free: the pledge manager will add it to your pledge
+          automatically, and it ships with the rest at no extra cost.
+          <template v-if="otherwise !== null">{{ otherwise }}</template>
         </p>
         <p class="mt-2">
           Gamefound recognises you by the email address of your earlier pledge, so pledge with the

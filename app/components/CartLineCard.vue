@@ -75,7 +75,7 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
           />
           <UBadge
             v-if="line.isGift"
-            label="Returning backer gift · nothing to add"
+            label="Returning backer gift"
             icon="i-fa-robot"
             color="primary"
             variant="subtle"
