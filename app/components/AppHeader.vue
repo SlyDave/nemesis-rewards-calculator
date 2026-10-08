@@ -73,7 +73,7 @@ const currency = computed<CurrencyCode>({
           :search-input="{ placeholder: 'Find a currency…' }"
           aria-label="Currency"
           size="lg"
-          class="w-full"
+          class="hud-control w-full"
         />
       </div>
       <UButton
@@ -81,7 +81,7 @@ const currency = computed<CurrencyCode>({
         icon="i-fa-arrow-rotate-left"
         color="neutral"
         variant="outline"
-        class="hud-label text-xs"
+        class="hud-control hud-label text-xs"
         @click="reset"
       />
     </div>

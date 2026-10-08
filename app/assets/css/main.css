@@ -239,6 +239,15 @@ body::before {
   letter-spacing: 0.16em;
 }
 
+/*
+ * The height of one row of a segmented choice (SegmentedChoice.vue): a line of its small
+ * capitals with their padding, and the frame's own padding and border round that. For a
+ * control that sits beside one and should stand as tall.
+ */
+@utility hud-control {
+  height: calc(2.5rem + 2px);
+}
+
 /* Text lit by the accent, for the figures that matter. */
 @utility hud-glow {
   text-shadow:
