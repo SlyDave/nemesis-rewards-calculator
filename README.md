@@ -64,7 +64,7 @@ everything separately.
 - **MSRP**: what the cart would cost at retail. The campaign states a retail MSRP for the
   Legacy Core Box and Stretch Goals, and the Retaliation campaign did for its own. For the
   rest it is the price in the earliest campaign that sold the item, and where there is none,
-  this campaign's price. Anything from an earlier campaign is raised by consumer-price
+  an assumption: this campaign's price plus 50%. Anything from an earlier campaign is raised by consumer-price
   inflation since, as Statistics Poland publishes it for Dolnośląskie, the region Wrocław is
   the capital of. Hover over the figure for the breakdown. These are estimates.
 

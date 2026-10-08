@@ -16,7 +16,8 @@ import type { Cents } from './types'
  *    its own Core Box and Stretch Goals — and otherwise the price it sold the item at. The
  *    campaign taken is the first of the three to have sold the item by itself.
  * 3. Failing that too — for everything that is new with Legacy, and the few older items no
- *    earlier campaign priced — the price in this campaign, before any bundle discount.
+ *    earlier campaign priced — an assumption: the price in this campaign, before any bundle
+ *    discount, and half as much again (ASSUMED_UPLIFT). It is always shown as an assumption.
  *
  * An earlier figure is turned into euros at the European Central Bank's reference rate of
  * the day it dates from, and only then raised by inflation.
@@ -177,8 +178,8 @@ export type MsrpBasis =
   | 'earlierMsrp'
   /** The price in an earlier campaign, raised by inflation. */
   | 'earlierPrice'
-  /** No figure anywhere: this campaign's own price. */
-  | 'campaignPrice'
+  /** No figure anywhere: this campaign's own price with an assumed uplift on it. */
+  | 'assumed'
   /** Counted in another item's figure. */
   | 'counted'
 
@@ -206,12 +207,39 @@ export interface ItemMsrp {
 
 const CENTS_PER_UNIT = 100
 
+/**
+ * What is added to this campaign's price to stand for a retail price, where none is published
+ * anywhere: half as much again. An assumption, and the page says so wherever it is used.
+ */
+export const ASSUMED_UPLIFT = 0.5
+
+/** A time a campaign put a retail MSRP beside its own price for the same thing. */
+export interface StatedUplift {
+  readonly campaign: string
+  /** How far the retail MSRP stood above the campaign's price: 0.5 is half as much again. */
+  readonly uplift: number
+}
+
+const upliftOf = (campaignPrice: number, retail: number): number => retail / campaignPrice - 1
+
+/**
+ * What the assumption rests on, and all it rests on: the only two times a campaign has done
+ * so. Both are for a Core Box, and both set the whole pledge's price against it, the Stretch
+ * Goals being called free. Half as much again is a little under either.
+ */
+export const STATED_UPLIFTS: readonly StatedUplift[] = [
+  // "CORE BOX SPECIAL EDITION €129 … RETAIL MSRP: €199", on the Legacy project page.
+  { campaign: 'Nemesis Legacy', uplift: upliftOf(129, 199) },
+  // "CORE BOX SPECIAL EDITION $109 … RETAIL MSRP: $189", on the Retaliation project page.
+  { campaign: 'Nemesis Retaliation', uplift: upliftOf(109, 189) },
+]
+
 const fromSource = (product: Product, source: Source | undefined): ItemMsrp => {
   if (source === undefined) {
     return {
       product,
-      amount: product.price,
-      basis: 'campaignPrice',
+      amount: Math.round(product.price * (1 + ASSUMED_UPLIFT)),
+      basis: 'assumed',
       earlier: null,
       countedWith: null,
     }

@@ -133,6 +133,7 @@ const ICONS: Readonly<Record<string, IconSource>> = {
   msrp: light('faTags'),
   discount: light('faBadgePercent', 'percent'),
   inflation: light('faArrowTrendUp'),
+  assumption: light('faCalculator'),
   bonus: light('faSparkles', 'wand-magic-sparkles'),
 
   // Signs and actions.

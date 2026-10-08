@@ -2,13 +2,14 @@ import { describe, expect, test } from 'bun:test'
 
 import { catalog, findProduct, getProduct, leavesOf } from '../app/domain/catalog'
 import { LATEST_QUARTER, priceRiseSince, quarterOf } from '../app/domain/inflation'
-import { MSRP_SOURCE_IDS, msrpOf } from '../app/domain/msrp'
+import { ASSUMED_UPLIFT, MSRP_SOURCE_IDS, STATED_UPLIFTS, msrpOf } from '../app/domain/msrp'
 import { DEFAULT_PREFERENCES } from '../app/domain/preferences'
 import { buildQuote } from '../app/domain/quote'
 
 import { ALL_EXTRAS, ALL_LINES, preferencesWith } from './support'
 
 const LEGACY_CORE_BOX = 120365
+const LEGACY_CORE_PLEDGE = 120364
 const LEGACY_STRETCH_GOALS = 125532
 const INFINITY_MODE = 127879
 const RETALIATION_CORE_BOX = 125525
@@ -88,13 +89,16 @@ describe('the retail price of an item', () => {
     expect(carnomorphs.amount).toBeGreaterThan(carnomorphs.earlier?.euros ?? 0)
   })
 
-  test('is this campaign’s price where no figure exists', () => {
+  test('is assumed, at half as much again as this campaign’s price, where no figure exists', () => {
+    expect(ASSUMED_UPLIFT).toBe(0.5)
     for (const id of [INFINITY_MODE, SAM]) {
       const product = getProduct(id)
       const item = msrpOf(product)
-      expect(item.basis).toBe('campaignPrice')
-      expect(item.amount).toBe(product.price)
+      expect(item.basis).toBe('assumed')
+      expect(item.amount).toBe(Math.round(product.price * 1.5))
+      expect(item.earlier).toBeNull()
     }
+    expect(msrpOf(getProduct(INFINITY_MODE)).amount).toBe(3600)
   })
 
   test('is counted once where two items were sold at one price', () => {
@@ -102,6 +106,31 @@ describe('the retail price of an item', () => {
     expect(stretchGoals.basis).toBe('counted')
     expect(stretchGoals.amount).toBe(0)
     expect(stretchGoals.countedWith?.id).toBe(LOCKDOWN_CORE_BOX)
+  })
+})
+
+describe('what the assumed uplift rests on', () => {
+  test('is the two campaigns that state a retail MSRP beside their own price', () => {
+    expect(STATED_UPLIFTS.map(({ campaign }) => campaign)).toEqual([
+      'Nemesis Legacy',
+      'Nemesis Retaliation',
+    ])
+    const [legacy, retaliation] = STATED_UPLIFTS.map(({ uplift }) => uplift)
+    // €129 against €199, and $109 against $189.
+    expect(legacy).toBeCloseTo(0.5426, 4)
+    expect(retaliation).toBeCloseTo(0.7339, 4)
+  })
+
+  test('still matches Legacy’s price and stated MSRP as the catalogue has them', () => {
+    const pledge = getProduct(LEGACY_CORE_PLEDGE).effectivePrice
+    const retail = msrpOf(getProduct(LEGACY_CORE_BOX)).amount
+    expect(STATED_UPLIFTS[0]?.uplift).toBeCloseTo(retail / pledge - 1, 10)
+  })
+
+  test('is not undercut by the assumption: half as much again is below both', () => {
+    for (const { uplift } of STATED_UPLIFTS) {
+      expect(ASSUMED_UPLIFT).toBeLessThan(uplift)
+    }
   })
 })
 
@@ -147,9 +176,10 @@ describe('the retail prices, against the catalogue', () => {
 describe('the MSRP of an order', () => {
   test('is the sum of what is in the cart', () => {
     const quote = buildQuote(DEFAULT_PREFERENCES)
-    // Core Box 199 and Stretch Goals 99 as stated; Recharge Pack 5 and Infinity Mode 24 as priced.
+    // Core Box 199 and Stretch Goals 99 as stated; Recharge Pack 5 and Infinity Mode 24 as
+    // priced, each with the assumed half again on it.
     expect(quote.msrp).toHaveLength(4)
-    expect(quote.msrpTotal).toBe(19900 + 9900 + 500 + 2400)
+    expect(quote.msrpTotal).toBe(19900 + 9900 + 750 + 3600)
     expect(quote.msrpSavings).toBe(quote.msrpTotal - 12900)
   })
 
@@ -178,10 +208,11 @@ describe('the MSRP of an order', () => {
     expect(dressed.msrpSavings).toBe(plain.msrpSavings)
   })
 
-  test('counts a returning backer’s gift at its price, though it costs nothing', () => {
+  test('counts a returning backer’s gift at its retail price, though it costs nothing', () => {
     const quote = buildQuote(preferencesWith({ returningBacker: true }))
     const gift = quote.msrp.find((item) => item.product.id === SAM)
-    expect(gift?.amount).toBe(800)
+    // €8 in this campaign, and no retail price published: assumed at half as much again.
+    expect(gift?.amount).toBe(1200)
     expect(quote.msrpSavings).toBe(quote.msrpTotal - 12900)
   })
 })

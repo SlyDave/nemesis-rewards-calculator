@@ -25,7 +25,7 @@ pushed and live unless it says otherwise.
 | Catalogue        | Captured 8 October 2026, 18:20 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 133, all passing (`bun test`)                                                           |
+| Tests            | 136, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -570,9 +570,11 @@ That is four figures for some eighty items, so the rest needed a rule. **[readin
    taken is the first of the three to have sold the item by itself — so the price is the
    oldest there is, and the inflation the longest. Twenty-five items get the Nemesis or
    Lockdown pledge manager's price in pounds, twenty-seven Retaliation's in dollars.
-3. **Otherwise this campaign's own list price**, with nothing added. That is everything new
-   with Legacy except its two stated figures, and the few older items no earlier campaign
-   sold: the BIG BOXes, the Premium Synthetic Cards, Retaliation's promo cards.
+3. **[owner] Otherwise an assumption: this campaign's own list price plus 50%**
+   (`ASSUMED_UPLIFT`). That is everything new with Legacy except its two stated figures, and
+   the few older items no earlier campaign sold: the BIG BOXes, the Premium Synthetic Cards,
+   Retaliation's promo cards. Twenty-four items in all. Each says in the breakdown that it is
+   assumed, and from what price.
 4. **Two core boxes were only ever priced together with their stretch goals** (OG's "Core Box
    Pledge", Lockdown's "Lockdown Pledge"). The figure is given to the core box, and the stretch
    goals inside the pledges are counted with it, at nothing. A test holds that such a pair is
@@ -598,7 +600,14 @@ On the page:
 - **[owner]** Two more tiles, "MSRP" and "Saving vs MSRP", beside "Reward value" and "Saving".
 - **[owner]** The MSRP figure opens a breakdown: every item, its retail price, and where it is
   from. An item raised by inflation says so in the warning colour, with the original figure,
-  its date, its campaign, the euros then and the amount now.
+  its date, its campaign, the euros then and the amount now. An assumed one says so in the
+  same colour.
+- **[owner]** Where any figure in the breakdown is assumed, a note under it says what the 50%
+  rests on: the two times a campaign has put a retail MSRP beside its own price. Legacy sets
+  €129 against €199, which is 54.3% more; Retaliation set $109 against $189, which is 73.4%
+  more. Both set the whole pledge's price against the Core Box alone. The note's range is
+  worked out from `STATED_UPLIFTS` in `msrp.ts`, and a test holds that the assumption stays
+  under both.
 - **[reading]** It opens on hover, on keyboard focus, and on a tap, since a phone has no hover.
 
 The figures are estimates and say so. The older a price, the more of it is inflation: the OG
@@ -685,7 +694,7 @@ and has not yet said (section 13).
 
 - Components use semantic names — `i-fa-legacy`, `i-fa-dicetray`, `i-fa-cart`. The mapping to
   Font Awesome icons is the `ICONS` table in `scripts/generate-fa-icons.ts`.
-- That script writes each of the 64 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
+- That script writes each of the 65 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
   as a local collection (`provider: 'none'`) and bundles what the page uses, because there is
   no server to fetch icons from.
 - Nuxt UI's own internal icons are pointed at the same collection in `app.config.ts`.
@@ -820,10 +829,9 @@ Nothing requested is outstanding. These were raised and left with the owner:
 8. **The prices go stale.** They are a snapshot from 8 October 2026, and the campaign runs to
    27 October. Capture again (section 6) whenever Gamefound changes something. The pledge
    manager will later publish add-on shipping, which the site does not have.
-9. **The MSRP rule** (section 7.11) is a reading throughout. The points most worth a second
-   look: taking the oldest campaign's price rather than the latest; using this campaign's
-   price where there is nothing else, which makes those items show no saving; and the region
-   standing in for the city.
+9. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
+   look: taking the oldest campaign's price rather than the latest; the region standing in
+   for the city; and the range quoted beside the assumed uplift.
 10. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
     October 2026: add the line to `inflation.ts`.
 
