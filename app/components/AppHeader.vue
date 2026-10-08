@@ -25,6 +25,12 @@ const CURRENCY_GROUPS = [
   CURRENCY_OPTIONS.slice(LEADING_CURRENCIES),
 ]
 
+/** GitHub Sponsors, opened on a one-time donation of three dollars, which can be changed there. */
+const DONATE_URL = 'https://github.com/sponsors/SlyDave?frequency=one-time&sponsor=SlyDave&amount=3'
+
+const DONATE_HINT =
+  'Hi! If you find this useful, please consider a small donation to fuel more creations and help me pay for the hosting - you’re the best, cheers!'
+
 const chosenTheme = computed<ThemeName>({
   get: () => theme.value,
   set: setTheme,
@@ -84,6 +90,24 @@ const currency = computed<CurrencyCode>({
         class="hud-control hud-label text-xs"
         @click="reset"
       />
+      <!-- Takes whatever of the row is left, and is lit like the total to be noticed. -->
+      <UTooltip
+        :delay-duration="150"
+        :ui="{ content: 'h-auto max-w-80 py-2' }"
+      >
+        <UButton
+          :to="DONATE_URL"
+          target="_blank"
+          label="Donate"
+          icon="i-fa-donate"
+          color="primary"
+          variant="subtle"
+          class="hud-control min-w-36 flex-1 justify-center hud-label text-xs hud-glow"
+        />
+        <template #content>
+          <span class="leading-snug">{{ DONATE_HINT }}</span>
+        </template>
+      </UTooltip>
     </div>
   </header>
 </template>

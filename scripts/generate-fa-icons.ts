@@ -145,6 +145,7 @@ const ICONS: Readonly<Record<string, IconSource>> = {
   clock: light('faClock'),
   sliders: light('faSliders'),
   list: light('faListCheck'),
+  donate: light('faHandHoldingHeart'),
 }
 
 type Package = Readonly<Record<string, unknown>>

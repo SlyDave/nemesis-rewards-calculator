@@ -82,6 +82,8 @@ called `nemesis-rewards-calculator`:
     is an assumption and what it rests on (section 7.11).
 18. Split shipping is not offered where the order has nothing to split, as the campaign's FAQ
     describes the two shipments (section 7.6).
+19. A Donate link to the right of Reset, filling the rest of the row, opening the owner's GitHub
+    Sponsors page in a new tab, with given hover text, and lit like the total (section 8.3).
 
 ### Where each decision came from
 
@@ -649,7 +651,8 @@ to the bottom carries the total and a link down to the cart.
 | 2     | Add to your Gamefound cart | `QuoteCart`   | `CartLineCard`s in sections per game                                                 |
 | 3     | Good to know               | `QuoteNotes`  | Waves, bonuses, unpriced shipping, the method                                        |
 
-The header (`AppHeader`) has the Style and Currency choices and Reset. The footer says when the
+The header (`AppHeader`) has the Style and Currency choices, Reset, and a Donate link that
+takes whatever of the row is left. The footer says when the
 prices were read, that the tool is unofficial, and links to the source.
 
 ### 8.2 Decisions
@@ -679,6 +682,10 @@ Use these exactly.
   with the rest at no extra cost."
 - The cart badge: "Returning backer gift".
 - The switch: "I’ve backed Nemesis before" (with a typographic apostrophe, as in the code).
+- The Donate link's hover text: "Hi! If you find this useful, please consider a small donation
+  to fuel more creations and help me pay for the hosting - you’re the best, cheers!" As
+  dictated but for two slips put right: "find this in useful", and a doubled space. It opens
+  `https://github.com/sponsors/SlyDave?frequency=one-time&sponsor=SlyDave&amount=3`.
 
 One sentence is the builder's, not the owner's: with the switch off, the paragraph ends
 "Otherwise it is an add-on at €8.00, under Expansions." The owner was asked whether to keep it
@@ -709,7 +716,7 @@ and has not yet said (section 13).
 
 - Components use semantic names — `i-fa-legacy`, `i-fa-dicetray`, `i-fa-cart`. The mapping to
   Font Awesome icons is the `ICONS` table in `scripts/generate-fa-icons.ts`.
-- That script writes each of the 65 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
+- That script writes each of the 66 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
   as a local collection (`provider: 'none'`) and bundles what the page uses, because there is
   no server to fetch icons from.
 - Nuxt UI's own internal icons are pointed at the same collection in `app.config.ts`.
