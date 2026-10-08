@@ -59,7 +59,7 @@ const currency = computed<CurrencyCode>({
       </p>
     </div>
 
-    <div class="flex flex-wrap items-end gap-3">
+    <div class="flex flex-wrap items-end gap-3 lg:pr-2">
       <div class="w-full md:w-auto md:min-w-[40rem]">
         <p class="mb-1.5 hud-label text-[0.65rem] text-muted">Style</p>
         <SegmentedChoice
@@ -90,7 +90,9 @@ const currency = computed<CurrencyCode>({
         class="hud-control hud-label text-xs"
         @click="reset"
       />
-      <!-- Takes whatever of the row is left, and is lit like the total to be noticed. -->
+      <!-- Takes whatever of the row is left, and is lit like the total to be noticed. Where the
+           row is too narrow to keep it, it drops to a line of its own, and is held to a
+           sensible width there rather than stretching across the page. -->
       <UTooltip
         :delay-duration="150"
         :ui="{ content: 'h-auto max-w-80 py-2' }"
@@ -102,12 +104,20 @@ const currency = computed<CurrencyCode>({
           icon="i-fa-donate"
           color="primary"
           variant="subtle"
-          class="hud-control min-w-36 flex-1 justify-center hud-label text-xs hud-glow"
+          class="hud-control min-w-36 flex-1 justify-center hud-label text-xs hud-glow sm:max-w-80"
         />
         <template #content>
           <span class="leading-snug">{{ DONATE_HINT }}</span>
         </template>
       </UTooltip>
+      <!-- The column beneath this end of the row keeps a gap and a scrollbar's width clear of
+           the page's edge (pages/index.vue). The row's padding is the gap; this, a scrollbar
+           with nothing to scroll, is the width — whatever that is on the system in use — so
+           the row ends exactly where that column's panels do. Its margin undoes the row's gap. -->
+      <span
+        aria-hidden="true"
+        class="invisible -ml-3 hidden hud-scroll overflow-y-scroll lg:block"
+      />
     </div>
   </header>
 </template>

@@ -27,9 +27,11 @@ onMounted(() => {
       </div>
 
       <!-- Beside the choices on a wide screen, and scrolling on its own, so the total stays in
-           view while switches further down the page are flipped. -->
+           view while switches further down the page are flipped. Room is kept for its scrollbar
+           whether there is one or not, so the panels do not shift as the order grows; the
+           header ends its row in line with them (AppHeader.vue). -->
       <div
-        class="grid min-w-0 hud-scroll grid-cols-1 gap-6 lg:sticky lg:top-4 lg:col-span-6 lg:max-h-[calc(100dvh-2rem)] lg:overflow-y-auto lg:pr-2"
+        class="grid min-w-0 hud-scroll grid-cols-1 gap-6 lg:sticky lg:top-4 lg:col-span-6 lg:max-h-[calc(100dvh-2rem)] lg:[scrollbar-gutter:stable] lg:overflow-y-auto lg:pr-2"
       >
         <QuoteTotals :quote="quote" />
         <QuoteCart :quote="quote" />
