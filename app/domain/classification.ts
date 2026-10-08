@@ -19,9 +19,11 @@ export interface Requirement {
   readonly line: GameLine
   readonly tag: Tag
   /**
-   * For the rare item whose usefulness depends on more than its own game being included.
-   * Without this, an item goes with exactly its own game.
+   * A second game the item is played in, by Gamefound's own description of it. With either
+   * game included it goes with the order. Without this, an item goes with exactly its own game.
    */
+  readonly alsoWith?: GameLine
+  /** For the rare item whose usefulness depends on more than which game it is played in. */
   readonly when?: (lines: LineSelection) => boolean
   /** Said beside such an item when its switch passes it over, in place of naming its game. */
   readonly whenNote?: string
@@ -36,6 +38,14 @@ const core = (line: GameLine, ...ids: readonly number[]): readonly Requirement[]
 
 const extra = (line: GameLine, tag: ExtraTag, ...ids: readonly number[]): readonly Requirement[] =>
   ids.map((id) => ({ id, line, tag }))
+
+/** An extra sold with one game that Gamefound says is played in a second one as well. */
+const shared = (
+  line: GameLine,
+  alsoWith: GameLine,
+  tag: ExtraTag,
+  ...ids: readonly number[]
+): readonly Requirement[] => ids.map((id) => ({ id, line, tag, alsoWith }))
 
 /** An extra for the gameplay expansions: pointless, so unwanted, without them. */
 const forExpansions = (
@@ -59,8 +69,11 @@ export const REQUIREMENTS: readonly Requirement[] = [
   { id: 125533, line: 'legacy', tag: 'core', edition: 'standard' }, // Core Box, standees
   { id: 125534, line: 'legacy', tag: 'core', edition: 'standard' }, // Stretch Goals, standees
   ...core('legacy', 125536, 127879), // Recharge Pack, Infinity Mode
-  // Zenith of Ruin and its Recharge Pack, Crew Logs, the Secret Add-on, SAM
-  ...extra('legacy', 'gameplay', 125546, 125537, 125547, 125545, 128018),
+  // Zenith of Ruin and its Recharge Pack, Crew Logs, SAM
+  ...extra('legacy', 'gameplay', 125546, 125537, 125547, 128018),
+  // Evolved Void Seeders — the "Secret Add-on" until campaign Update #9 — which has "content
+  // for both the Infinity Mode and Nemesis: Retaliation".
+  ...shared('legacy', 'retaliation', 'gameplay', 125545),
   ...extra('legacy', 'acrylic', 125550, 125551), // Core Box, Stretch Goals
   ...forExpansions('legacy', 'acrylic', 125552), // Add-ons
   ...extra('legacy', 'terrain', 125548),
@@ -71,10 +84,13 @@ export const REQUIREMENTS: readonly Requirement[] = [
 
   // --- Nemesis (the original) -------------------------------------------------------------
   ...core('og', 125508, 125198, 125203), // Core Box, Aftermath, Void Seeders
-  ...extra('og', 'gameplay', 125204, 125205), // Carnomorphs, Medic
+  // Carnomorphs "will work with classic Nemesis, Aftermath, and Lockdown"; the Medic can be
+  // "one of the Mars survivors".
+  ...shared('og', 'lockdown', 'gameplay', 125204, 125205),
   ...extra('og', 'untold', 125215, 125216),
   ...extra('og', 'promo', 125224, 125225, 125226, 125227),
-  ...extra('og', 'terrain', 125206, 125233), // Terrain Expansion, Constructs Pack
+  ...extra('og', 'terrain', 125206), // Terrain Expansion: "for the original Nemesis game"
+  ...shared('og', 'lockdown', 'terrain', 125233), // Constructs Pack: "for Nemesis and Lockdown"
   ...extra('og', 'cats', 125213),
   ...extra('og', 'sculpts', 125214), // Alien Kings
   ...extra('og', 'playmat', 125217),
@@ -161,7 +177,8 @@ export const findRequirement = (id: number): Requirement | undefined => requirem
  * for by default, since any extra can be bought without its game.
  */
 export const goesWith = (requirement: Requirement, lines: LineSelection): boolean =>
-  requirement.when?.(lines) ?? lines[requirement.line]
+  requirement.when?.(lines) ??
+  (lines[requirement.line] || (requirement.alsoWith !== undefined && lines[requirement.alsoWith]))
 
 /** The requirements one single item satisfies. */
 export const providedBy = (leafId: number): readonly number[] => PROVIDES[leafId] ?? [leafId]

@@ -111,9 +111,15 @@ const categoryName = (tag: ExtraTag): string =>
 
 const lineOrder = (line: GameLine): number => LINES.findIndex((entry) => entry.line === line)
 
+/** Whose an item is, said of one whose game — or games, if it is played in two — is left out. */
+const notIncluded = (requirement: Requirement): string =>
+  requirement.alsoWith === undefined
+    ? `For ${gameName(requirement.line)}, which is not included`
+    : `For ${gameName(requirement.line)} or ${gameName(requirement.alsoWith)}, neither of which is included`
+
 const reasonPassedOver = (requirement: Requirement, preferences: Preferences): string | null => {
   if (!isInScope(requirement, preferences)) {
-    return requirement.whenNote ?? `For ${gameName(requirement.line)}, which is not included`
+    return requirement.whenNote ?? notIncluded(requirement)
   }
   if (requirement.needs !== undefined && isWaiting(requirement, preferences)) {
     return `For the ${categoryName(requirement.needs)}, which are not included`

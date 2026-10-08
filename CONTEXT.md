@@ -8,7 +8,8 @@ It is a companion to two shorter files: [README.md](README.md) is the developer'
 [SECURITY.md](SECURITY.md) is the security posture. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: commit `7709052` on `main`, 7 October 2026. Everything below is built, tested,
+State described: `main` on 8 October 2026, after the catalogue was captured again for campaign
+Update #9. Everything below is built, tested,
 pushed and live unless it says otherwise.
 
 ## 1. Snapshot
@@ -21,10 +22,10 @@ pushed and live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 6 October 2026, 19:29 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
+| Catalogue        | Captured 8 October 2026, 18:20 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 94, all passing (`bun test`)                                                            |
+| Tests            | 102, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -67,6 +68,9 @@ called `nemesis-rewards-calculator`:
 11. The word "Include" is removed from the Games and Extras labels.
 12. A returning-backer section at the top of the page (section 7.4).
 13. Exact wording for the returning-backer paragraph and the cart badge (section 8.3).
+14. Campaign Update #9: the "Secret Add-on" became Evolved Void Seeders. Capture the catalogue
+    again, and double-check the existing items, prices, groups and conditions (sections 6 and
+    7.1).
 
 ### Where each decision came from
 
@@ -125,6 +129,7 @@ These were set by the owner during the work, and still hold.
 | In scope               | Reached by its category's switch (section 7.2)                                                          |
 | Passed over            | Listed under a switch but not reached by it; shown with the reason                                      |
 | Waiting                | An accessory whose `needs` category has nothing asked for in its game                                   |
+| Goes with              | True of an item when a game it is played in is included: its own, or its `alsoWith` (section 7.1)       |
 | Offer                  | A buyable product as the solver sees it: a cost and the requirements it provides                        |
 | Solution               | The cheapest set of offers covering everything wanted                                                   |
 | Quote                  | A solution priced in full: lines, shipping, tax, totals (`Quote`)                                       |
@@ -221,18 +226,39 @@ itself asks for.
    bundle down to its parts, and downloads `gamefound.json`.
 3. Move it to `data/gamefound.json` and run `bun run catalog:build`. That validates the file
    (every product URL must start `https://gamefound.com/`), writes `app/data/catalog.json`, and
-   stores each product image as a 640 px WebP in `public/images/products/<id>.webp`. Add
-   `--force` to fetch every image again.
+   stores each product image as a 640 px WebP in `public/images/products/<id>.webp`.
 4. Run `bun test`. It fails if Gamefound has a product `classification.ts` does not know.
+5. Read `git diff data/gamefound.json`. The capture lists products in order of id, so the diff
+   is exactly what Gamefound changed: act on each line of it.
 
 A product is buyable in the catalogue only if Gamefound says so **and** it is listed on the
 rewards page.
+
+**An image that already exists is kept**, even when Gamefound has replaced the picture. If the
+diff shows a product's `image` has changed, delete its file in `public/images/products/` before
+building, or build with `--force` to fetch every image again.
+
+An agent driving a browser pane can run the same capture without the download, by keeping the
+result on the page and reading it back. In a pane that is not on screen Gamefound's page never
+mounts and `innerText` is empty, but `window.__INITIAL_STATE__` and the page's endpoints still
+answer, and an update's text is in the props of its `ProjectUpdateContent` script.
+
+What the 8 October capture changed, against the 6 October one: product 125545 was renamed from
+"Secret Add-on" to "Evolved Void Seeders", with a new description and picture, and it swapped
+places with the Crew Logs in the listing. No price, bundle or category changed. Evolved
+Carnomorphs and the new Scope crew member, from the same update, are free stretch goals inside
+the Legacy pledges and are not products.
 
 ### Shipping
 
 The campaign publishes its shipping table as an image, so `app/domain/shipping.ts` is typed out
 by hand from it. It prices pledges only. The same image says add-on shipping "will be calculated
 in pledge manager", so an add-on has no shipping price and none is invented.
+
+The table typed out is the image under the "Estimated shipping" heading of the project page,
+whose file is `richtext/c1e9f274-85d9-43af-92ab-071d32f91c44.png`. Gamefound gives a replaced
+image a new file name, so a different name there means the table has changed and must be typed
+out again. It was still that file on 8 October 2026.
 
 ### What is hand-maintained
 
@@ -290,6 +316,27 @@ else has one.
 - **[reading]** Four accessories are for the _add-ons_ of their game (`needs: 'gameplay'`):
   the Legacy and Retaliation "Add-ons" acrylic packs and sleeve sets. Their switch does not
   reach them until that game has an expansion asked for.
+- **[reading]** Four add-ons are played in a second game besides the one they are sold with
+  (`alsoWith`), by Gamefound's own description. With either game included, their switch takes
+  them; with neither, it passes them over and names both. They stay listed in the cart under
+  the game they are sold with.
+
+  | Add-on                           | Sold with | Also goes with | Gamefound's words                                             |
+  | -------------------------------- | --------- | -------------- | ------------------------------------------------------------- |
+  | Evolved Void Seeders (125545)    | Legacy    | Retaliation    | "content for both the Infinity Mode and Nemesis: Retaliation" |
+  | Carnomorph Expansion (125204)    | OG        | Lockdown       | "will work with classic Nemesis, Aftermath, and Lockdown"     |
+  | Medic Character Pack (125205)    | OG        | Lockdown       | "the original Nemesis crew … or one of the Mars survivors"    |
+  | Nemesis Constructs Pack (125233) | OG        | Lockdown       | "for Nemesis and Nemesis Lockdown with all expansions"        |
+
+  So Expansions with only Lockdown included means the Carnomorphs and the Medic, and Terrain
+  with only Lockdown means the Constructs Pack — not every game's, as it was before these were
+  recorded.
+
+- **Not modelled:** Aftermath and the Void Seeders Expansion also "work with Lockdown", but
+  they are part of OG's core, and core items come only with their game. They cannot be chosen
+  for a Lockdown-only order.
+- Every other item was checked against Gamefound's category and description on 8 October 2026
+  and is classified as Gamefound has it.
 
 ### 7.2 What the switches ask for
 
@@ -390,7 +437,9 @@ All sums are in euro cents.
   once. The older games ship once either way, at one price.
 - **Waves**: without Legacy, everything is in the first wave. With Legacy and Single, everything
   waits for the second. With Legacy and Split, the older games and the Legacy core box come
-  first, and the Legacy stretch goals and add-ons follow.
+  first, and the Legacy stretch goals and add-ons follow. Where the order has Legacy add-ons
+  but no Legacy pledge — Evolved Void Seeders for Retaliation, say — the wording leaves the
+  core box out: the older games first, the Legacy add-ons second.
 - **Unpriced shipping**: add-ons in the cart, gift excepted, are counted and flagged: "Plus
   shipping for N add-ons, which Awaken Realms will only price in the pledge manager."
 
@@ -645,6 +694,8 @@ Each of these cost time once. The fix is in the code; this is why it is there.
 | Gamefound returns 403 to scripts                                        | Cloudflare bot protection                                                                 | Capture from a real browser (section 6). Do not work around it                                                  |
 | A base path such as `/x/` turns into a Windows path                     | Git Bash rewrites arguments that look like paths                                          | Prefix the command with `MSYS_NO_PATHCONV=1`                                                                    |
 | The preview shows odd defaults                                          | An earlier session's choices are still in `localStorage`                                  | Clear `nemesis-rewards:preferences` before judging the defaults                                                 |
+| A renamed product keeps its old picture                                 | `catalog:build` only fetches images that are missing                                      | Delete the product's file in `public/images/products/`, or build with `--force` (section 6)                     |
+| A new capture differs from the last on every line                       | The products were in the order Gamefound listed them, which shifts                        | The capture script sorts them by id                                                                             |
 
 Two facts about the data that are easy to assume wrong:
 
@@ -672,7 +723,7 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 6 October 2026, and the campaign runs to
+8. **The prices go stale.** They are a snapshot from 8 October 2026, and the campaign runs to
    27 October. Capture again (section 6) whenever Gamefound changes something. The pledge
    manager will later publish add-on shipping, which the site does not have.
 
@@ -682,19 +733,22 @@ From the catalogue as captured, delivering to the UK with Split shipping and VAT
 stated. Use them to check that a rebuild or a refactor still agrees. They change when the
 catalogue is captured again.
 
-| Choices                             | Code            | Cart                                                     | Rewards | Shipping | Total   |
-| ----------------------------------- | --------------- | -------------------------------------------------------- | ------- | -------- | ------- |
-| Defaults: Legacy, Special           | `13-GB-EUR-`    | Legacy Core Pledge (Special)                             | 129.00  | 39.00    | 201.60  |
-| Legacy, Standard                    | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                            | 89.00   | 39.00    | 153.60  |
-| Defaults, Single shipping           | `19-GB-EUR-`    | Legacy Core Pledge (Special)                             | 129.00  | 27.00    | 187.20  |
-| Defaults, Painted                   | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish         | 129.00  | 39.00    | 350.40  |
-| All four games, either edition      | `af-GB-EUR-`    | 4 x Core Pledge                                          | 419.00  | 97.00    | 619.20  |
-| Legacy and the Dice Tray            | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                    | 139.00  | 39.00    | 213.60  |
-| No game, the Dice Tray              | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                        | 10.00   | 0.00     | 12.00   |
-| Legacy, returning backer            | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                           | 129.00  | 39.00    | 201.60  |
-| Legacy and OG, Alternative Sculpts  | `8fl3-GB-EUR-`  | Two core pledges, Classic Crew, Alien Kings              | 282.00  | 63.00    | 414.00  |
-| All four games, Alternative Sculpts | `8fp3-GB-EUR-`  | 4 x Core Pledge and four sculpt add-ons; no Classic Crew | 493.00  | 97.00    | 708.00  |
-| All four games, every extra         | `7hp13-GB-EUR-` | Salvation, Veteran, Martian, Intruder and 11 add-ons     | 1599.00 | 169.00   | 2121.60 |
+| Choices                             | Code            | Cart                                                           | Rewards | Shipping | Total   |
+| ----------------------------------- | --------------- | -------------------------------------------------------------- | ------- | -------- | ------- |
+| Defaults: Legacy, Special           | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                   | 129.00  | 39.00    | 201.60  |
+| Legacy, Standard                    | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                  | 89.00   | 39.00    | 153.60  |
+| Defaults, Single shipping           | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                   | 129.00  | 27.00    | 187.20  |
+| Defaults, Painted                   | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish               | 129.00  | 39.00    | 350.40  |
+| All four games, either edition      | `af-GB-EUR-`    | 4 x Core Pledge                                                | 419.00  | 97.00    | 619.20  |
+| Legacy and the Dice Tray            | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                          | 139.00  | 39.00    | 213.60  |
+| No game, the Dice Tray              | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                              | 10.00   | 0.00     | 12.00   |
+| Legacy, returning backer            | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                 | 129.00  | 39.00    | 201.60  |
+| Legacy and OG, Alternative Sculpts  | `8fl3-GB-EUR-`  | Two core pledges, Classic Crew, Alien Kings                    | 282.00  | 63.00    | 414.00  |
+| All four games, Alternative Sculpts | `8fp3-GB-EUR-`  | 4 x Core Pledge and four sculpt add-ons; no Classic Crew       | 493.00  | 97.00    | 708.00  |
+| All four games, every extra         | `7hp13-GB-EUR-` | Salvation, Veteran, Martian, Intruder and 11 add-ons           | 1599.00 | 169.00   | 2121.60 |
+| Retaliation, Expansions             | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders | 212.00  | 24.00    | 283.20  |
+| Lockdown, Expansions                | `dr-GB-EUR-`    | Lockdown pledge, Carnomorph Expansion, Medic                   | 161.00  | 24.00    | 222.00  |
+| Lockdown, Terrain Pack(s)           | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                       | 145.00  | 24.00    | 202.80  |
 
 ## 15. Working on it
 
@@ -713,7 +767,7 @@ For common jobs:
 | Job                           | Touch                                                                                                                                |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Prices changed on Gamefound   | Capture, `bun run catalog:build`, `bun test` (section 6)                                                                             |
-| Gamefound added a product     | Classify it in `classification.ts`; add a `PROVIDES` entry if it equals something else                                               |
+| Gamefound added a product     | Classify it in `classification.ts`; add a `PROVIDES` entry if it equals something else, `alsoWith` if it is played in a second game  |
 | A new pledge                  | Also give it a tier in `shipping.ts`                                                                                                 |
 | The shipping table changed    | `shipping.ts`, by hand from the campaign's image                                                                                     |
 | A new extras switch           | `ExtraTag`, `EXTRAS`, `DEFAULT_PREFERENCES`, an icon — and its bit in the share code, placed by hand (section 7.9)                   |

@@ -179,6 +179,32 @@ describe('shipping', () => {
     expect(quote.waves).toContain('1st wave')
     expect(quote.waves).not.toContain('2nd')
   })
+
+  test('sends the Legacy Core Box ahead of the rest of Legacy', () => {
+    const quote = buildQuote(preferencesWith({ ...itemsOnly, lines: ['legacy', 'lockdown'] }))
+    expect(quote.waves).toBe(
+      'The older games and the Legacy Core Box ship in the 1st wave (Q4 2027); the Legacy stretch goals and add-ons follow in the 2nd (Q3 2028).',
+    )
+  })
+
+  // Evolved Void Seeders are a Legacy add-on that Retaliation's expansions switch takes.
+  test('does not speak of a Legacy Core Box that is not in the order', () => {
+    const order = { ...itemsOnly, lines: ['retaliation'], extras: ['gameplay'] } as const
+    expect(buildQuote(preferencesWith(order)).waves).toBe(
+      'The older games ship in the 1st wave (Q4 2027); the Legacy add-ons follow in the 2nd (Q3 2028).',
+    )
+    expect(buildQuote(preferencesWith({ ...order, shipping: 'single' })).waves).toBe(
+      'Everything ships together in the 2nd wave (Q3 2028).',
+    )
+  })
+
+  test('sends Legacy add-ons bought on their own in the second wave', () => {
+    const quote = buildQuote(
+      preferencesWith({ ...itemsOnly, lines: [], overrides: { [SAM]: true } }),
+    )
+    expect(cart(quote)).toEqual([SAM])
+    expect(quote.waves).toBe('Everything ships together in the 2nd wave (Q3 2028).')
+  })
 })
 
 describe('tax', () => {

@@ -86,34 +86,37 @@
         sortOrder: category.sortOrder,
       })),
     ],
-    products: [...details].map(([id, { detail, cart }]) => ({
-      id,
-      name: detail.productName.trim(),
-      price: detail.price,
-      effectivePrice: detail.effectivePrice,
-      categoryId: detail.categoryID,
-      isSet: detail.productType === 1,
-      buyable: Boolean(detail.isBuyable),
-      listed: listed.includes(id),
-      listOrder: listed.indexOf(id),
-      abstract: detail.abstract || null,
-      description: text(detail.description),
-      image: detail.mainImageUrl || detail.imageList?.[0]?.productImage || null,
-      thumb: cart.imageUrl || null,
-      images: (detail.imageList ?? []).map((image) => image.productImage),
-      setItems: (detail.setItems ?? []).map((item) => ({
-        id: item.productID,
-        qty: item.quantity,
+    // In order of id, so that one capture can be compared with the next line by line.
+    products: [...details]
+      .sort(([a], [b]) => a - b)
+      .map(([id, { detail, cart }]) => ({
+        id,
+        name: detail.productName.trim(),
+        price: detail.price,
+        effectivePrice: detail.effectivePrice,
+        categoryId: detail.categoryID,
+        isSet: detail.productType === 1,
+        buyable: Boolean(detail.isBuyable),
+        listed: listed.includes(id),
+        listOrder: listed.indexOf(id),
+        abstract: detail.abstract || null,
+        description: text(detail.description),
+        image: detail.mainImageUrl || detail.imageList?.[0]?.productImage || null,
+        thumb: cart.imageUrl || null,
+        images: (detail.imageList ?? []).map((image) => image.productImage),
+        setItems: (detail.setItems ?? []).map((item) => ({
+          id: item.productID,
+          qty: item.quantity,
+        })),
+        options: (cart.options ?? []).map((option) => ({
+          text: option.text,
+          values: option.values
+            .filter((value) => value.isEnabled)
+            .map((value) => ({ text: value.text, priceModifier: value.priceModifier || 0 })),
+        })),
+        eta: detail.estimatedDeliveryAt || null,
+        url: `https://gamefound.com${detail.productUrl}`,
       })),
-      options: (cart.options ?? []).map((option) => ({
-        text: option.text,
-        values: option.values
-          .filter((value) => value.isEnabled)
-          .map((value) => ({ text: value.text, priceModifier: value.priceModifier || 0 })),
-      })),
-      eta: detail.estimatedDeliveryAt || null,
-      url: `https://gamefound.com${detail.productUrl}`,
-    })),
   }
 
   const link = document.createElement('a')

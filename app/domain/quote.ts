@@ -124,6 +124,10 @@ const tagOf = (leaf: Product): Tag | undefined =>
     .map((id) => findRequirement(id)?.tag)
     .find((tag) => tag !== undefined)
 
+/** Whether a single item is part of the Legacy pledge, rather than an add-on for it. */
+const isLegacyCore = (leaf: Product): boolean =>
+  lineOf(leaf.id) === 'legacy' && tagOf(leaf) === 'core'
+
 /**
  * The game a product is listed under: the first one it has anything of, so the four-game
  * bundle heads the list with Legacy. Merchandise bought on its own belongs to none.
@@ -208,6 +212,7 @@ export const buildQuote = (preferences: Preferences): Quote => {
       .map((line) => line.product),
     waves: describeWaves(preferences.shipping, {
       legacy: games.has('legacy'),
+      legacyCore: contents.some((content) => isLegacyCore(content.product)),
       older: games.has('og') || games.has('lockdown') || games.has('retaliation'),
     }),
     destination,

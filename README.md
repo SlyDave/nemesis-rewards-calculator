@@ -126,6 +126,14 @@ The tests fail if Gamefound has added a product that `app/domain/classification.
 know about yet — classify it there. If the shipping table on the project page has changed,
 update `app/domain/shipping.ts` to match.
 
+`git diff data/gamefound.json` shows exactly what Gamefound changed. A picture that is already
+stored is kept, so where a product's `image` has changed, delete its file in
+`public/images/products/` before building — or fetch them all again:
+
+```bash
+bun run catalog:build --force
+```
+
 ## Deployment
 
 The site is at [nemesis.slydave.com](https://nemesis.slydave.com/).

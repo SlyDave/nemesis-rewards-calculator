@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-06T19:29:05.594Z",
+  "capturedAt": "2026-10-08T18:20:31.880Z",
   "source": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards",
   "projectId": 8524,
   "baseCurrency": "EUR",
@@ -8,20 +8,20 @@
     {
       "code": "AUD",
       "symbol": "A$",
-      "eurPerUnit": 0.62123377,
-      "eurPerUnitWithCommission": 0.60726664
+      "eurPerUnit": 0.62192922,
+      "eurPerUnitWithCommission": 0.60794645
     },
     {
       "code": "CAD",
       "symbol": "C$",
-      "eurPerUnit": 0.62621329,
-      "eurPerUnitWithCommission": 0.6121342
+      "eurPerUnit": 0.62770699,
+      "eurPerUnitWithCommission": 0.61359432
     },
     {
       "code": "CHF",
       "symbol": "Fr.",
-      "eurPerUnit": 1.0739985,
-      "eurPerUnitWithCommission": 1.04985191
+      "eurPerUnit": 1.07422924,
+      "eurPerUnitWithCommission": 1.05007746
     },
     {
       "code": "DKK",
@@ -32,50 +32,50 @@
     {
       "code": "GBP",
       "symbol": "£",
-      "eurPerUnit": 1.18035883,
-      "eurPerUnitWithCommission": 1.15382095
+      "eurPerUnit": 1.18140469,
+      "eurPerUnitWithCommission": 1.15484329
     },
     {
       "code": "HKD",
       "symbol": "HK$",
-      "eurPerUnit": 0.1137333,
-      "eurPerUnitWithCommission": 0.11117625
+      "eurPerUnit": 0.11399649,
+      "eurPerUnitWithCommission": 0.11143352
     },
     {
       "code": "NOK",
       "symbol": "kr",
-      "eurPerUnit": 0.0929584,
-      "eurPerUnitWithCommission": 0.09086843
+      "eurPerUnit": 0.09335325,
+      "eurPerUnitWithCommission": 0.0912544
     },
     {
       "code": "NZD",
       "symbol": "NZ$",
-      "eurPerUnit": 0.4990518,
-      "eurPerUnitWithCommission": 0.48783167
+      "eurPerUnit": 0.50057566,
+      "eurPerUnitWithCommission": 0.48932127
     },
     {
       "code": "PLN",
       "symbol": "zł",
-      "eurPerUnit": 0.22833657,
-      "eurPerUnitWithCommission": 0.2232029
+      "eurPerUnit": 0.22818026,
+      "eurPerUnitWithCommission": 0.22305011
     },
     {
       "code": "SEK",
       "symbol": "kr",
-      "eurPerUnit": 0.08886914,
-      "eurPerUnitWithCommission": 0.0868711
+      "eurPerUnit": 0.0890948,
+      "eurPerUnitWithCommission": 0.08709169
     },
     {
       "code": "SGD",
       "symbol": "S$",
-      "eurPerUnit": 0.69715561,
-      "eurPerUnitWithCommission": 0.68148153
+      "eurPerUnit": 0.69876319,
+      "eurPerUnitWithCommission": 0.68305297
     },
     {
       "code": "USD",
       "symbol": "$",
-      "eurPerUnit": 0.89253838,
-      "eurPerUnitWithCommission": 0.87247153
+      "eurPerUnit": 0.89469446,
+      "eurPerUnitWithCommission": 0.87457914
     }
   ],
   "categories": [
@@ -3355,20 +3355,20 @@
     },
     {
       "id": 125545,
-      "name": "Secret Add-on",
+      "name": "Evolved Void Seeders",
       "price": 35,
       "effectivePrice": 35,
       "categoryId": 25960,
       "isSet": false,
       "buyable": true,
       "listed": true,
-      "listOrder": 23,
-      "abstract": "The content of this add-on will be revealed during Day 1 of the campaign.",
+      "listOrder": 22,
+      "abstract": "This add-on introduces a new enemy race, with dedicated gameplay content for both the Infinity Mode and Nemesis: Retaliation. Face hallucinations, psychological pressure, and enemies that twist the battlefield as much as your perception of it.",
       "description": null,
-      "image": "https://imgcdn.gamefound.com/productimage/projects/8524/f197fa54-9915-4483-b947-e2e850cb1c79.jpg",
-      "thumb": "https://imgcdn.gamefound.com/infoboxthumb/projects/8524/f197fa54-9915-4483-b947-e2e850cb1c79.jpg",
+      "image": "https://imgcdn.gamefound.com/productimage/projects/8524/9b8b321d-7959-49d1-a91d-c44b07a18273.jpg",
+      "thumb": "https://imgcdn.gamefound.com/infoboxthumb/projects/8524/9b8b321d-7959-49d1-a91d-c44b07a18273.jpg",
       "images": [
-        "https://imgcdn.gamefound.com/productimage/projects/8524/f197fa54-9915-4483-b947-e2e850cb1c79.jpg"
+        "https://imgcdn.gamefound.com/productimage/projects/8524/9b8b321d-7959-49d1-a91d-c44b07a18273.jpg"
       ],
       "setItems": [],
       "options": [
@@ -3508,7 +3508,7 @@
       "isSet": false,
       "buyable": true,
       "listed": true,
-      "listOrder": 22,
+      "listOrder": 23,
       "abstract": "Add a layer of personal ambition to your Nemesis: Legacy campaign.\n\nEach player receives their own Achievement Sheet, tied to a specific agenda. Across the entire campaign, you’ll be given personal goals to pursue alongside the group’s main objectives.",
       "description": null,
       "image": "https://imgcdn.gamefound.com/productimage/projects/8524/0937db65-f70c-421c-aa78-a50d8381bd6b.png",

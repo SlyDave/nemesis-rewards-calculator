@@ -110,13 +110,23 @@ export const WAVE_TWO = 'Q3 2028'
 /** When things arrive, which depends on what is ordered as well as on the mode chosen. */
 export const describeWaves = (
   mode: ShippingMode,
-  content: { readonly legacy: boolean; readonly older: boolean },
+  content: {
+    /** Anything of Legacy's at all: its pledge, or only add-ons for it. */
+    readonly legacy: boolean
+    /** The Legacy pledge itself, whose Core Box goes out ahead of the rest of it. */
+    readonly legacyCore: boolean
+    readonly older: boolean
+  },
 ): string => {
   if (!content.legacy) {
     return `Everything ships together in the 1st wave (${WAVE_ONE}).`
   }
-  if (mode === 'single') {
+  // Legacy add-ons with nothing to go ahead of them are a single shipment whatever the mode.
+  if (mode === 'single' || (!content.legacyCore && !content.older)) {
     return `Everything ships together in the 2nd wave (${WAVE_TWO}).`
+  }
+  if (!content.legacyCore) {
+    return `The older games ship in the 1st wave (${WAVE_ONE}); the Legacy add-ons follow in the 2nd (${WAVE_TWO}).`
   }
   const first = content.older
     ? 'The older games and the Legacy Core Box ship'

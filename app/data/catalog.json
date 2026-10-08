@@ -1,10 +1,10 @@
 {
-  "capturedAt": "2026-10-06T19:29:05.594Z",
+  "capturedAt": "2026-10-08T18:20:31.880Z",
   "source": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards",
   "campaignEnd": "2026-10-27T19:00:00Z",
   "rates": {
-    "USD": 1.1204,
-    "GBP": 0.8472
+    "USD": 1.1177,
+    "GBP": 0.8465
   },
   "categories": [
     {
@@ -1806,14 +1806,14 @@
     },
     {
       "id": 125545,
-      "name": "Secret Add-on",
+      "name": "Evolved Void Seeders",
       "price": 35,
       "effectivePrice": 35,
       "categoryId": 25960,
       "isSet": false,
       "buyable": true,
-      "listOrder": 23,
-      "abstract": "The content of this add-on will be revealed during Day 1 of the campaign.",
+      "listOrder": 22,
+      "abstract": "This add-on introduces a new enemy race, with dedicated gameplay content for both the Infinity Mode and Nemesis: Retaliation. Face hallucinations, psychological pressure, and enemies that twist the battlefield as much as your perception of it.",
       "image": "images/products/125545.webp",
       "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125545",
       "setItems": [],
@@ -1848,7 +1848,7 @@
       "categoryId": 25960,
       "isSet": false,
       "buyable": true,
-      "listOrder": 22,
+      "listOrder": 23,
       "abstract": "Add a layer of personal ambition to your Nemesis: Legacy campaign.\n\nEach player receives their own Achievement Sheet, tied to a specific agenda. Across the entire campaign, you’ll be given personal goals to pursue alongside the group’s main objectives.",
       "image": "images/products/125547.webp",
       "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy#/product/125547",
