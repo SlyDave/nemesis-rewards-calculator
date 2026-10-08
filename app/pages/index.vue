@@ -23,7 +23,7 @@ onMounted(() => {
         <ChoicesBacker />
         <ChoicesGames />
         <ChoicesExtras />
-        <ChoicesDelivery />
+        <ChoicesDelivery :quote="quote" />
       </div>
 
       <!-- Beside the choices on a wide screen, and scrolling on its own, so the total stays in

@@ -207,6 +207,64 @@ describe('shipping', () => {
   })
 })
 
+describe('split shipping', () => {
+  test('is a choice for a Legacy pledge, whose Core Box goes out ahead of the rest', () => {
+    const quote = buildQuote(preferencesWith({ shipping: 'split' }))
+    expect(quote.canSplit).toBe(true)
+    expect(quote.shipping).toBe('split')
+    expect(buildQuote(preferencesWith({ shipping: 'single' })).shipping).toBe('single')
+  })
+
+  test('is a choice for all four games in one bundle', () => {
+    expect(buildQuote(preferencesWith({ lines: ALL_LINES })).canSplit).toBe(true)
+  })
+
+  test('is not one for the older games alone, which all go out together', () => {
+    // Every extra but the expansions: Retaliation's bring Evolved Void Seeders, a Legacy add-on.
+    const order = {
+      ...itemsOnly,
+      lines: ['og', 'lockdown', 'retaliation'],
+      extras: ALL_EXTRAS.filter((tag) => tag !== 'gameplay'),
+    } as const
+    const asked = buildQuote(preferencesWith({ ...order, shipping: 'split' }))
+    expect(asked.lines.length).toBeGreaterThan(3)
+    expect(asked.canSplit).toBe(false)
+    expect(asked.shipping).toBe('single')
+    expect(asked.waves).toBe('Everything ships together in the 1st wave (Q4 2027).')
+    // Asking for it changes nothing: the order is the single-shipping one, to the cent.
+    expect(asked).toEqual(buildQuote(preferencesWith({ ...order, shipping: 'single' })))
+  })
+
+  test('is one for an older game with a Legacy add-on, which follows it', () => {
+    const quote = buildQuote(preferencesWith({ lines: ['retaliation'], extras: ['gameplay'] }))
+    expect(quote.canSplit).toBe(true)
+    expect(quote.shipping).toBe('split')
+  })
+
+  test('is not one for Legacy add-ons alone, which all go out in the second shipment', () => {
+    const quote = buildQuote(preferencesWith({ lines: [], overrides: { [SAM]: true } }))
+    expect(cart(quote)).toEqual([SAM])
+    expect(quote.canSplit).toBe(false)
+    expect(quote.shipping).toBe('single')
+    expect(quote.waves).toBe('Everything ships together in the 2nd wave (Q3 2028).')
+  })
+
+  test('is not one for an empty order', () => {
+    const quote = buildQuote(preferencesWith({ lines: [] }))
+    expect(quote.canSplit).toBe(false)
+    expect(quote.shipping).toBe('single')
+  })
+
+  test('leaves the choice itself alone, to apply again once there is something to split', () => {
+    const olderOnly = preferencesWith({ lines: ['lockdown'], shipping: 'split' })
+    expect(buildQuote(olderOnly).shipping).toBe('single')
+    expect(olderOnly.shipping).toBe('split')
+
+    const withLegacy = buildQuote({ ...olderOnly, lines: { ...olderOnly.lines, legacy: true } })
+    expect(withLegacy.shipping).toBe('split')
+  })
+})
+
 describe('tax', () => {
   test('is charged on the items and the shipping at the destination’s rate', () => {
     const quote = buildQuote(preferencesWith({ destination: 'GB' }))

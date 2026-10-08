@@ -165,6 +165,12 @@ export const PROVIDES: Readonly<Record<number, readonly number[]>> = {
   128437: [128436, 128437],
 }
 
+/**
+ * The Legacy Core Box, with miniatures and with standees. It is the one part of Legacy that
+ * goes out in the first of the campaign's two shipments, with the older games (quote.ts).
+ */
+export const LEGACY_CORE_BOXES: ReadonlySet<number> = new Set([120365, 125533])
+
 const requirementsById: ReadonlyMap<number, Requirement> = new Map(
   REQUIREMENTS.map((requirement) => [requirement.id, requirement]),
 )

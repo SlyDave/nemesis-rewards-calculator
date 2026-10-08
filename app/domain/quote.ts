@@ -1,5 +1,5 @@
 import { buyableProducts, getProduct, leavesOf } from './catalog'
-import { findRequirement, lineOf, providedBy } from './classification'
+import { LEGACY_CORE_BOXES, findRequirement, lineOf, providedBy } from './classification'
 import { destinationFor } from './destinations'
 import { isGift, priceFor } from './gift'
 import { msrpOf } from './msrp'
@@ -12,7 +12,7 @@ import type { Product } from './catalog'
 import type { Destination } from './destinations'
 import type { ItemMsrp } from './msrp'
 import type { Offer } from './solver'
-import type { Cents, Finish, GameLine, Preferences, Tag } from './types'
+import type { Cents, Finish, GameLine, Preferences, ShippingMode, Tag } from './types'
 
 /** One item inside something in the cart. */
 export interface ContentLine {
@@ -58,6 +58,13 @@ export interface Quote {
   readonly shippingTotal: Cents
   /** The cart lines whose shipping will only be priced in the pledge manager. */
   readonly unpricedShipping: readonly Product[]
+  /**
+   * Whether the order can be sent in two parts: whether it has something for each of the
+   * campaign's two shipments. An order that all goes out together has nothing to split.
+   */
+  readonly canSplit: boolean
+  /** The mode the order is priced in: the one chosen, or single where it cannot be split. */
+  readonly shipping: ShippingMode
   readonly waves: string
   readonly destination: Destination
   /** The rate applied, in percent: zero when tax is switched off. */
@@ -131,6 +138,14 @@ const tagOf = (leaf: Product): Tag | undefined =>
     .map((id) => findRequirement(id)?.tag)
     .find((tag) => tag !== undefined)
 
+/**
+ * Which of the campaign's two shipments a single item goes out in. By its FAQ and its shipping
+ * graphic, the first takes everything from the older games and the Legacy Core Box; the
+ * second, the rest of Legacy: its stretch goals and its add-ons.
+ */
+const waveOf = (leaf: Product): 1 | 2 =>
+  lineOf(leaf.id) === 'legacy' && !LEGACY_CORE_BOXES.has(leaf.id) ? 2 : 1
+
 /** Whether a single item is part of the Legacy pledge, rather than an add-on for it. */
 const isLegacyCore = (leaf: Product): boolean =>
   lineOf(leaf.id) === 'legacy' && tagOf(leaf) === 'core'
@@ -169,7 +184,8 @@ const byCartOrder = (a: Product, b: Product): number => {
   return steps.find((step) => step !== 0) ?? 0
 }
 
-export const buildQuote = (preferences: Preferences): Quote => {
+/** The best combination priced as the preferences stand, split shipping or no. */
+const priceOrder = (preferences: Preferences): Quote => {
   const destination = destinationFor(preferences.destination)
   const wanted = wantedRequirements(preferences)
   const offers = offersFor(preferences)
@@ -207,6 +223,7 @@ export const buildQuote = (preferences: Preferences): Quote => {
   const msrp = contents.map((content) => msrpOf(content.product))
   const msrpTotal = sum(msrp.map((item) => item.amount))
   const games = new Set(contents.map((content) => lineOf(content.product.id)))
+  const shipments = new Set(contents.map((content) => waveOf(content.product)))
 
   return {
     lines,
@@ -222,6 +239,8 @@ export const buildQuote = (preferences: Preferences): Quote => {
     unpricedShipping: lines
       .filter((line) => line.shipping === null && !line.isGift)
       .map((line) => line.product),
+    canSplit: shipments.has(1) && shipments.has(2),
+    shipping: preferences.shipping,
     waves: describeWaves(preferences.shipping, {
       legacy: games.has('legacy'),
       legacyCore: contents.some((content) => isLegacyCore(content.product)),
@@ -235,4 +254,19 @@ export const buildQuote = (preferences: Preferences): Quote => {
     wantedCount: wanted.size,
     unavailable,
   }
+}
+
+/**
+ * The best combination for a set of preferences, and what it comes to.
+ *
+ * Split shipping is only a choice where there is something to split. An order that all goes
+ * out in one shipment — the older games alone, or Legacy add-ons alone — is priced and
+ * described as single shipping, whichever was asked for. The preference itself is left as
+ * it is, so that it applies again as soon as the order has two parts.
+ */
+export const buildQuote = (preferences: Preferences): Quote => {
+  const quote = priceOrder(preferences)
+  return quote.canSplit || preferences.shipping === 'single'
+    ? quote
+    : priceOrder({ ...preferences, shipping: 'single' })
 }

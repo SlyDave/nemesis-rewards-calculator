@@ -5,6 +5,8 @@ const props = defineProps<{
     readonly value: T
     readonly label: string
     readonly icon?: string
+    /** For an option that is not on offer just now. It stays in view, and cannot be chosen. */
+    readonly disabled?: boolean
   }[]
   /** What the choice is, for screen readers; the visible label is the caller's. */
   label: string
@@ -15,9 +17,12 @@ const props = defineProps<{
 
 const chosen = defineModel<T>({ required: true })
 
-const choose = (option: T): void => {
-  if (!props.disabled) {
-    chosen.value = option
+const isOff = (option: { readonly disabled?: boolean }): boolean =>
+  props.disabled || option.disabled === true
+
+const choose = (option: { readonly value: T; readonly disabled?: boolean }): void => {
+  if (!isOff(option)) {
+    chosen.value = option.value
   }
 }
 </script>
@@ -36,14 +41,16 @@ const choose = (option: T): void => {
       type="button"
       role="radio"
       :aria-checked="option.value === chosen"
-      :disabled="disabled"
+      :disabled="isOff(option)"
       class="flex min-w-0 flex-1 items-center justify-center gap-2 px-2 py-2 hud-label text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-      :class="
+      :class="[
         option.value === chosen
           ? 'bg-primary/20 text-primary hud-chevron'
-          : 'cursor-pointer text-muted hover:text-highlighted disabled:cursor-not-allowed'
-      "
-      @click="choose(option.value)"
+          : 'cursor-pointer text-muted hover:text-highlighted disabled:cursor-not-allowed disabled:hover:text-muted',
+        // The whole choice being off already fades it; one option off fades only itself.
+        option.disabled === true && !disabled ? 'opacity-40' : '',
+      ]"
+      @click="choose(option)"
     >
       <UIcon
         v-if="option.icon !== undefined"

@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import { DESTINATIONS, REGION_NAMES, destinationFor } from '~/domain/destinations'
 
+import type { Quote } from '~/domain/quote'
 import type { ShippingMode } from '~/domain/types'
+
+const props = defineProps<{
+  /** The order as it stands: whether it can be split depends on what is in it. */
+  quote: Quote
+}>()
 
 const { preferences, update } = usePreferences()
 
 const DESTINATION_OPTIONS = DESTINATIONS.map(({ code, name }) => ({ label: name, value: code }))
 
-const SHIPPING_MODES: readonly { value: ShippingMode; label: string; icon: string }[] = [
-  { value: 'split', label: 'Split shipping', icon: 'i-fa-split' },
-  { value: 'single', label: 'Single shipping', icon: 'i-fa-single' },
-]
+/** Split shipping is only on offer for an order with something in each of the two shipments. */
+const shippingModes = computed(() => [
+  {
+    value: 'split' as const,
+    label: 'Split shipping',
+    icon: 'i-fa-split',
+    disabled: !props.quote.canSplit,
+  },
+  { value: 'single' as const, label: 'Single shipping', icon: 'i-fa-single' },
+])
 
 const MAX_TAX_RATE = 100
 const TAX_RATE_STEP = 0.5
@@ -25,11 +37,23 @@ const destinationCode = computed<string>({
   },
 })
 
+// Shown as the order is priced: single where it cannot be split, whatever was last chosen. The
+// choice itself is kept, and comes back into force once there is something to split.
 const shipping = computed<ShippingMode>({
-  get: () => preferences.value.shipping,
+  get: () => props.quote.shipping,
   set: (value) => {
     update({ shipping: value })
   },
+})
+
+const shippingNote = computed<string>(() => {
+  if (props.quote.canSplit) {
+    return 'Split sends what is ready first and the rest later, for more. Single waits and sends it all at once.'
+  }
+  if (props.quote.lines.length === 0) {
+    return 'Split shipping sends an order in two parts, so it needs something in each: nothing is ordered yet.'
+  }
+  return `Nothing here to split, so split shipping is not on offer. ${props.quote.waves}`
 })
 
 const includeTax = computed<boolean>({
@@ -97,12 +121,14 @@ const taxTiming = computed<string>(() => {
         </p>
         <SegmentedChoice
           v-model="shipping"
-          :options="SHIPPING_MODES"
+          :options="shippingModes"
           label="Split or Single Shipping"
         />
-        <p class="mt-2 text-xs text-muted">
-          Split sends what is ready first and the rest later, for more. Single waits and sends it
-          all at once.
+        <p
+          class="mt-2 text-xs text-muted"
+          data-testid="shipping-note"
+        >
+          {{ shippingNote }}
         </p>
       </div>
 

@@ -25,7 +25,7 @@ pushed and live unless it says otherwise.
 | Catalogue        | Captured 8 October 2026, 18:20 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 136, all passing (`bun test`)                                                           |
+| Tests            | 143, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -78,6 +78,10 @@ called `nemesis-rewards-calculator`:
     campaign's project page, which holds it in images; failing that from the earlier campaigns,
     raised by inflation in Wrocław since they were created; with a breakdown on hover that says
     where inflation was used, with the original figure, its date and the result (section 7.11).
+17. Where no MSRP is published, assume one at 50% above this campaign's price, and say that it
+    is an assumption and what it rests on (section 7.11).
+18. Split shipping is not offered where the order has nothing to split, as the campaign's FAQ
+    describes the two shipments (section 7.6).
 
 ### Where each decision came from
 
@@ -451,6 +455,17 @@ All sums are in euro cents.
   items that a Standard backer only received through a bundle.
 - **Shipping modes**: only the Legacy pledges and the four-game bundle are cheaper sent at
   once. The older games ship once either way, at one price.
+- **[owner] Split shipping is only offered where there is something to split.** By the
+  campaign's FAQ and shipping graphic, the first shipment is everything from the older games
+  and the Legacy Core Box; the second is the rest of Legacy. An order can be split only if it
+  has something in each (`Quote.canSplit`). So it is offered for any Legacy pledge, and for
+  an older game with a Legacy add-on; not for the older games alone, which all go in the
+  first; nor for Legacy add-ons alone, which all go in the second; nor for an empty order.
+- **[reading]** Where it is not offered, the option is shown faded and cannot be chosen, the
+  order is priced and described as single shipping, and a line beneath says why.
+  `Preferences.shipping` is left as it was — the share code too — so the choice applies again
+  as soon as the order has two parts. Nothing costs more or less for it: the pledges that
+  cannot be split have one shipping price either way.
 - **Waves**: without Legacy, everything is in the first wave. With Legacy and Single, everything
   waits for the second. With Legacy and Split, the older games and the Legacy core box come
   first, and the Legacy stretch goals and add-ons follow. Where the order has Legacy add-ons
