@@ -92,16 +92,17 @@ export const usePreferences = (): PreferencesStore => {
   }
 }
 
-const CURRENCY_BY_REGION: Readonly<Record<string, CurrencyCode>> = { GB: 'GBP', US: 'USD' }
-
-/** A first guess at where the visitor is, from the language their browser asks for. */
+/**
+ * A first guess at where the visitor is, from the language their browser asks for. Only at
+ * where: the currency stays the euro, which is what they will be charged in, until they choose.
+ */
 const guessFromLocale = (): Partial<Preferences> => {
   try {
     const { region } = new Intl.Locale(navigator.language)
     if (region === undefined || findDestination(region) === undefined) {
       return {}
     }
-    return { destination: region, currency: CURRENCY_BY_REGION[region] ?? 'EUR' }
+    return { destination: region }
   } catch {
     return {}
   }

@@ -1,4 +1,4 @@
-import type { RegionId } from './types'
+import type { CurrencyCode, RegionId } from './types'
 
 /**
  * Where an order can go: which row of the shipping table it falls in, and what tax the
@@ -23,6 +23,11 @@ export interface Destination {
   readonly code: string
   readonly name: string
   readonly region: RegionId
+  /**
+   * The money spent there. It is why the currency is offered at all (currencies.ts); the
+   * catch-alls, which are no one place, are given the euro the campaign charges in.
+   */
+  readonly currency: CurrencyCode
   readonly taxName: string
   /** Percent. */
   readonly taxRate: number
@@ -34,11 +39,13 @@ const vat = (
   code: string,
   name: string,
   taxRate: number,
+  currency: CurrencyCode = 'EUR',
   region: RegionId = 'eu',
 ): Destination => ({
   code,
   name,
   region,
+  currency,
   taxName: 'VAT',
   taxRate,
   collection: 'checkout',
@@ -47,10 +54,16 @@ const vat = (
 const IMPORT_NOTE =
   'The campaign collects no tax for this destination. Import VAT, GST or duty may be charged on delivery.'
 
-const untaxed = (code: string, name: string, region: RegionId): Destination => ({
+const untaxed = (
+  code: string,
+  name: string,
+  region: RegionId,
+  currency: CurrencyCode = 'EUR',
+): Destination => ({
   code,
   name,
   region,
+  currency,
   taxName: 'Tax',
   taxRate: 0,
   collection: 'none',
@@ -58,22 +71,22 @@ const untaxed = (code: string, name: string, region: RegionId): Destination => (
 })
 
 export const DESTINATIONS: readonly Destination[] = [
-  vat('GB', 'United Kingdom', 20, 'uk'),
-  vat('PL', 'Poland', 23, 'poland'),
+  vat('GB', 'United Kingdom', 20, 'GBP', 'uk'),
+  vat('PL', 'Poland', 23, 'PLN', 'poland'),
 
   vat('AT', 'Austria', 20),
   vat('BE', 'Belgium', 21),
   vat('BG', 'Bulgaria', 20),
   vat('HR', 'Croatia', 25),
   vat('CY', 'Cyprus', 19),
-  vat('CZ', 'Czech Republic', 21),
-  vat('DK', 'Denmark', 25),
+  vat('CZ', 'Czech Republic', 21, 'CZK'),
+  vat('DK', 'Denmark', 25, 'DKK'),
   vat('EE', 'Estonia', 24),
   vat('FI', 'Finland', 25.5),
   vat('FR', 'France', 20),
   vat('DE', 'Germany', 19),
   vat('GR', 'Greece', 24),
-  vat('HU', 'Hungary', 27),
+  vat('HU', 'Hungary', 27, 'HUF'),
   vat('IE', 'Ireland', 23),
   vat('IT', 'Italy', 22),
   vat('LV', 'Latvia', 21),
@@ -83,21 +96,22 @@ export const DESTINATIONS: readonly Destination[] = [
   vat('MC', 'Monaco', 20),
   vat('NL', 'Netherlands', 21),
   vat('PT', 'Portugal', 23),
-  vat('RO', 'Romania', 21),
+  vat('RO', 'Romania', 21, 'RON'),
   vat('SK', 'Slovakia', 23),
   vat('SI', 'Slovenia', 22),
   vat('ES', 'Spain', 21),
-  vat('SE', 'Sweden', 25),
+  vat('SE', 'Sweden', 25, 'SEK'),
 
-  untaxed('NO', 'Norway', 'restOfEurope'),
-  untaxed('CH', 'Switzerland', 'restOfEurope'),
-  untaxed('IS', 'Iceland', 'restOfEurope'),
+  untaxed('NO', 'Norway', 'restOfEurope', 'NOK'),
+  untaxed('CH', 'Switzerland', 'restOfEurope', 'CHF'),
+  untaxed('IS', 'Iceland', 'restOfEurope', 'ISK'),
   untaxed('XE', 'Rest of Europe', 'restOfEurope'),
 
   {
     code: 'US',
     name: 'United States',
     region: 'usa',
+    currency: 'USD',
     taxName: 'Sales tax',
     taxRate: 0,
     collection: 'pledgeManager',
@@ -107,29 +121,30 @@ export const DESTINATIONS: readonly Destination[] = [
     code: 'CA',
     name: 'Canada',
     region: 'canada',
+    currency: 'CAD',
     taxName: 'GST/HST',
     taxRate: 5,
     collection: 'pledgeManager',
     note: 'GST/HST is collected in the pledge manager: 5% GST, or 13–15% HST in the provinces that have it.',
   },
 
-  untaxed('AU', 'Australia', 'anzo'),
-  untaxed('NZ', 'New Zealand', 'anzo'),
+  untaxed('AU', 'Australia', 'anzo', 'AUD'),
+  untaxed('NZ', 'New Zealand', 'anzo', 'NZD'),
   untaxed('XO', 'Rest of Oceania', 'anzo'),
 
-  untaxed('CN', 'China', 'asia1'),
-  untaxed('HK', 'Hong Kong', 'asia1'),
-  untaxed('MO', 'Macau', 'asia1'),
+  untaxed('CN', 'China', 'asia1', 'CNY'),
+  untaxed('HK', 'Hong Kong', 'asia1', 'HKD'),
+  untaxed('MO', 'Macau', 'asia1', 'MOP'),
 
-  untaxed('JP', 'Japan', 'asia2'),
-  untaxed('KR', 'South Korea', 'asia2'),
-  untaxed('TW', 'Taiwan', 'asia2'),
-  untaxed('SG', 'Singapore', 'asia2'),
-  untaxed('MY', 'Malaysia', 'asia2'),
-  untaxed('TH', 'Thailand', 'asia2'),
-  untaxed('VN', 'Vietnam', 'asia2'),
-  untaxed('PH', 'Philippines', 'asia2'),
-  untaxed('ID', 'Indonesia', 'asia2'),
+  untaxed('JP', 'Japan', 'asia2', 'JPY'),
+  untaxed('KR', 'South Korea', 'asia2', 'KRW'),
+  untaxed('TW', 'Taiwan', 'asia2', 'TWD'),
+  untaxed('SG', 'Singapore', 'asia2', 'SGD'),
+  untaxed('MY', 'Malaysia', 'asia2', 'MYR'),
+  untaxed('TH', 'Thailand', 'asia2', 'THB'),
+  untaxed('VN', 'Vietnam', 'asia2', 'VND'),
+  untaxed('PH', 'Philippines', 'asia2', 'PHP'),
+  untaxed('ID', 'Indonesia', 'asia2', 'IDR'),
 
   untaxed('XW', 'Rest of the world', 'restOfWorld'),
 ]

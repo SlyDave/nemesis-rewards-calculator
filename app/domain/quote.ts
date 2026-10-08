@@ -2,6 +2,7 @@ import { buyableProducts, getProduct, leavesOf } from './catalog'
 import { findRequirement, lineOf, providedBy } from './classification'
 import { destinationFor } from './destinations'
 import { isGift, priceFor } from './gift'
+import { msrpOf } from './msrp'
 import { EXTRAS } from './preferences'
 import { wantedRequirements } from './selection'
 import { describeWaves, shippingOf } from './shipping'
@@ -9,6 +10,7 @@ import { solve } from './solver'
 
 import type { Product } from './catalog'
 import type { Destination } from './destinations'
+import type { ItemMsrp } from './msrp'
 import type { Offer } from './solver'
 import type { Cents, Finish, GameLine, Preferences, Tag } from './types'
 
@@ -46,6 +48,11 @@ export interface Quote {
   /** What they cost. */
   readonly itemsTotal: Cents
   readonly savings: Cents
+  /** What each item in the cart would cost at retail, asked for or not (msrp.ts). */
+  readonly msrp: readonly ItemMsrp[]
+  readonly msrpTotal: Cents
+  /** How far under that the rewards come. Shipping, finish and tax are in neither figure. */
+  readonly msrpSavings: Cents
   readonly finishTotal: Cents
   /** The shipping the campaign has published a price for: the pledges'. */
   readonly shippingTotal: Cents
@@ -197,6 +204,8 @@ export const buildQuote = (preferences: Preferences): Quote => {
   const taxTotal = Math.round(((itemsTotal + finishTotal + shippingTotal) * taxRate) / PERCENT)
 
   const contents = lines.flatMap((line) => line.contents)
+  const msrp = contents.map((content) => msrpOf(content.product))
+  const msrpTotal = sum(msrp.map((item) => item.amount))
   const games = new Set(contents.map((content) => lineOf(content.product.id)))
 
   return {
@@ -204,6 +213,9 @@ export const buildQuote = (preferences: Preferences): Quote => {
     listTotal,
     itemsTotal,
     savings: listTotal - itemsTotal,
+    msrp,
+    msrpTotal,
+    msrpSavings: msrpTotal - itemsTotal,
     finishTotal,
     shippingTotal,
     // A gift is taken to travel free with the rest, so it is not one of these.

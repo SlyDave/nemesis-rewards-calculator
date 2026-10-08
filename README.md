@@ -23,6 +23,8 @@ happens in the browser. There is no server.
 | What each product _is_ (which switch)      | `app/domain/classification.ts`                           |
 | What the switches and single picks ask for | `app/domain/selection.ts`                                |
 | The shipping table                         | `app/domain/shipping.ts`                                 |
+| The currencies and their symbols           | `app/domain/currencies.ts`                               |
+| Retail prices, and inflation since         | `app/domain/msrp.ts`, `app/domain/inflation.ts`          |
 | Destinations and tax rates                 | `app/domain/destinations.ts`                             |
 | The search for the best combination        | `app/domain/solver.ts`                                   |
 | Turning a combination into a full quote    | `app/domain/quote.ts`                                    |
@@ -54,9 +56,17 @@ everything separately.
   places the campaign collects it. The rate can be corrected on the page.
 - **Returning backers** get the SAM Robot Pack free (campaign Update #6). With that switch on
   it is added to a Legacy order at no charge; otherwise it is an ordinary add-on.
-- **Currency**: everything is in euros, as Gamefound charges it. Dollars and pounds use the
-  European Central Bank's daily reference rate, fetched by the browser from
-  [Frankfurter](https://frankfurter.dev), falling back to the rate captured with the catalogue.
+- **Currency**: everything is in euros, as Gamefound charges it. The total can be read in any
+  currency the campaign lists, or that is spent somewhere it ships to — twenty-seven in all —
+  at central banks' reference rates, fetched by the browser from
+  [Frankfurter](https://frankfurter.dev), falling back to the rates of the day the catalogue
+  was captured.
+- **MSRP**: what the cart would cost at retail. The campaign states a retail MSRP for the
+  Legacy Core Box and Stretch Goals, and the Retaliation campaign did for its own. For the
+  rest it is the price in the earliest campaign that sold the item, and where there is none,
+  this campaign's price. Anything from an earlier campaign is raised by consumer-price
+  inflation since, as Statistics Poland publishes it for Dolnośląskie, the region Wrocław is
+  the capital of. Hover over the figure for the breakdown. These are estimates.
 
 ## Security
 

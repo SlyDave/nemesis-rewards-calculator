@@ -8,8 +8,8 @@ It is a companion to two shorter files: [README.md](README.md) is the developer'
 [SECURITY.md](SECURITY.md) is the security posture. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: `main` on 8 October 2026, after the catalogue was captured again for campaign
-Update #9. Everything below is built, tested,
+State described: 8 October 2026, after the catalogue was captured again for campaign Update #9
+and the currencies and MSRP were added. Everything below is built, tested,
 pushed and live unless it says otherwise.
 
 ## 1. Snapshot
@@ -25,7 +25,7 @@ pushed and live unless it says otherwise.
 | Catalogue        | Captured 8 October 2026, 18:20 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 102, all passing (`bun test`)                                                           |
+| Tests            | 133, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -71,6 +71,13 @@ called `nemesis-rewards-calculator`:
 14. Campaign Update #9: the "Secret Add-on" became Evolved Void Seeders. Capture the catalogue
     again, and double-check the existing items, prices, groups and conditions (sections 6 and
     7.1).
+15. Every currency the campaign supports — those it lists, and those of the places it ships to
+    — in a searchable menu, with EUR, USD and GBP at the top, EUR the default, and the correct
+    symbol for each, looked up (section 7.8).
+16. "MSRP" and "Saving vs MSRP" beside "Reward value" and "Saving": the MSRP read from the
+    campaign's project page, which holds it in images; failing that from the earlier campaigns,
+    raised by inflation in Wrocław since they were created; with a breakdown on hover that says
+    where inflation was used, with the original figure, its date and the result (section 7.11).
 
 ### Where each decision came from
 
@@ -143,6 +150,9 @@ These were set by the owner during the work, and still hold.
 | Code / share code      | The preferences as a short string, in `?c=` and in storage (section 7.9)                                |
 | HUD                    | The look: framed console panels with cut corners (`hud-*` utilities in `main.css`)                      |
 | Cents                  | Euro cents, the unit of every sum. Other currencies are for display only                                |
+| MSRP                   | What an item would cost at retail: stated by a campaign, or the nearest figure there is (section 7.11)  |
+| Earlier campaign       | One of the three older Gamefound projects: Nemesis (2018), Lockdown (2020), Retaliation (2023)          |
+| Listed currency        | One Gamefound's own currency menu offers; the rest are there for a place the campaign ships to          |
 
 ## 5. Stack, versions and layout
 
@@ -194,7 +204,10 @@ app/
     shipping.ts               The shipping table, typed out by hand
     destinations.ts           Countries -> shipping region and tax
     preferences.ts            Labels, defaults, and the share code
-    money.ts                  Rates and formatting
+    currencies.ts             The currencies offered: code, name, symbol, where it goes
+    money.ts                  Rates and writing amounts out
+    msrp.ts                   Each item's retail price, and where the figure is from
+    inflation.ts              Consumer prices in Wrocław's region, by quarter
   pages/index.vue             The one page
 data/gamefound.json           The capture, committed
 public/                       CNAME, .nojekyll, favicon.svg, images/products/*.webp
@@ -262,12 +275,15 @@ out again. It was still that file on 8 October 2026.
 
 ### What is hand-maintained
 
-| File                           | Why it cannot be generated                                          |
-| ------------------------------ | ------------------------------------------------------------------- |
-| `app/domain/classification.ts` | Gamefound does not say what a product _is_, or what equals what     |
-| `app/domain/shipping.ts`       | Published as an image                                               |
-| `app/domain/destinations.ts`   | Tax rates and which taxes the campaign collects, from its own notes |
-| `app/domain/gift.ts`           | Announced in campaign Update #6, not in the catalogue               |
+| File                           | Why it cannot be generated                                                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `app/domain/classification.ts` | Gamefound does not say what a product _is_, or what equals what                                                           |
+| `app/domain/shipping.ts`       | Published as an image                                                                                                     |
+| `app/domain/destinations.ts`   | Tax rates and which taxes the campaign collects, from its own notes                                                       |
+| `app/domain/gift.ts`           | Announced in campaign Update #6, not in the catalogue                                                                     |
+| `app/domain/currencies.ts`     | Symbols and where they go are convention, looked up; which are offered follows from Gamefound's menu and the destinations |
+| `app/domain/msrp.ts`           | Read off graphics on the campaign pages, and off the earlier projects' price lists                                        |
+| `app/domain/inflation.ts`      | Statistics Poland's quarterly figures, copied in; one line more each quarter                                              |
 
 ### The pledges at capture
 
@@ -460,14 +476,32 @@ All sums are in euro cents.
 
 ### 7.8 Currency
 
-- **[owner]** Euros are the base. Dollars and pounds are a way of reading the same sum.
-- Rates are the European Central Bank's daily reference rates, fetched by the browser from
-  `https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD,GBP` — no key, and the only
-  outside request the page makes.
-- The reply is checked for shape. On any failure the rates captured with the catalogue stay in
-  use, and the page says which it is using.
-- Amounts are formatted with one fixed locale (`en-GB`, narrow symbol) so that the pre-rendered
-  page and the browser agree to the character.
+- **[owner]** Euros are the base, and the default. Every other currency is a way of reading
+  the same sum.
+- **[owner]** The currencies are all those the campaign supports: the twelve its own menu
+  lists beside the euro (AUD, CAD, CHF, DKK, GBP, HKD, NOK, NZD, PLN, SEK, SGD, USD), and the
+  currency of every place it ships to that is not among them (CNY, CZK, HUF, IDR, ISK, JPY,
+  KRW, MOP, MYR, PHP, RON, THB, TWD, VND). Twenty-seven in all. Each destination records its
+  currency, and a test holds the list to exactly those two sources.
+- **[owner]** They are chosen from a searchable menu, with EUR, USD and GBP at the top and the
+  rest by name. It searches the code, the symbol and the name.
+- **[owner]** The symbols were looked up — XE's list of currency symbols, the ISO 4217 tables
+  — and checked against what Gamefound itself writes for the ones it lists. **[reading]** The
+  site writes them itself rather than leaving it to the browser, which would write a bare "$"
+  for five of them and differs between browsers. Each goes where its own users put it:
+  "€12.50", "Fr. 12.50", "12.50 zł". Seven currencies that are not spent in decimals are
+  written without them.
+- **[reading]** The first-visit guess no longer touches the currency: a British visitor used to
+  be started in pounds, which is not "EUR the default". It still guesses the destination.
+- Rates are central banks' reference rates from Frankfurter, fetched by the browser from
+  `https://api.frankfurter.dev/v2/rates?base=EUR&quotes=…` — no key, and still the only
+  outside request the page makes. Version 2 is needed: version 1 is the ECB's rates alone,
+  which have no TWD, VND or MOP.
+- A reply is used only if it has a sound rate for every currency. Otherwise the rates the site
+  was built with stay: `catalog:build` fetches them from the same service for the day of the
+  capture. They replaced Gamefound's own display rates, which cover only its twelve.
+- Figures are written with one fixed locale (`en-GB`) so that the pre-rendered page and the
+  browser agree to the character.
 
 ### 7.9 Remembering and sharing the choices
 
@@ -512,6 +546,64 @@ within a category, alphabetically.
   name.
 - The numbers beside the lines count the things to add, so a gift has none.
 
+### 7.11 MSRP
+
+What the cart would cost at retail, item by item (`msrp.ts`), and how far under it the
+rewards come. Shipping, finish and tax are in neither figure.
+
+**[owner]** The source is the campaign's project page, where the figures are in images; failing
+that, the earlier campaigns, raised by inflation in Wrocław since each was created.
+
+What the pages turned out to hold, read by OCR and then by eye:
+
+| Page                      | Stated as retail MSRP                                        |
+| ------------------------- | ------------------------------------------------------------ |
+| Nemesis Legacy            | Core Box (Special Edition) €199; Stretch Goals €99           |
+| Nemesis Retaliation       | Core Box (Special Edition) $189; Stretch Goals $109          |
+| Nemesis, Nemesis Lockdown | Nothing. They are pledge managers: price lists with no story |
+
+That is four figures for some eighty items, so the rest needed a rule. **[reading]**, all of it:
+
+1. **A stated MSRP wins**: this campaign's as it stands, an earlier campaign's raised by
+   inflation.
+2. **Otherwise the item's price in an earlier campaign, raised by inflation.** The campaign
+   taken is the first of the three to have sold the item by itself — so the price is the
+   oldest there is, and the inflation the longest. Twenty-five items get the Nemesis or
+   Lockdown pledge manager's price in pounds, twenty-seven Retaliation's in dollars.
+3. **Otherwise this campaign's own list price**, with nothing added. That is everything new
+   with Legacy except its two stated figures, and the few older items no earlier campaign
+   sold: the BIG BOXes, the Premium Synthetic Cards, Retaliation's promo cards.
+4. **Two core boxes were only ever priced together with their stretch goals** (OG's "Core Box
+   Pledge", Lockdown's "Lockdown Pledge"). The figure is given to the core box, and the stretch
+   goals inside the pledges are counted with it, at nothing. A test holds that such a pair is
+   never sold apart.
+
+How an earlier figure is brought up to date:
+
+- Its day is the campaign's opening day (Retaliation: 23 November 2023), or for a pledge
+  manager, which has none, the day Gamefound published it (Nemesis: 12 September 2018;
+  Lockdown: 25 August 2020).
+- It is turned into euros at the ECB reference rate of that day, then multiplied by the rise
+  in consumer prices from that quarter to the latest one published.
+- **[owner]** The inflation is Wrocław's. **Statistics Poland publishes no price index for a
+  city**; the finest it goes is the voivodeship. So it is Dolnośląskie's, of which Wrocław is
+  the capital. By it prices have risen 51.1% since Q3 2018, 43.7% since Q3 2020 and 9.0% since
+  Q4 2023, to Q2 2026.
+- The rise is worked back from the latest quarter a year at a time on the year-on-year
+  figures, then a quarter at a time. The published figures are rounded, and fewer of them
+  multiplied together means less rounding.
+
+On the page:
+
+- **[owner]** Two more tiles, "MSRP" and "Saving vs MSRP", beside "Reward value" and "Saving".
+- **[owner]** The MSRP figure opens a breakdown: every item, its retail price, and where it is
+  from. An item raised by inflation says so in the warning colour, with the original figure,
+  its date, its campaign, the euros then and the amount now.
+- **[reading]** It opens on hover, on keyboard focus, and on a tap, since a phone has no hover.
+
+The figures are estimates and say so. The older a price, the more of it is inflation: the OG
+Core Box is £70 from 2018, which comes to €118.78 now.
+
 ## 8. The page
 
 ### 8.1 Layout
@@ -527,11 +619,11 @@ to the bottom carries the total and a link down to the cart.
 | 3     | Extras           | `ChoicesExtras`   | Fifteen `ExtraChoice` cards; "All" and "None"              |
 | 4     | Delivery & tax   | `ChoicesDelivery` | Deliver to; Split or Single; Include Tax / VAT and rate    |
 
-| Order | Right: answer              | Component     | Holds                                             |
-| ----- | -------------------------- | ------------- | ------------------------------------------------- |
-| 1     | Your best order            | `QuoteTotals` | Total, breakdown, reward value, saving, rate note |
-| 2     | Add to your Gamefound cart | `QuoteCart`   | `CartLineCard`s in sections per game              |
-| 3     | Good to know               | `QuoteNotes`  | Waves, bonuses, unpriced shipping, the method     |
+| Order | Right: answer              | Component     | Holds                                                                                |
+| ----- | -------------------------- | ------------- | ------------------------------------------------------------------------------------ |
+| 1     | Your best order            | `QuoteTotals` | Total, breakdown, four tiles (reward value, saving, MSRP, saving vs MSRP), rate note |
+| 2     | Add to your Gamefound cart | `QuoteCart`   | `CartLineCard`s in sections per game                                                 |
+| 3     | Good to know               | `QuoteNotes`  | Waves, bonuses, unpriced shipping, the method                                        |
 
 The header (`AppHeader`) has the Style and Currency choices and Reset. The footer says when the
 prices were read, that the tool is unofficial, and links to the source.
@@ -593,7 +685,7 @@ and has not yet said (section 13).
 
 - Components use semantic names — `i-fa-legacy`, `i-fa-dicetray`, `i-fa-cart`. The mapping to
   Font Awesome icons is the `ICONS` table in `scripts/generate-fa-icons.ts`.
-- That script writes each of the 61 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
+- That script writes each of the 64 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
   as a local collection (`provider: 'none'`) and bundles what the page uses, because there is
   no server to fetch icons from.
 - Nuxt UI's own internal icons are pointed at the same collection in `app.config.ts`.
@@ -679,23 +771,25 @@ The repository and the site are both public. The rules:
 
 Each of these cost time once. The fix is in the code; this is why it is there.
 
-| Symptom                                                                 | Cause                                                                                     | Fix, and where                                                                                                  |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Nothing renders: "Either manifest or precomputed data must be provided" | Nuxt 4.6.0 on Windows, in both `dev` and `build`                                          | Nuxt is held at `~4.5.2`. Upgrade deliberately and test both                                                    |
-| The theme snaps back to Nemesis after loading                           | Anything in `htmlAttrs` is re-applied when the page hydrates                              | `data-theme` is **not** in `htmlAttrs`; the inline head script and `useTheme` set it                            |
-| Menus and tooltips open underneath the page                             | The app was lifted above the background grid, and so above Nuxt UI's overlays on `<body>` | The grid is `body::before` at `z-index: -1`; `#__nuxt` has no stacking context                                  |
-| A shared `?c=` link is ignored on the built site                        | While hydrating a pre-rendered page, Nuxt strips the query to match the HTML              | The code is read at module load (`linkedAtLoad`), applied in `onNuxtReady`, written with `history.replaceState` |
-| Hydration mismatches in dates or prices                                 | The build machine's locale and time zone differ from the visitor's                        | One fixed locale (`en-GB`) and UTC for anything rendered at build time                                          |
-| Lint errors in `scripts/` about index signatures                        | The strict options were only on the app's tsconfig                                        | They are applied to all four (section 9)                                                                        |
-| Lint fails to start, or reports nonsense                                | `.nuxt/` is missing or stale; `eslint.config.mjs` imports from it                         | Run `bunx nuxt prepare`                                                                                         |
-| `bun install` fails without the token                                   | Every `@fortawesome/*` package goes through the token's registry, including the Free ones | The Free fallback is `@iconify-json/fa7-solid`; `fontawesome-common-types` is optional too                      |
-| Pro packages are not picked up after adding the token                   | Bun kept an earlier failed resolution                                                     | Delete `bun.lock`, reinstall, and commit the new lockfile                                                       |
-| A phone scrolls sideways                                                | Grid children default to `min-width: auto`                                                | `grid-cols-1` on grids and `min-w-0` on children                                                                |
-| Gamefound returns 403 to scripts                                        | Cloudflare bot protection                                                                 | Capture from a real browser (section 6). Do not work around it                                                  |
-| A base path such as `/x/` turns into a Windows path                     | Git Bash rewrites arguments that look like paths                                          | Prefix the command with `MSYS_NO_PATHCONV=1`                                                                    |
-| The preview shows odd defaults                                          | An earlier session's choices are still in `localStorage`                                  | Clear `nemesis-rewards:preferences` before judging the defaults                                                 |
-| A renamed product keeps its old picture                                 | `catalog:build` only fetches images that are missing                                      | Delete the product's file in `public/images/products/`, or build with `--force` (section 6)                     |
-| A new capture differs from the last on every line                       | The products were in the order Gamefound listed them, which shifts                        | The capture script sorts them by id                                                                             |
+| Symptom                                                                 | Cause                                                                                              | Fix, and where                                                                                                  |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Nothing renders: "Either manifest or precomputed data must be provided" | Nuxt 4.6.0 on Windows, in both `dev` and `build`                                                   | Nuxt is held at `~4.5.2`. Upgrade deliberately and test both                                                    |
+| The theme snaps back to Nemesis after loading                           | Anything in `htmlAttrs` is re-applied when the page hydrates                                       | `data-theme` is **not** in `htmlAttrs`; the inline head script and `useTheme` set it                            |
+| Menus and tooltips open underneath the page                             | The app was lifted above the background grid, and so above Nuxt UI's overlays on `<body>`          | The grid is `body::before` at `z-index: -1`; `#__nuxt` has no stacking context                                  |
+| A shared `?c=` link is ignored on the built site                        | While hydrating a pre-rendered page, Nuxt strips the query to match the HTML                       | The code is read at module load (`linkedAtLoad`), applied in `onNuxtReady`, written with `history.replaceState` |
+| Hydration mismatches in dates or prices                                 | The build machine's locale and time zone differ from the visitor's                                 | One fixed locale (`en-GB`) and UTC for anything rendered at build time                                          |
+| Lint errors in `scripts/` about index signatures                        | The strict options were only on the app's tsconfig                                                 | They are applied to all four (section 9)                                                                        |
+| Lint fails to start, or reports nonsense                                | `.nuxt/` is missing or stale; `eslint.config.mjs` imports from it                                  | Run `bunx nuxt prepare`                                                                                         |
+| `bun install` fails without the token                                   | Every `@fortawesome/*` package goes through the token's registry, including the Free ones          | The Free fallback is `@iconify-json/fa7-solid`; `fontawesome-common-types` is optional too                      |
+| Pro packages are not picked up after adding the token                   | Bun kept an earlier failed resolution                                                              | Delete `bun.lock`, reinstall, and commit the new lockfile                                                       |
+| A phone scrolls sideways                                                | Grid children default to `min-width: auto`                                                         | `grid-cols-1` on grids and `min-w-0` on children                                                                |
+| Gamefound returns 403 to scripts                                        | Cloudflare bot protection                                                                          | Capture from a real browser (section 6). Do not work around it                                                  |
+| A base path such as `/x/` turns into a Windows path                     | Git Bash rewrites arguments that look like paths                                                   | Prefix the command with `MSYS_NO_PATHCONV=1`                                                                    |
+| The preview shows odd defaults                                          | An earlier session's choices are still in `localStorage`                                           | Clear `nemesis-rewards:preferences` before judging the defaults                                                 |
+| A renamed product keeps its old picture                                 | `catalog:build` only fetches images that are missing                                               | Delete the product's file in `public/images/products/`, or build with `--force` (section 6)                     |
+| The regional price index cannot be fetched                              | Statistics Poland's Local Data Bank API (bdl.stat.gov.pl) refuses anonymous list requests on quota | Its Knowledge Databases API (api-dbw.stat.gov.pl) has the same series and answers                               |
+| The MSRP is not in the page's data                                      | The campaign states it only inside story images                                                    | Fetch the images from the image CDN, find the text with OCR, then read the figures by eye                       |
+| A new capture differs from the last on every line                       | The products were in the order Gamefound listed them, which shifts                                 | The capture script sorts them by id                                                                             |
 
 Two facts about the data that are easy to assume wrong:
 
@@ -726,6 +820,12 @@ Nothing requested is outstanding. These were raised and left with the owner:
 8. **The prices go stale.** They are a snapshot from 8 October 2026, and the campaign runs to
    27 October. Capture again (section 6) whenever Gamefound changes something. The pledge
    manager will later publish add-on shipping, which the site does not have.
+9. **The MSRP rule** (section 7.11) is a reading throughout. The points most worth a second
+   look: taking the oldest campaign's price rather than the latest; using this campaign's
+   price where there is nothing else, which makes those items show no saving; and the region
+   standing in for the city.
+10. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
+    October 2026: add the line to `inflation.ts`.
 
 ## 14. Reference results
 
@@ -774,6 +874,9 @@ For common jobs:
 | A new destination or tax rate | `destinations.ts`                                                                                                                    |
 | A new theme                   | A palette and a `:root[data-theme]` block in `main.css`; `ThemeName`; `useTheme`; `AppHeader`; the inline script in `nuxt.config.ts` |
 | A new icon                    | `ICONS` in `generate-fa-icons.ts`, then `bun run icons:generate`                                                                     |
+| A new currency                | `CurrencyCode`, an entry in `currencies.ts`, then `bun run catalog:build` for its starting rate                                      |
+| A new quarter of inflation    | One more line at the end of the table in `inflation.ts`, from dbw.stat.gov.pl (variable 305, Dolnośląskie)                           |
+| An MSRP for a product         | An entry in `msrp.ts`: `stated`, or `price`/`msrp` with the earlier campaign it is from                                              |
 | A new outside request         | Add its origin to the security policy in `nuxt.config.ts`                                                                            |
 
 To rebuild the project from nothing, the order that worked was: scaffold Nuxt with Nuxt UI and

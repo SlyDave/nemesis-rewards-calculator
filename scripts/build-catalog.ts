@@ -4,7 +4,8 @@
  * data/gamefound.json is the campaign's catalogue as Gamefound's own page reads it
  * (scripts/capture-gamefound.js). This trims it to what the calculator needs, writes that
  * to app/data/catalog.json, and stores every product image locally as a small WebP so the
- * site never loads anything from Gamefound.
+ * site never loads anything from Gamefound. It also fetches the exchange rates for the day of
+ * the capture, which the site starts from.
  *
  * Run with `bun run catalog:build` after a new capture; add `--force` to fetch every image
  * again rather than only the missing ones.
@@ -13,6 +14,8 @@
 import { mkdir } from 'node:fs/promises'
 
 import sharp from 'sharp'
+
+import { FOREIGN_CURRENCIES, isCurrencyCode } from '../app/domain/currencies'
 
 interface CapturedOptionValue {
   readonly text: string
@@ -67,7 +70,10 @@ const IMAGE_DIR = 'public/images/products'
 const IMAGE_WIDTH = 640
 const IMAGE_QUALITY = 78
 const MINIATURES_OPTION = 'Miniatures version'
-const RATE_PRECISION = 4
+const RATES_URL = 'https://api.frankfurter.dev/v2/rates'
+/** Significant figures: enough for a rate of 0.8475 and of 20,060 alike. */
+const RATE_PRECISION = 5
+const DATE_LENGTH = 'YYYY-MM-DD'.length
 
 const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> =>
   typeof value === 'object' && value !== null
@@ -133,13 +139,51 @@ const storeImage = async (product: CapturedProduct): Promise<string | null> => {
   return published
 }
 
-/** Gamefound quotes each currency in euros; the site wants the other way round. */
-const perEuro = (code: string): number => {
-  const currency = capture.displayCurrencies.find((candidate) => candidate.code === code)
-  if (currency === undefined) {
-    throw new Error(`the capture has no ${code} rate`)
+/**
+ * The exchange rates the site starts with, until the browser has fetched the day's own
+ * (app/composables/useRates.ts): central banks' reference rates for the day of the capture,
+ * from Frankfurter. Gamefound's own rates would do for the dozen currencies its menu offers,
+ * but the site also offers those of the other places the campaign ships to.
+ */
+const ratesOn = async (day: string): Promise<Record<string, number>> => {
+  const codes = FOREIGN_CURRENCIES.join(',')
+  const response = await fetch(`${RATES_URL}?base=EUR&quotes=${codes}&date=${day}`)
+  if (!response.ok) {
+    throw new Error(`${String(response.status)} fetching the exchange rates for ${day}`)
   }
-  return Number((1 / currency.eurPerUnit).toFixed(RATE_PRECISION))
+  const reply: unknown = await response.json()
+  const found = new Map<string, number>()
+  if (Array.isArray(reply)) {
+    for (const entry of reply) {
+      if (
+        isRecord(entry) &&
+        typeof entry['quote'] === 'string' &&
+        typeof entry['rate'] === 'number' &&
+        entry['rate'] > 0
+      ) {
+        found.set(entry['quote'], entry['rate'])
+      }
+    }
+  }
+  return Object.fromEntries(
+    FOREIGN_CURRENCIES.map((code) => {
+      const rate = found.get(code)
+      if (rate === undefined) {
+        throw new Error(`no ${code} rate for ${day}`)
+      }
+      return [code, Number(rate.toPrecision(RATE_PRECISION))]
+    }),
+  )
+}
+
+/** Gamefound's menu must not have gained a currency the site does not offer. */
+const unknownCurrencies = capture.displayCurrencies
+  .map((candidate) => candidate.code)
+  .filter((code) => !isCurrencyCode(code))
+if (unknownCurrencies.length > 0) {
+  throw new Error(
+    `Gamefound lists currencies app/domain/currencies.ts does not: ${unknownCurrencies.join(', ')}`,
+  )
 }
 
 await mkdir(IMAGE_DIR, { recursive: true })
@@ -167,7 +211,7 @@ const catalog = {
   capturedAt: capture.capturedAt,
   source: capture.source,
   campaignEnd: capture.campaignEnd,
-  rates: { USD: perEuro('USD'), GBP: perEuro('GBP') },
+  rates: await ratesOn(capture.capturedAt.slice(0, DATE_LENGTH)),
   categories: capture.categories,
   products,
 }

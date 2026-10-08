@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CURRENCY_SYMBOLS, rateFor } from '~/domain/money'
+import { formatRate } from '~/domain/money'
 
 import type { Quote } from '~/domain/quote'
 
@@ -10,8 +10,6 @@ const props = defineProps<{
 const { preferences } = usePreferences()
 const { rates } = useRates()
 const { format } = useMoney()
-
-const RATE_DECIMALS = 4
 
 const FINISH_NAMES = { plain: 'Plain', sundrop: 'Sundrop', painted: 'Fully painted' } as const
 
@@ -36,12 +34,10 @@ const rateNote = computed<string | null>(() => {
   if (currency === 'EUR') {
     return null
   }
-  const rate = rateFor(currency, rates.value).toFixed(RATE_DECIMALS)
   const day = new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeZone: 'UTC' }).format(
     new Date(rates.value.date),
   )
-  const source = rates.value.live ? 'ECB reference rate' : 'Gamefound’s rate'
-  return `€1 = ${CURRENCY_SYMBOLS[currency]}${rate} · ${source}, ${day}. Gamefound charges in euros, so your bank sets the final figure.`
+  return `€1 = ${formatRate(currency, rates.value)} · central-bank reference rate, ${day}. Gamefound charges in euros, so your bank sets the final figure.`
 })
 </script>
 
@@ -163,6 +159,54 @@ const rateNote = computed<string | null>(() => {
             :class="quote.savings > 0 ? 'text-primary' : 'text-muted'"
           >
             {{ format(quote.savings) }}
+          </p>
+        </div>
+        <div class="border border-default bg-elevated/40 p-3">
+          <p class="flex items-center gap-2 hud-label text-[0.65rem] text-muted">
+            <UIcon
+              name="i-fa-msrp"
+              class="size-4 text-primary"
+            />
+            MSRP
+          </p>
+          <!-- Opens on hover, on focus and, on a touch screen, on a tap. -->
+          <UPopover
+            mode="hover"
+            enable-touch
+            :open-delay="100"
+            :close-delay="150"
+            :content="{ side: 'top', align: 'start' }"
+          >
+            <button
+              type="button"
+              class="mt-1 cursor-help text-xl font-semibold text-highlighted underline decoration-primary/60 decoration-dotted underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              :aria-label="`MSRP ${format(quote.msrpTotal)}: show how it is made up`"
+              data-testid="msrp"
+            >
+              {{ format(quote.msrpTotal) }}
+            </button>
+            <template #content>
+              <MsrpBreakdown
+                :items="quote.msrp"
+                :total="quote.msrpTotal"
+              />
+            </template>
+          </UPopover>
+        </div>
+        <div class="border border-default bg-elevated/40 p-3">
+          <p class="flex items-center gap-2 hud-label text-[0.65rem] text-muted">
+            <UIcon
+              name="i-fa-discount"
+              class="size-4 text-primary"
+            />
+            Saving vs MSRP
+          </p>
+          <p
+            class="mt-1 text-xl font-semibold"
+            :class="quote.msrpSavings > 0 ? 'text-primary' : 'text-muted'"
+            data-testid="msrp-saving"
+          >
+            {{ format(quote.msrpSavings) }}
           </p>
         </div>
       </div>

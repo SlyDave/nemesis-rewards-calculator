@@ -1,5 +1,6 @@
 import rawCatalog from '../data/catalog.json'
 
+import type { ForeignCurrency } from './currencies'
 import type { Cents } from './types'
 
 /** A product as Gamefound lists it: a pledge, an add-on, or a part that only comes in a set. */
@@ -30,8 +31,8 @@ export interface Catalog {
   readonly capturedAt: string
   readonly source: string
   readonly campaignEnd: string
-  /** Units of each currency per euro when the catalogue was captured. */
-  readonly rates: { readonly USD: number; readonly GBP: number }
+  /** Units of each currency per euro on the day the catalogue was captured. */
+  readonly rates: Readonly<Record<ForeignCurrency, number>>
   readonly products: readonly Product[]
 }
 

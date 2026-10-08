@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { CURRENCY_SYMBOLS } from '~/domain/money'
-import { CURRENCIES } from '~/domain/preferences'
+import { CURRENCIES, LEADING_CURRENCIES } from '~/domain/currencies'
 
 import type { CurrencyCode, ThemeName } from '~/domain/types'
 
@@ -14,10 +13,17 @@ const THEMES: readonly { value: ThemeName; label: string; icon: string }[] = [
   { value: 'legacy', label: 'Legacy', icon: 'i-fa-legacy' },
 ]
 
-const CURRENCY_OPTIONS = CURRENCIES.map((code) => ({
+const CURRENCY_OPTIONS = CURRENCIES.map(({ code, name, symbol }) => ({
   value: code,
-  label: `${CURRENCY_SYMBOLS[code]} ${code}`,
+  label: `${symbol} ${code}`,
+  description: name,
 }))
+
+/** The euro, the dollar and the pound in a group of their own, ahead of the rest. */
+const CURRENCY_GROUPS = [
+  CURRENCY_OPTIONS.slice(0, LEADING_CURRENCIES),
+  CURRENCY_OPTIONS.slice(LEADING_CURRENCIES),
+]
 
 const chosenTheme = computed<ThemeName>({
   get: () => theme.value,
@@ -57,12 +63,17 @@ const currency = computed<CurrencyCode>({
           wrap
         />
       </div>
-      <div class="min-w-56 flex-1 sm:flex-none">
+      <div class="min-w-56 flex-1 sm:w-64 sm:flex-none">
         <p class="mb-1.5 hud-label text-[0.65rem] text-muted">Currency</p>
-        <SegmentedChoice
+        <USelectMenu
           v-model="currency"
-          :options="CURRENCY_OPTIONS"
-          label="Currency"
+          :items="CURRENCY_GROUPS"
+          value-key="value"
+          :filter-fields="['label', 'description']"
+          :search-input="{ placeholder: 'Find a currency…' }"
+          aria-label="Currency"
+          size="lg"
+          class="w-full"
         />
       </div>
       <UButton

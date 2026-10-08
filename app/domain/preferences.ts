@@ -1,15 +1,8 @@
 import { findRequirement } from './classification'
+import { isCurrencyCode } from './currencies'
 import { DEFAULT_DESTINATION, findDestination } from './destinations'
 
-import type {
-  CurrencyCode,
-  Edition,
-  ExtraTag,
-  Finish,
-  GameLine,
-  Preferences,
-  ShippingMode,
-} from './types'
+import type { Edition, ExtraTag, Finish, GameLine, Preferences, ShippingMode } from './types'
 
 /** The games, in the order they are offered. Legacy is the campaign; the rest are reprints. */
 export const LINES: readonly {
@@ -70,7 +63,6 @@ export const EXTRAS: readonly {
 const EDITIONS: readonly Edition[] = ['standard', 'special']
 const FINISHES: readonly Finish[] = ['plain', 'sundrop', 'painted']
 const SHIPPING_MODES: readonly ShippingMode[] = ['split', 'single']
-export const CURRENCIES: readonly CurrencyCode[] = ['EUR', 'USD', 'GBP']
 
 export const DEFAULT_PREFERENCES: Preferences = {
   returningBacker: false,
@@ -174,9 +166,6 @@ const decodeList = (text: string | undefined): readonly number[] | null => {
     })
 }
 
-const isCurrency = (value: string): value is CurrencyCode =>
-  (CURRENCIES as readonly string[]).includes(value)
-
 /** Reads a string written by encodePreferences; null for anything else. */
 export const decodePreferences = (code: string): Preferences | null => {
   const [packedText, destination, currency, taxText, takenText, leftText, ...surplus] =
@@ -229,7 +218,7 @@ export const decodePreferences = (code: string): Preferences | null => {
     shipping === undefined ||
     bits !== 0 ||
     findDestination(destination) === undefined ||
-    !isCurrency(currency) ||
+    !isCurrencyCode(currency) ||
     (taxRate !== null && !(taxRate >= 0 && taxRate <= MAX_TAX_RATE))
   ) {
     return null

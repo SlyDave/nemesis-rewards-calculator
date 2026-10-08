@@ -1,9 +1,16 @@
 import { catalog } from '~/domain/catalog'
+import { FOREIGN_CURRENCIES } from '~/domain/currencies'
 
+import type { ForeignCurrency } from '~/domain/currencies'
 import type { Rates } from '~/domain/money'
 
-/** The European Central Bank's daily reference rates, served by Frankfurter with no key. */
-const RATES_URL = 'https://api.frankfurter.dev/v1/latest?base=EUR&symbols=USD,GBP'
+/**
+ * Central banks' reference rates for every currency offered, served by Frankfurter with no
+ * key. The same address is what the build fetches the starting rates from
+ * (scripts/build-catalog.ts), and the one outside address the page is allowed to call
+ * (nuxt.config.ts).
+ */
+const RATES_URL = `https://api.frankfurter.dev/v2/rates?base=EUR&quotes=${FOREIGN_CURRENCIES.join(',')}`
 const DATE_LENGTH = 'YYYY-MM-DD'.length
 
 const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> =>
@@ -12,13 +19,44 @@ const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> =>
 const isRate = (value: unknown): value is number =>
   typeof value === 'number' && Number.isFinite(value) && value > 0
 
-/** Picks the rates out of Frankfurter's reply; null if it is not the shape expected. */
+const isDate = (value: unknown): value is string =>
+  typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
+
+/**
+ * Picks the rates out of Frankfurter's reply — a list of `{ date, base, quote, rate }` — and
+ * returns null unless it has a sound rate for every currency: a partial answer would leave
+ * some totals on today's rate and others on the build's.
+ */
 const parseRates = (reply: unknown): Rates | null => {
-  if (!isRecord(reply) || !isRecord(reply['rates']) || typeof reply['date'] !== 'string') {
+  if (!Array.isArray(reply)) {
     return null
   }
-  const { USD, GBP } = reply['rates']
-  return isRate(USD) && isRate(GBP) ? { USD, GBP, date: reply['date'], live: true } : null
+  const found = new Map<string, number>()
+  let date = ''
+  for (const entry of reply) {
+    if (
+      isRecord(entry) &&
+      entry['base'] === 'EUR' &&
+      typeof entry['quote'] === 'string' &&
+      isRate(entry['rate']) &&
+      isDate(entry['date'])
+    ) {
+      found.set(entry['quote'], entry['rate'])
+      // Not every central bank has published by the same hour; the note carries the latest day.
+      date = entry['date'] > date ? entry['date'] : date
+    }
+  }
+
+  const perEuro: Partial<Record<ForeignCurrency, number>> = {}
+  for (const code of FOREIGN_CURRENCIES) {
+    const rate = found.get(code)
+    if (rate === undefined) {
+      return null
+    }
+    perEuro[code] = rate
+  }
+  // Every currency was filled in above, or this was left by the early return.
+  return { perEuro: { ...catalog.rates, ...perEuro }, date, live: true }
 }
 
 interface RatesStore {
@@ -28,12 +66,12 @@ interface RatesStore {
 }
 
 /**
- * The exchange rates. They start as the ones Gamefound was showing when the catalogue was
+ * The exchange rates. They start as the reference rates of the day the catalogue was
  * captured, so the page is right enough before, or without, the network.
  */
 export const useRates = (): RatesStore => {
   const rates = useState<Rates>('rates', () => ({
-    ...catalog.rates,
+    perEuro: catalog.rates,
     date: catalog.capturedAt.slice(0, DATE_LENGTH),
     live: false,
   }))

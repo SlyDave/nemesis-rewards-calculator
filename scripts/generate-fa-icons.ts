@@ -130,6 +130,9 @@ const ICONS: Readonly<Record<string, IconSource>> = {
   cart: light('faCartShopping'),
   value: light('faGift'),
   savings: light('faPiggyBank'),
+  msrp: light('faTags'),
+  discount: light('faBadgePercent', 'percent'),
+  inflation: light('faArrowTrendUp'),
   bonus: light('faSparkles', 'wand-magic-sparkles'),
 
   // Signs and actions.
