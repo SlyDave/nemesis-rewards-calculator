@@ -25,7 +25,7 @@ pushed and live unless it says otherwise.
 | Catalogue        | Captured 8 October 2026, 18:20 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 143, all passing (`bun test`)                                                           |
+| Tests            | 154, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -84,6 +84,8 @@ called `nemesis-rewards-calculator`:
     describes the two shipments (section 7.6).
 19. A Donate link to the right of Reset, filling the rest of the row, opening the owner's GitHub
     Sponsors page in a new tab, with given hover text, and lit like the total (section 8.3).
+20. Aftermath was not to be found under Expansions: find out why, and list it correctly
+    (section 7.1).
 
 ### Where each decision came from
 
@@ -338,7 +340,7 @@ else has one.
 - **[reading]** Four accessories are for the _add-ons_ of their game (`needs: 'gameplay'`):
   the Legacy and Retaliation "Add-ons" acrylic packs and sleeve sets. Their switch does not
   reach them until that game has an expansion asked for.
-- **[reading]** Four add-ons are played in a second game besides the one they are sold with
+- **[reading]** Six add-ons are played in a second game besides the one they are sold with
   (`alsoWith`), by Gamefound's own description. With either game included, their switch takes
   them; with neither, it passes them over and names both. They stay listed in the cart under
   the game they are sold with.
@@ -349,14 +351,30 @@ else has one.
   | Carnomorph Expansion (125204)    | OG        | Lockdown       | "will work with classic Nemesis, Aftermath, and Lockdown"     |
   | Medic Character Pack (125205)    | OG        | Lockdown       | "the original Nemesis crew … or one of the Mars survivors"    |
   | Nemesis Constructs Pack (125233) | OG        | Lockdown       | "for Nemesis and Nemesis Lockdown with all expansions"        |
+  | Aftermath Expansion 2.0 (125198) | OG        | Lockdown       | "Also works with Nemesis Lockdown"                            |
+  | Void Seeders Expansion (125203)  | OG        | Lockdown       | "will work with classic Nemesis, Aftermath, and Lockdown"     |
 
-  So Expansions with only Lockdown included means the Carnomorphs and the Medic, and Terrain
-  with only Lockdown means the Constructs Pack — not every game's, as it was before these were
-  recorded.
+  So Expansions with only Lockdown included means the Carnomorphs, the Medic, Aftermath and
+  Void Seeders, and Terrain with only Lockdown means the Constructs Pack — not every game's,
+  as it was before these were recorded.
 
-- **Not modelled:** Aftermath and the Void Seeders Expansion also "work with Lockdown", but
-  they are part of OG's core, and core items come only with their game. They cannot be chosen
-  for a Lockdown-only order.
+- **[owner]** Aftermath is listed under Expansions. It never left the catalogue: it was
+  classed as part of the original game and nothing more, because every pledge for that game
+  holds it, in the "Nemesis Stretch Goals (Special Edition)" box that is Aftermath and Void
+  Seeders together. Whatever is classed `core` has no switch, so it was listed nowhere, and
+  could not be had without the game. Gamefound sells it by itself too.
+- **[reading]** Five items are like that — in every pledge for their game, and sold on their
+  own — and all five are now Expansions items marked `withPledge`: Aftermath, the Void Seeders
+  Expansion, the Lockdown Stretch Goals, the Retaliation Stretch Goals and the Legacy Recharge
+  Pack. With its game included, such an item comes regardless: it is listed as there already
+  ("Comes with the Nemesis OG pledge, in its Nemesis Stretch Goals (Special Edition)"),
+  cannot be left out, costs nothing more, and is no part of what the switch counts. Without
+  its game it is an extra like any other. Aftermath and Void Seeders also go with Lockdown,
+  by Gamefound's wording, as the Carnomorphs do: so Expansions with only Lockdown now takes
+  all four.
+- A test holds that every single item on sale is under some switch, so that nothing sold can
+  go missing from the page this way again; another, that an item is only said to come with a
+  pledge where every pledge for its game holds it.
 - Every other item was checked against Gamefound's category and description on 8 October 2026
   and is classified as Gamefound has it.
 
@@ -878,7 +896,7 @@ catalogue is captured again.
 | All four games, Alternative Sculpts | `8fp3-GB-EUR-`  | 4 x Core Pledge and four sculpt add-ons; no Classic Crew       | 493.00  | 97.00    | 708.00  |
 | All four games, every extra         | `7hp13-GB-EUR-` | Salvation, Veteran, Martian, Intruder and 11 add-ons           | 1599.00 | 169.00   | 2121.60 |
 | Retaliation, Expansions             | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders | 212.00  | 24.00    | 283.20  |
-| Lockdown, Expansions                | `dr-GB-EUR-`    | Lockdown pledge, Carnomorph Expansion, Medic                   | 161.00  | 24.00    | 222.00  |
+| Lockdown, Expansions                | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic   | 217.00  | 24.00    | 289.20  |
 | Lockdown, Terrain Pack(s)           | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                       | 145.00  | 24.00    | 202.80  |
 
 ## 15. Working on it

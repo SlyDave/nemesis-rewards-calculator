@@ -27,6 +27,16 @@ export interface Requirement {
   readonly when?: (lines: LineSelection) => boolean
   /** Said beside such an item when its switch passes it over, in place of naming its game. */
   readonly whenNote?: string
+  /**
+   * For an item that is sold on its own and is also in every pledge for its game. With the
+   * game included it simply comes, and is shown under its switch as already there. Without
+   * the game it is an extra like any other: reached by its switch, or picked out.
+   *
+   * Gamefound sells five such, all under "Gameplay". Classing them as part of their game and
+   * nothing more once kept them out of the Expansions list altogether, where a backer of one
+   * game goes looking for an expansion that is played in it.
+   */
+  readonly withPledge?: true
   /** A second switch that must also be on, for extras that only serve other extras. */
   readonly needs?: ExtraTag
   /** For the Legacy core, which comes with standees or with miniatures. */
@@ -46,6 +56,10 @@ const shared = (
   tag: ExtraTag,
   ...ids: readonly number[]
 ): readonly Requirement[] => ids.map((id) => ({ id, line, tag, alsoWith }))
+
+/** A gameplay item that every pledge for its game holds, and that is also sold by itself. */
+const pledged = (line: GameLine, ...ids: readonly number[]): readonly Requirement[] =>
+  ids.map((id) => ({ id, line, tag: 'gameplay', withPledge: true }))
 
 /** An extra for the gameplay expansions: pointless, so unwanted, without them. */
 const forExpansions = (
@@ -68,7 +82,8 @@ export const REQUIREMENTS: readonly Requirement[] = [
   { id: 125532, line: 'legacy', tag: 'core', edition: 'special' }, // Stretch Goals, miniatures
   { id: 125533, line: 'legacy', tag: 'core', edition: 'standard' }, // Core Box, standees
   { id: 125534, line: 'legacy', tag: 'core', edition: 'standard' }, // Stretch Goals, standees
-  ...core('legacy', 125536, 127879), // Recharge Pack, Infinity Mode
+  ...core('legacy', 127879), // Infinity Mode
+  ...pledged('legacy', 125536), // Recharge Pack
   // Zenith of Ruin and its Recharge Pack, Crew Logs, SAM
   ...extra('legacy', 'gameplay', 125546, 125537, 125547, 128018),
   // Evolved Void Seeders — the "Secret Add-on" until campaign Update #9 — which has "content
@@ -83,7 +98,12 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...forExpansions('legacy', 'sleeves', 128437), // … + Add-ons
 
   // --- Nemesis (the original) -------------------------------------------------------------
-  ...core('og', 125508, 125198, 125203), // Core Box, Aftermath, Void Seeders
+  ...core('og', 125508), // Core Box
+  // Aftermath and Void Seeders: the two expansions in the Stretch Goals box of every pledge
+  // for the original game, and each sold by itself too. Aftermath "also works with Nemesis
+  // Lockdown"; Void Seeders "will work with classic Nemesis, Aftermath, and Lockdown".
+  { id: 125198, line: 'og', tag: 'gameplay', alsoWith: 'lockdown', withPledge: true },
+  { id: 125203, line: 'og', tag: 'gameplay', alsoWith: 'lockdown', withPledge: true },
   // Carnomorphs "will work with classic Nemesis, Aftermath, and Lockdown"; the Medic can be
   // "one of the Mars survivors".
   ...shared('og', 'lockdown', 'gameplay', 125204, 125205),
@@ -105,7 +125,8 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('og', 'hoodie', 125234),
 
   // --- Nemesis Lockdown -------------------------------------------------------------------
-  ...core('lockdown', 125515, 125236), // Core Box, Stretch Goals
+  ...core('lockdown', 125515), // Core Box
+  ...pledged('lockdown', 125236), // Stretch Goals
   ...extra('lockdown', 'playmat', 125239),
   ...extra('lockdown', 'acrylic', 125244),
   ...extra('lockdown', 'cats', 125237),
@@ -118,7 +139,8 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('lockdown', 'hoodie', 125245),
 
   // --- Nemesis Retaliation ----------------------------------------------------------------
-  ...core('retaliation', 125525, 125526), // Core Box, Stretch Goals
+  ...core('retaliation', 125525), // Core Box
+  ...pledged('retaliation', 125526), // Stretch Goals
   ...extra('retaliation', 'gameplay', 125249, 125250, 125251), // Sangrevores, Xyrians, Squad
   ...extra('retaliation', 'untold', 125260),
   ...extra('retaliation', 'promo', 125267),
@@ -185,6 +207,17 @@ export const findRequirement = (id: number): Requirement | undefined => requirem
 export const goesWith = (requirement: Requirement, lines: LineSelection): boolean =>
   requirement.when?.(lines) ??
   (lines[requirement.line] || (requirement.alsoWith !== undefined && lines[requirement.alsoWith]))
+
+/**
+ * The part of a pledge that holds an item along with others, for an item that is one of
+ * several in a box: the original game's Stretch Goals, for Aftermath. Undefined for the rest.
+ */
+export const boxOf = (id: number): number | undefined => {
+  const found = Object.entries(PROVIDES).find(
+    ([box, contents]) => Number(box) !== id && contents.length > 1 && contents.includes(id),
+  )
+  return found === undefined ? undefined : Number(found[0])
+}
 
 /** The requirements one single item satisfies. */
 export const providedBy = (leafId: number): readonly number[] => PROVIDES[leafId] ?? [leafId]

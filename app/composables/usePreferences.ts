@@ -6,7 +6,7 @@ import {
   decodePreferences,
   encodePreferences,
 } from '~/domain/preferences'
-import { isOnByDefault } from '~/domain/selection'
+import { comesWithPledge, isOnByDefault } from '~/domain/selection'
 
 import type { CurrencyCode, ExtraTag, GameLine, Preferences } from '~/domain/types'
 
@@ -54,7 +54,8 @@ export const usePreferences = (): PreferencesStore => {
     },
     setItem: (id, wanted) => {
       const requirement = findRequirement(id)
-      if (requirement === undefined) {
+      // What comes with an included game's pledge is not there to be picked or left.
+      if (requirement === undefined || comesWithPledge(requirement, preferences.value)) {
         return
       }
       const { [id]: _previous, ...others } = preferences.value.overrides

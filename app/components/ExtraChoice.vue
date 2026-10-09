@@ -36,9 +36,25 @@ const hint = computed<string>(() => {
   return state === 'some' ? `${String(wantedCount)} of ${plural(size)}` : plural(size)
 })
 
-/** The small print under an item the switch passes over: whose it is, and that it can be had. */
-const noteFor = (item: ExtraItem): { description?: string } =>
-  item.passedOver === null ? {} : { description: `${item.passedOver}. Tick it to take it anyway.` }
+/**
+ * The small print under an item: that a pledge brings it already, or, for one the switch
+ * passes over, whose it is and that it can be had.
+ */
+const noteFor = (item: ExtraItem): { description?: string } => {
+  if (item.included !== null) {
+    return { description: `${item.included}.` }
+  }
+  return item.passedOver === null
+    ? {}
+    : { description: `${item.passedOver}. Tick it to take it anyway.` }
+}
+
+const priceOf = (item: ExtraItem): string => {
+  if (item.included !== null) {
+    return 'Included'
+  }
+  return item.price === 0 ? 'Free' : format(item.price)
+}
 </script>
 
 <template>
@@ -104,15 +120,14 @@ const noteFor = (item: ExtraItem): { description?: string } =>
       >
         <UCheckbox
           :model-value="item.wanted"
+          :disabled="item.included !== null"
           :label="item.name"
           v-bind="noteFor(item)"
           size="sm"
           class="min-w-0"
           @update:model-value="emit('pick', item.id, $event === true)"
         />
-        <span class="shrink-0 text-xs text-muted">{{
-          item.price === 0 ? 'Free' : format(item.price)
-        }}</span>
+        <span class="shrink-0 text-xs text-muted">{{ priceOf(item) }}</span>
       </li>
     </ul>
   </div>
