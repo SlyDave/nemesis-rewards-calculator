@@ -31,7 +31,7 @@ export interface CartLine {
   readonly product: Product
   /** What this visitor pays for it, which for a returning backer's gift is nothing. */
   readonly price: Cents
-  /** A gift is not added to the cart by hand: the pledge manager adds it. */
+  /** A returning backer's gift: added like the rest, as the one Gamefound lists at nothing. */
   readonly isGift: boolean
   readonly group: CartGroup
   readonly contents: readonly ContentLine[]
@@ -235,10 +235,8 @@ const priceOrder = (preferences: Preferences): Quote => {
     msrpSavings: msrpTotal - itemsTotal,
     finishTotal,
     shippingTotal,
-    // A gift is taken to travel free with the rest, so it is not one of these.
-    unpricedShipping: lines
-      .filter((line) => line.shipping === null && !line.isGift)
-      .map((line) => line.product),
+    // A gift is one of these too: it is free, but by the FAQ its shipping is not.
+    unpricedShipping: lines.filter((line) => line.shipping === null).map((line) => line.product),
     canSplit: shipments.has(1) && shipments.has(2),
     shipping: preferences.shipping,
     waves: describeWaves(preferences.shipping, {

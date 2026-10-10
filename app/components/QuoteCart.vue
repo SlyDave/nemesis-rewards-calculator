@@ -17,19 +17,14 @@ const GROUP_NAMES: Readonly<Record<CartGroup, string>> = {
 
 interface Section {
   readonly group: CartGroup
-  readonly entries: { readonly line: CartLine; readonly position: number | null }[]
+  readonly entries: { readonly line: CartLine; readonly position: number }[]
 }
 
 /** The lines as they come — by game, then category, then name — cut into one run per game. */
 const sections = computed<readonly Section[]>(() => {
   const result: Section[] = []
-  // The numbers count the things to add; a gift is listed with them but is not one.
-  let added = 0
-  for (const line of props.quote.lines) {
-    if (!line.isGift) {
-      added += 1
-    }
-    const entry = { line, position: line.isGift ? null : added }
+  for (const [index, line] of props.quote.lines.entries()) {
+    const entry = { line, position: index + 1 }
     const current = result.at(-1)
     if (current?.group === line.group) {
       current.entries.push(entry)

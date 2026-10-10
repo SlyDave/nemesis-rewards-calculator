@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getProduct } from '~/domain/catalog'
-import { GIFT_DETAILS_URL, RETURNING_BACKER_GIFT } from '~/domain/gift'
+import { GIFT_DETAILS_URL, GIFT_FAQ_URL, RETURNING_BACKER_GIFT } from '~/domain/gift'
 
 const { preferences, update } = usePreferences()
 const { format } = useMoney()
@@ -54,18 +54,26 @@ const otherwise = computed<string | null>(() =>
       <div class="min-w-0 text-xs text-muted">
         <p>
           <span class="font-semibold text-highlighted">Free gift: the SAM Robot Pack.</span>
-          Returning Nemesis backers get it for free: the pledge manager will add it to your pledge
-          automatically, and it ships with the rest at no extra cost.
+          Returning Nemesis backers get it for free, one per order: on Gamefound, add the one listed
+          at {{ format(0) }} among the add-ons. Its shipping is not free: it adds to the weight of
+          your order.
           <template v-if="otherwise !== null">{{ otherwise }}</template>
         </p>
         <p class="mt-2">
           Gamefound recognises you by the email address of your earlier pledge, so pledge with the
-          same one.
+          same one. Details in
           <ULink
             :to="GIFT_DETAILS_URL"
             target="_blank"
             class="text-primary hover:underline"
-            >Details in campaign Update #6</ULink
+            >campaign Update #6</ULink
+          >
+          and
+          <ULink
+            :to="GIFT_FAQ_URL"
+            target="_blank"
+            class="text-primary hover:underline"
+            >the campaign’s FAQ</ULink
           >.
         </p>
       </div>

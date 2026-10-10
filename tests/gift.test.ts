@@ -34,11 +34,13 @@ describe('the returning backer’s gift', () => {
     expect(quote.savings).toBe(800)
   })
 
-  test('ships free, so it is not among the add-ons still waiting for a shipping price', () => {
+  // The campaign's FAQ: the pack is free, but it adds to the weight of the order.
+  test('is free, but not its shipping: it waits for a shipping price like any add-on', () => {
     const gifted = buildQuote(preferencesWith({ ...plain, returningBacker: true }))
-    expect(gifted.unpricedShipping).toEqual([])
+    expect(gifted.unpricedShipping.map((product) => product.id)).toEqual([SAM])
+    // Nothing is charged for it yet: only the pledge has a published price.
+    expect(gifted.shippingTotal).toBe(buildQuote(preferencesWith(plain)).shippingTotal)
 
-    // Bought, it is an add-on like any other.
     const bought = buildQuote(preferencesWith({ ...plain, overrides: { [SAM]: true } }))
     expect(bought.unpricedShipping.map((product) => product.id)).toEqual([SAM])
   })

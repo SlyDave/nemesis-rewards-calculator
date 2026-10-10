@@ -3,8 +3,8 @@ import type { CartLine } from '~/domain/quote'
 
 const props = defineProps<{
   line: CartLine
-  /** Its place among the things to add, from 1; null for a gift, which is not added by hand. */
-  position: number | null
+  /** Its place among the things to add, from 1. */
+  position: number
 }>()
 
 const { format } = useMoney()
@@ -41,14 +41,8 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
         <span
           class="absolute -top-1.5 -left-1.5 grid size-6 place-items-center bg-primary hud-label text-xs text-inverted"
           aria-hidden="true"
+          >{{ position }}</span
         >
-          <UIcon
-            v-if="position === null"
-            name="i-fa-value"
-            class="size-3.5"
-          />
-          <template v-else>{{ position }}</template>
-        </span>
       </div>
 
       <div class="flex min-w-0 flex-1 flex-col gap-2">
@@ -106,6 +100,13 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
             size="sm"
           />
         </div>
+
+        <p
+          v-if="line.isGift"
+          class="text-xs text-muted"
+        >
+          On Gamefound, add the one listed at {{ format(0) }} for returning backers.
+        </p>
 
         <div class="mt-auto flex flex-wrap items-center justify-between gap-2">
           <UCollapsible

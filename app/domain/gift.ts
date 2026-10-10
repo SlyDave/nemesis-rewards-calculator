@@ -6,15 +6,18 @@ import type { Cents, Preferences } from './types'
  *
  * Anyone who has pledged for Nemesis before — on Kickstarter or Gamefound, in a campaign, a
  * pledge manager or a late pledge — gets the SAM Robot Pack for nothing (campaign Update #6).
- * It is the same product everyone else buys as an add-on; for a returning backer the pledge
- * manager adds it by itself, so it is not something to put in the cart, and it is taken to
- * ship free with the rest. Gamefound knows a returning backer by the email address of the
+ * It is the same product everyone else buys as an add-on. By the campaign's FAQ a returning
+ * backer adds it to the cart like any other, choosing the one Gamefound lists for them at
+ * 0,00 €, one to an order; and though the pack is free its shipping is not, since it adds to
+ * the weight of the order. Gamefound knows a returning backer by the email address of the
  * earlier pledge.
  */
 export const RETURNING_BACKER_GIFT = 128018
 
 export const GIFT_DETAILS_URL =
   'https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/updates/6'
+
+export const GIFT_FAQ_URL = 'https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/faq'
 
 /** Whether a product is the gift, for someone it is a gift to. */
 export const isGift = (productId: number, preferences: Preferences): boolean =>
