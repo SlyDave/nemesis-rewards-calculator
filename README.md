@@ -57,7 +57,11 @@ everything separately.
 - **VAT** is charged on rewards and shipping at the destination's standard rate, for the
   places the campaign collects it. The rate can be corrected on the page.
 - **Returning backers** get the SAM Robot Pack free (campaign Update #6). With that switch on
-  it is added to a Legacy order at no charge; otherwise it is an ordinary add-on.
+  it is added to a Legacy order at no charge, though by the campaign's FAQ its shipping is
+  still to pay; otherwise it is an ordinary add-on.
+- **Miniatures finish**: each item that offers Sundrop or paint adds its own surcharge. A
+  pledge's stretch goals take the finish of its Core Box (campaign Update #10); only
+  Retaliation's are priced for it separately on Gamefound, and so here.
 - **Currency**: everything is in euros, as Gamefound charges it. The total can be read in any
   currency the campaign lists, or that is spent somewhere it ships to — twenty-seven in all —
   at central banks' reference rates, fetched by the browser from

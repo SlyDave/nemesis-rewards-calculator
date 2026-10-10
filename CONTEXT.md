@@ -8,9 +8,9 @@ It is a companion to two shorter files: [README.md](README.md) is the developer'
 [SECURITY.md](SECURITY.md) is the security posture. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 8 October 2026, after the catalogue was captured again for campaign Update #9
-and the currencies and MSRP were added. Everything below is built, tested,
-pushed and live unless it says otherwise.
+State described: 10 October 2026, after the catalogue was captured again for campaign Update
+#10 and the returning backer's gift was brought into line with the campaign's FAQ. Everything
+below is built, tested, pushed and live unless it says otherwise.
 
 ## 1. Snapshot
 
@@ -22,10 +22,10 @@ pushed and live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 8 October 2026, 18:20 UTC. The campaign ends 27 October 2026, 19:00 UTC        |
+| Catalogue        | Captured 10 October 2026, 20:27 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 154, all passing (`bun test`)                                                           |
+| Tests            | 155, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -86,6 +86,12 @@ called `nemesis-rewards-calculator`:
     Sponsors page in a new tab, with given hover text, and lit like the total (section 8.3).
 20. Aftermath was not to be found under Expansions: find out why, and list it correctly
     (section 7.1).
+21. Campaign Update #10: check whether the catalogue has changed, whether the update changes
+    what is selected, and what needs a note; report and recommend before acting. Then, as
+    recommended: capture again, say under "Miniatures finish" that stretch goals follow their
+    Core Box, and record it (sections 6 and 7.6).
+22. Bring the returning backer's gift into line with the campaign's FAQ, which has the backer
+    add it to the cart and has it pay shipping (section 7.4).
 
 ### Where each decision came from
 
@@ -270,6 +276,21 @@ places with the Crew Logs in the listing. No price, bundle or category changed. 
 Carnomorphs and the new Scope crew member, from the same update, are free stretch goals inside
 the Legacy pledges and are not products.
 
+What the 10 October capture changed, against the 8 October one: the Salvation Pledge (125558)
+has a new picture, with the Evolved Void Seeders box where the "Secret Add-on" placeholder was.
+Nothing else: no price, bundle, category, option or place in the listing. Its abstract on
+Gamefound still says "the SECRET add-on". Campaign Update #10, of the same day, named the Scope
+crew member (Ian Vale) and added six Fleshbeasts to the Evolved Carnomorphs: free stretch goals
+inside the Legacy pledges again, and not products.
+
+How an update is checked, as that one was: read its text and look at its graphics; capture
+again and compare; see that the shipping table's file name has not changed (below) and that
+the graphic stating the MSRPs still reads the same (section 7.11); and read the FAQ, whose
+entries each carry the date they were last edited, in the props of the page's
+`ProjectFaqContent` script. A pledge's own cart options, item by item, are in
+`productSetItems` of `getProductAddToCartModel` for the pledge; the capture only keeps each
+item's own.
+
 ### Shipping
 
 The campaign publishes its shipping table as an image, so `app/domain/shipping.ts` is typed out
@@ -279,7 +300,7 @@ in pledge manager", so an add-on has no shipping price and none is invented.
 The table typed out is the image under the "Estimated shipping" heading of the project page,
 whose file is `richtext/c1e9f274-85d9-43af-92ab-071d32f91c44.png`. Gamefound gives a replaced
 image a new file name, so a different name there means the table has changed and must be typed
-out again. It was still that file on 8 October 2026.
+out again. It was still that file on 10 October 2026.
 
 ### What is hand-maintained
 
@@ -418,16 +439,24 @@ OG and Lockdown are.
 
 From campaign Update #6: anyone who has backed Nemesis before gets the SAM Robot Pack free.
 
-- **[owner]** The gift is the ordinary €8 add-on (product 128018). The pledge manager adds it
-  by itself; it is not something to put in the cart.
-- **[owner]** It ships free with the rest, so it never raises the "Plus shipping for…" warning.
+- **[owner]** On 10 October 2026 the owner asked for the gift to be brought into line with the
+  campaign's FAQ, which differs from what was first built on two points. They are the next two.
+- The gift is the ordinary €8 add-on (product 128018), and the backer adds it to the cart like
+  anything else: the FAQ says to find it among the add-ons and choose the one at 0,00 €, one
+  to an order. (As first built, the pledge manager was to add it by itself.) A capture is made
+  signed out, so it never sees that free listing; the cart line is product 128018 at no
+  charge, links to it, and says which one to take.
+- Its shipping is not free: the FAQ says the charges are adjusted for its weight. So it is
+  counted in the "Plus shipping for…" warning with the other add-ons. (As first built, it
+  shipped free and was left out.)
 - **[owner]** The switch, "I’ve backed Nemesis before", is the first panel on the page and is
   **off by default**.
 - **[reading]** With the switch on, the pack is listed automatically only when Legacy is
   included, since it is played in Legacy. Otherwise it can be ticked under Expansions, and is
   free there too. It can also be unticked.
-- In the cart it shows "Free", carries the badge "Returning backer gift", has a gift icon
-  where the others have a number, and is not counted among the cart lines to add.
+- In the cart it shows "Free", carries the badge "Returning backer gift" and the line "On
+  Gamefound, add the one listed at €0.00 for returning backers.", and is numbered and counted
+  among the cart lines to add like the rest.
 - Its list price still counts in "Reward value", so it shows as an €8 saving.
 - With the switch off it is an ordinary Expansions add-on.
 
@@ -473,6 +502,26 @@ All sums are in euro cents.
 - **Finish** **[reading]**: an addition to the brief. Each wanted item that offers Sundrop or
   Painted adds its own surcharge. It is not charged on bonus items, nor on Special-edition
   items that a Standard backer only received through a bundle.
+- **Stretch goals take their Core Box's finish.** Campaign Update #10: "Your Stretch Goal
+  miniatures will always MATCH the finish selected for your Core Box", with no choice of their
+  own. Gamefound's cart agreed for three games and not the fourth, read from each pledge's own
+  options on 10 October 2026 (euros, Sundrop / fully painted):
+
+  | Pledge           | Core Box   | Its Stretch Goals box     | The site charges |
+  | ---------------- | ---------- | ------------------------- | ---------------- |
+  | Legacy (Special) | +33 / +124 | No finish option          | 33 / 124         |
+  | OG               | +30 / +75  | No finish option          | 30 / 75          |
+  | Lockdown         | +35 / +85  | No finish option          | 35 / 85          |
+  | Retaliation      | +26 / +125 | Its own option, +13 / +59 | 39 / 184         |
+
+  The site charges what the cart charges, so both for Retaliation. **[owner]** The line under
+  "Miniatures finish" says it, in words the builder proposed and the owner approved: "Stretch
+  goals take their Core Box’s finish. Only Retaliation’s are charged for it separately." A
+  test pins that sentence to the catalogue: it fails if any pledge's Stretch Goals gain or
+  lose a finish price, and the sentence then has to change. An expansion bought on its own —
+  Aftermath for a Lockdown order, say — is an add-on with a finish price of its own, and is
+  charged it.
+
 - **Shipping modes**: only the Legacy pledges and the four-game bundle are cheaper sent at
   once. The older games ship once either way, at one price.
 - **[owner] Split shipping is only offered where there is something to split.** By the
@@ -491,7 +540,7 @@ All sums are in euro cents.
   first, and the Legacy stretch goals and add-ons follow. Where the order has Legacy add-ons
   but no Legacy pledge — Evolved Void Seeders for Retaliation, say — the wording leaves the
   core box out: the older games first, the Legacy add-ons second.
-- **Unpriced shipping**: add-ons in the cart, gift excepted, are counted and flagged: "Plus
+- **Unpriced shipping**: add-ons in the cart, a gift among them, are counted and flagged: "Plus
   shipping for N add-ons, which Awaken Realms will only price in the pledge manager."
 
 ### 7.7 Tax and destinations
@@ -579,7 +628,7 @@ within a category, alphabetically.
 - **[reading]** "Everything else" is merchandise bought on its own: hoodies and plushes.
 - Within a game: the pledge first, then add-ons in the order of the extras switches, then by
   name.
-- The numbers beside the lines count the things to add, so a gift has none.
+- The numbers beside the lines count the things to add. A gift is one of them (section 7.4).
 
 ### 7.11 MSRP
 
@@ -596,6 +645,10 @@ What the pages turned out to hold, read by OCR and then by eye:
 | Nemesis Legacy            | Core Box (Special Edition) €199; Stretch Goals €99           |
 | Nemesis Retaliation       | Core Box (Special Edition) $189; Stretch Goals $109          |
 | Nemesis, Nemesis Lockdown | Nothing. They are pledge managers: price lists with no story |
+
+The Legacy figures are in one graphic near the top of the project story ("In retail, you'll
+easily pay twice the price…"). It is replaced as stretch goals are revealed, under a new file
+name each time; on 10 October 2026 it still read €199 and €99.
 
 That is four figures for some eighty items, so the rest needed a rule. **[reading]**, all of it:
 
@@ -695,9 +748,7 @@ prices were read, that the tool is unofficial, and links to the source.
 
 Use these exactly.
 
-- The returning-backer paragraph: "**Free gift: the SAM Robot Pack.** Returning Nemesis backers
-  get it for free: the pledge manager will add it to your pledge automatically, and it ships
-  with the rest at no extra cost."
+- The returning-backer paragraph's heading: "**Free gift: the SAM Robot Pack.**"
 - The cart badge: "Returning backer gift".
 - The switch: "I’ve backed Nemesis before" (with a typographic apostrophe, as in the code).
 - The Donate link's hover text: "Hi! If you find this useful, please consider a small donation
@@ -705,7 +756,17 @@ Use these exactly.
   dictated but for two slips put right: "find this in useful", and a doubled space. It opens
   `https://github.com/sponsors/SlyDave?frequency=one-time&sponsor=SlyDave&amount=3`.
 
-One sentence is the builder's, not the owner's: with the switch off, the paragraph ends
+The rest of the returning-backer paragraph was the owner's too, at first: "Returning Nemesis
+backers get it for free: the pledge manager will add it to your pledge automatically, and it
+ships with the rest at no extra cost." The campaign's FAQ says otherwise on both points, and on
+10 October 2026 the owner asked for the site to follow the FAQ (section 7.4). It now reads:
+"Returning Nemesis backers get it for free, one per order: on Gamefound, add the one listed at
+€0.00 among the add-ons. Its shipping is not free: it adds to the weight of your order." Those
+words are the builder's, to the owner's instruction, as is the cart line's "On Gamefound, add
+the one listed at €0.00 for returning backers." and the link to the FAQ beside the one to
+Update #6.
+
+One more sentence is the builder's, not the owner's: with the switch off, the paragraph ends
 "Otherwise it is an add-on at €8.00, under Expansions." The owner was asked whether to keep it
 and has not yet said (section 13).
 
@@ -867,13 +928,19 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 8 October 2026, and the campaign runs to
-   27 October. Capture again (section 6) whenever Gamefound changes something. The pledge
+8. **The prices go stale.** They are a snapshot from 10 October 2026, and the campaign runs to
+   27 October. Capture again (section 6) whenever Gamefound changes something. Update #10
+   promised an update on Monday 12 October, a stretch goal on Day 7, and a fuller account of
+   Infinity Mode around Day 9 or Day 11 (14 or 16 October): check after each. The pledge
    manager will later publish add-on shipping, which the site does not have.
 9. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
    look: taking the oldest campaign's price rather than the latest; the region standing in
    for the city; and the range quoted beside the assumed uplift.
-10. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
+10. **Retaliation's Stretch Goals have a finish price of their own**, which sits oddly with
+    Update #10 (section 7.6). If Awaken Realms take the option away, the next capture shows it
+    as a change to product 125526's options, a test fails, and the site's finish for
+    Retaliation falls by €13 or €59.
+11. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
     October 2026: add the line to `inflation.ts`.
 
 ## 14. Reference results
