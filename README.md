@@ -11,6 +11,9 @@ and your currency, and lists what to put in your Gamefound cart, with pictures.
 
 An unofficial fan-made tool. Not affiliated with, or endorsed by, Awaken Realms or Gamefound.
 
+What has changed, and when, is in [CHANGELOG.md](CHANGELOG.md); the site's own "What's New?"
+list is the short version of it.
+
 ## How it works
 
 It is a static site: every page is rendered to HTML at build time, and all the working-out
@@ -29,6 +32,7 @@ happens in the browser. There is no server.
 | The search for the best combination        | `app/domain/solver.ts`                                   |
 | Turning a combination into a full quote    | `app/domain/quote.ts`                                    |
 | The page                                   | `app/pages/index.vue`, `app/components/`                 |
+| The "What's New?" list                     | `app/domain/changes.ts`                                  |
 | The four themes, one per game              | `app/assets/css/main.css`, `app/composables/useTheme.ts` |
 
 ### The search

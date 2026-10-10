@@ -1,0 +1,67 @@
+/**
+ * What has changed on the site, as a visitor would notice it: the list behind "What's New?".
+ *
+ * There are no version numbers. The site is deployed as changes are pushed, so they are
+ * grouped by the day they were made, newest first.
+ *
+ * This is the short version. CHANGELOG.md, at the root of the repository, is the full one,
+ * and has a section for every day here. A change belongs in `highlights` if a visitor will
+ * see it or get a different answer because of it. A smaller thing they could see — a tweak
+ * to the layout, a correction to the wording, a fix to something that was briefly wrong — is
+ * only counted, in `minor`. What nobody using the site could see, such as tests, documents
+ * and the build, is in the changelog alone.
+ */
+export interface ChangeDay {
+  /** The day, as YYYY-MM-DD. */
+  readonly date: string
+  /** What a visitor will notice or be affected by, the most significant first. */
+  readonly highlights: readonly string[]
+  /** How many smaller changes went with them, which are counted and not described. */
+  readonly minor: number
+}
+
+export const CHANGELOG_URL =
+  'https://github.com/SlyDave/nemesis-rewards-calculator/blob/main/CHANGELOG.md'
+
+export const CHANGES: readonly ChangeDay[] = [
+  {
+    date: '2026-10-10',
+    highlights: [
+      'This list: a “What’s New?” button at the top of the page.',
+      'Prices and bundles read again from Gamefound after campaign Update #10. No price has changed.',
+      'Returning backers: the free SAM Robot Pack is now a numbered line in the cart, since you add it yourself — the one Gamefound lists at €0.00. Its shipping is no longer taken to be free, as the campaign’s FAQ has it.',
+      'A note under “Miniatures finish”: stretch goals take their Core Box’s finish, and only Retaliation’s are charged for it separately.',
+    ],
+    minor: 1,
+  },
+  {
+    date: '2026-10-09',
+    highlights: [
+      'Aftermath, the Void Seeders Expansion, the Lockdown and Retaliation Stretch Goals and the Legacy Recharge Pack are now listed under Expansions. Each shows as included where your pledge already brings it, and can be added without its game.',
+      'Expansions with only Lockdown switched on now adds Aftermath and Void Seeders, which Gamefound says also work with Lockdown.',
+    ],
+    minor: 0,
+  },
+  {
+    date: '2026-10-08',
+    highlights: [
+      'Prices and bundles read again from Gamefound after campaign Update #9: the Secret Add-on is now Evolved Void Seeders.',
+      'MSRP and “Saving vs MSRP”: what your order would cost at retail, with a breakdown item by item.',
+      'Twenty-seven currencies in a searchable menu, with the euro as the default.',
+      'Add-ons that are played in two games now follow either one: Evolved Void Seeders with Retaliation; the Carnomorphs, the Medic and the Constructs Pack with Lockdown.',
+      'Split shipping is only offered where an order has something to split.',
+      'A Donate link in the header.',
+    ],
+    minor: 3,
+  },
+  {
+    date: '2026-10-06',
+    highlights: [
+      'The calculator goes live: switch on the games and extras you want, and it finds the cheapest combination of pledges, bundles and add-ons, with shipping, VAT and the list to add to your Gamefound cart.',
+      'Open any extra to pick single items, with or without the game they belong to.',
+      'A switch for returning backers, who get the SAM Robot Pack free.',
+      'Four styles, one for each Nemesis game.',
+    ],
+    minor: 7,
+  },
+]

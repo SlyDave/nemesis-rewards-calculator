@@ -4,13 +4,15 @@ A handover document. It records what was asked for, what was decided and why, an
 that broke along the way, so that someone picking this up — a person or an agent — can carry on
 without guessing at decisions already made.
 
-It is a companion to two shorter files: [README.md](README.md) is the developer's how-to, and
-[SECURITY.md](SECURITY.md) is the security posture. Where they overlap, this file has the
+It is a companion to three shorter files: [README.md](README.md) is the developer's how-to,
+[SECURITY.md](SECURITY.md) is the security posture, and [CHANGELOG.md](CHANGELOG.md) is what
+changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
 State described: 10 October 2026, after the catalogue was captured again for campaign Update
-#10 and the returning backer's gift was brought into line with the campaign's FAQ. Everything
-below is built, tested, pushed and live unless it says otherwise.
+#10, the returning backer's gift was brought into line with the campaign's FAQ, and the
+"What's New?" list and the changelog were added. Everything below is built, tested, pushed and
+live unless it says otherwise.
 
 ## 1. Snapshot
 
@@ -25,7 +27,7 @@ below is built, tested, pushed and live unless it says otherwise.
 | Catalogue        | Captured 10 October 2026, 20:27 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 155, all passing (`bun test`)                                                           |
+| Tests            | 162, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -92,6 +94,10 @@ called `nemesis-rewards-calculator`:
     Core Box, and record it (sections 6 and 7.6).
 22. Bring the returning backer's gift into line with the campaign's FAQ, which has the backer
     add it to the cart and has it pay shipping (section 7.4).
+23. A "What's New?" button at the top right, across from the logo, opening a list of the
+    changes by date, the latest first: the significant ones a visitor will notice, with the
+    minor ones only counted. The list made retroactively from the git history. And a fuller
+    `CHANGELOG.md`, to the Keep a Changelog 1.1.0 standard (section 8.6).
 
 ### Where each decision came from
 
@@ -106,6 +112,9 @@ These were set by the owner during the work, and still hold.
 
 - **Do not push until told to.** Commit locally and wait: the owner's words were "Hold until I
   say". A push to `main` is a production deploy, so it is never a formality.
+- **Write a change down as it is made.** Every notable change goes in `CHANGELOG.md`, and one
+  a visitor would notice goes in the "What's New?" list as well, in the same commit as the
+  change (section 8.6).
 - **Verify before reporting.** Run `bun run check`, and look at a change in a browser if it can
   be seen there, before saying it is done.
 - **Wording the owner dictates is used exactly**, not paraphrased.
@@ -222,8 +231,10 @@ app/
     money.ts                  Rates and writing amounts out
     msrp.ts                   Each item's retail price, and where the figure is from
     inflation.ts              Consumer prices in Wrocław's region, by quarter
+    changes.ts                What has changed, by day: the "What's New?" list
   pages/index.vue             The one page
 data/gamefound.json           The capture, committed
+CHANGELOG.md                  Every notable change, by day (section 8.6)
 public/                       CNAME, .nojekyll, favicon.svg, images/products/*.webp
 scripts/
   capture-gamefound.js        Pasted into the browser console on Gamefound
@@ -722,7 +733,8 @@ to the bottom carries the total and a link down to the cart.
 | 2     | Add to your Gamefound cart | `QuoteCart`   | `CartLineCard`s in sections per game                                                 |
 | 3     | Good to know               | `QuoteNotes`  | Waves, bonuses, unpriced shipping, the method                                        |
 
-The header (`AppHeader`) has the Style and Currency choices, Reset, and a Donate link that
+The header (`AppHeader`) has the logo with the "What's New?" button across from it
+(`WhatsNew`, section 8.6), then the Style and Currency choices, Reset, and a Donate link that
 takes whatever of the row is left. The footer says when the
 prices were read, that the tool is unofficial, and links to the source.
 
@@ -751,6 +763,7 @@ Use these exactly.
 - The returning-backer paragraph's heading: "**Free gift: the SAM Robot Pack.**"
 - The cart badge: "Returning backer gift".
 - The switch: "I’ve backed Nemesis before" (with a typographic apostrophe, as in the code).
+- The button that opens the list of changes: "What’s New?" (likewise).
 - The Donate link's hover text: "Hi! If you find this useful, please consider a small donation
   to fuel more creations and help me pay for the hosting - you’re the best, cheers!" As
   dictated but for two slips put right: "find this in useful", and a doubled space. It opens
@@ -795,13 +808,57 @@ and has not yet said (section 13).
 
 - Components use semantic names — `i-fa-legacy`, `i-fa-dicetray`, `i-fa-cart`. The mapping to
   Font Awesome icons is the `ICONS` table in `scripts/generate-fa-icons.ts`.
-- That script writes each of the 66 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
+- That script writes each of the 67 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
   as a local collection (`provider: 'none'`) and bundles what the page uses, because there is
   no server to fetch icons from.
 - Nuxt UI's own internal icons are pointed at the same collection in `app.config.ts`.
 - To add one: add a line to `ICONS` with the Pro export and a Free fallback, then run
   `bun run icons:generate`. The script fails if a named Pro icon does not exist, so a typo is
   not hidden by its fallback.
+
+### 8.6 What's New, and the changelog
+
+Two accounts of what has changed, one short and one full. Neither is generated from the other
+or from the git history: both are written by hand, and a test keeps them in step.
+
+- **[owner]** A "What's New?" button at the top right of the page, across from the logo, opens
+  a modal listing the changes by date, the latest first. It holds what a visitor will notice
+  or be affected by. Minor changes — tweaks to the layout, corrections to the wording, small
+  improvements — are an aggregate with no detail: "Plus 3 smaller fixes and tweaks."
+- **[owner]** There are no version numbers, so changes are grouped by date.
+- **[owner]** `CHANGELOG.md` is the deeper account, to the
+  [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/) standard: newest first, dates
+  as year-month-day, and changes under Added, Changed, Deprecated, Removed, Fixed and Security.
+- **[owner]** Both were first made retroactively, from the git history to 10 October 2026.
+
+The readings:
+
+- **[reading]** The date is the day the change was made, in the owner's time (the commit's own
+  date), which so far has always been the day it went live. If a push is held over to another
+  day, put the date right before pushing.
+- **[reading]** The list on the site is `CHANGES` in `app/domain/changes.ts`: per day, the
+  `highlights` and a count, `minor`. A change is a highlight if a visitor will see it or get a
+  different answer because of it. A smaller thing they could see is counted in `minor`. What
+  nobody using the site could see — tests, documents, the build, the licence — is in neither,
+  and in the changelog alone. So a day can have a section in the changelog and no entry on the
+  site, as 7 October has.
+- **[reading]** Each date in the changelog links to that day's commits on GitHub, by date
+  (`commits/main/?since=…&until=…`), since there are no tags to compare.
+- **[reading]** There is no "Unreleased" section, which the standard suggests and does not
+  require: every push is a release, and nothing waits long.
+- **[reading]** On a phone there is only room beside the logo for the button's icon; its name
+  is still "What’s New?" to a screen reader. The modal ends with a link to the full changelog
+  on GitHub.
+- The button's row ends where the row of controls beneath it ends, by the same means (section
+  12, the header's last control).
+- `tests/changes.test.ts` holds that the list is in order with real dates and whole sentences;
+  that the changelog has a section for every day the site lists, in order; that its headings
+  are only the six the standard names; and that every date has its link.
+
+To record a change: add it to the top section of `CHANGELOG.md`, under the right heading — or
+start a new section for a new day, with its link at the foot of the file. If a visitor would
+notice it, add a line to that day's `highlights` in `changes.ts`, most significant first, or
+add one to its `minor`.
 
 ## 9. Strictness and quality gates
 
@@ -976,7 +1033,9 @@ For any change:
 3. Look at it in the browser at phone and desktop widths, in more than one theme.
 4. If it touches loading, storage, the address bar or the security policy, check the built site
    too: `bun run build`, then `bun run preview`.
-5. Commit. **Do not push until the owner says to** (section 3).
+5. Write it down: `CHANGELOG.md`, and the "What's New?" list if a visitor would notice it
+   (section 8.6).
+6. Commit. **Do not push until the owner says to** (section 3).
 
 For common jobs:
 

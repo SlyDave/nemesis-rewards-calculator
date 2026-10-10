@@ -45,11 +45,22 @@ const currency = computed<CurrencyCode>({
 <template>
   <header class="flex flex-col gap-5 py-6 sm:py-8">
     <div>
-      <p
-        class="font-display text-3xl leading-none font-light tracking-[0.5em] text-highlighted uppercase sm:text-4xl"
-      >
-        Nemesis
-      </p>
+      <!-- The logo, and across from it the list of what has changed. The row ends where the
+           one below does: see the note on that one. -->
+      <div class="flex items-start justify-between gap-4 lg:pr-2">
+        <p
+          class="font-display text-3xl leading-none font-light tracking-[0.5em] text-highlighted uppercase sm:text-4xl"
+        >
+          Nemesis
+        </p>
+        <div class="flex shrink-0">
+          <WhatsNew />
+          <span
+            aria-hidden="true"
+            class="invisible hidden hud-scroll overflow-y-scroll lg:block"
+          />
+        </div>
+      </div>
       <h1 class="mt-3 hud-title text-sm text-primary hud-glow sm:text-base">
         Rewards calculator
       </h1>
