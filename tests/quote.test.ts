@@ -15,6 +15,11 @@ const OG_PLEDGE = 125507
 const PROMO_BUNDLE = 125513
 const SAM = 128018
 const SLEEVES_WITH_ADDONS = 128437
+const LEGACY_CORE_BOX = 120365
+const OG_CORE_BOX = 125508
+const LOCKDOWN_CORE_BOX = 125515
+const RETALIATION_CORE_BOX = 125525
+const RETALIATION_STRETCH_GOALS = 125526
 
 const cart = (quote: Quote): readonly number[] => quote.lines.map((line) => line.product.id)
 
@@ -301,6 +306,23 @@ describe('the miniatures finish', () => {
       preferencesWith({ ...itemsOnly, edition: 'standard', finish: 'painted' }),
     )
     expect(quote.finishTotal).toBe(0)
+  })
+
+  // Campaign Update #10: stretch goals come in the finish chosen for their Core Box, with no
+  // choice of their own. The page says so, and that Retaliation's alone are charged for it:
+  // Gamefound still prices a finish on that one Stretch Goals box. If this fails, the catalogue
+  // has changed and the sentence under "Miniatures finish" has to change with it.
+  test('is charged on the Core Box of a pledge, and on the Stretch Goals only for Retaliation', () => {
+    const charged = (line: 'legacy' | 'og' | 'lockdown' | 'retaliation'): readonly number[] =>
+      buildQuote(preferencesWith({ ...itemsOnly, lines: [line], finish: 'sundrop' }))
+        .lines.flatMap((cartLine) => cartLine.contents)
+        .filter((content) => content.finish > 0)
+        .map((content) => content.product.id)
+
+    expect(charged('legacy')).toEqual([LEGACY_CORE_BOX])
+    expect(charged('og')).toEqual([OG_CORE_BOX])
+    expect(charged('lockdown')).toEqual([LOCKDOWN_CORE_BOX])
+    expect(charged('retaliation')).toEqual([RETALIATION_CORE_BOX, RETALIATION_STRETCH_GOALS])
   })
 
   test('is not charged on a bundle’s uninvited items', () => {

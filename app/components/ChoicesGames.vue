@@ -83,7 +83,8 @@ const finish = computed<Finish>({
           label="Miniatures finish"
         />
         <p class="mt-2 text-xs text-muted">
-          Sundrop wash or full paint, added to everything you ask for that offers it.
+          Sundrop wash or full paint, added to everything you ask for that offers it. Stretch goals
+          take their Core Box’s finish. Only Retaliation’s are charged for it separately.
         </p>
       </div>
     </div>
