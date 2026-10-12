@@ -10,6 +10,18 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-12]
+
+### Changed
+
+- The catalogue was captured again after campaign Update #11. No price, bundle, picture,
+  category or option changed, so no figure on the site moved. The one difference is a word in
+  the Salvation Pledge's description on Gamefound, which the site does not show. The exchange
+  rates the site falls back on are now those of 12 October.
+- `CONTEXT.md` records Update #11: the Techie, a new crew member class that is a free stretch
+  goal inside the Legacy pledges and not a product; and that the Legacy Recharge Pack and the
+  Crew Logs add-on gain content with each new class, at the same price.
+
 ## [2026-10-10]
 
 ### Added
@@ -208,6 +220,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-12]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-12&until=2026-10-12
 [2026-10-10]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-10&until=2026-10-10
 [2026-10-09]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-09&until=2026-10-09
 [2026-10-08]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-08&until=2026-10-08

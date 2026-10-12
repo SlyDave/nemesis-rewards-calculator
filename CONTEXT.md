@@ -9,9 +9,9 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 10 October 2026, after the catalogue was captured again for campaign Update
-#10, the returning backer's gift was brought into line with the campaign's FAQ, and the
-"What's New?" list and the changelog were added. Everything below is built, tested, pushed and
+State described: 12 October 2026, after the catalogue was captured again for campaign Update
+#11. Before that, on 10 October, the returning backer's gift was brought into line with the
+campaign's FAQ, and the "What's New?" list and the changelog were added. Everything below is built, tested, pushed and
 live unless it says otherwise.
 
 ## 1. Snapshot
@@ -24,7 +24,7 @@ live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 10 October 2026, 20:27 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue        | Captured 12 October 2026, 19:15 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
 | Tests            | 162, all passing (`bun test`)                                                           |
@@ -98,6 +98,7 @@ called `nemesis-rewards-calculator`:
     changes by date, the latest first: the significant ones a visitor will notice, with the
     minor ones only counted. The list made retroactively from the git history. And a fuller
     `CHANGELOG.md`, to the Keep a Changelog 1.1.0 standard (section 8.6).
+24. Campaign Update #11: read it, and update the catalogue if required (section 6).
 
 ### Where each decision came from
 
@@ -294,7 +295,18 @@ Gamefound still says "the SECRET add-on". Campaign Update #10, of the same day, 
 crew member (Ian Vale) and added six Fleshbeasts to the Evolved Carnomorphs: free stretch goals
 inside the Legacy pledges again, and not products.
 
-How an update is checked, as that one was: read its text and look at its graphics; capture
+What the 12 October capture changed, against the 10 October one: one word. The Salvation
+Pledge's abstract no longer says it is for players who want "all" of Legacy's gameplay content.
+The site ships that text and shows it nowhere. Nothing else: no price, bundle, picture,
+category, option or place in the listing, and no finish priced differently inside a pledge.
+Campaign Update #11, of the same day, revealed the Techie, a second new crew member class, with
+a vote on who it is to be (Nico Ríos or Sora). Like the Scope it is a free stretch goal inside
+the Legacy pledges, playable in Legacy, Infinity Mode and Retaliation, and not a product. The
+update also says the Legacy Recharge Pack and the Crew Logs add-on gain content with every new
+class; neither has changed in price. The catalogue was refreshed all the same, so that the
+date in the site's footer says the prices have been read since the update.
+
+How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
 the graphic stating the MSRPs still reads the same (section 7.11); and read the FAQ, whose
 entries each carry the date they were last edited, in the props of the page's
@@ -311,7 +323,7 @@ in pledge manager", so an add-on has no shipping price and none is invented.
 The table typed out is the image under the "Estimated shipping" heading of the project page,
 whose file is `richtext/c1e9f274-85d9-43af-92ab-071d32f91c44.png`. Gamefound gives a replaced
 image a new file name, so a different name there means the table has changed and must be typed
-out again. It was still that file on 10 October 2026.
+out again. It was still that file on 12 October 2026.
 
 ### What is hand-maintained
 
@@ -516,7 +528,7 @@ All sums are in euro cents.
 - **Stretch goals take their Core Box's finish.** Campaign Update #10: "Your Stretch Goal
   miniatures will always MATCH the finish selected for your Core Box", with no choice of their
   own. Gamefound's cart agreed for three games and not the fourth, read from each pledge's own
-  options on 10 October 2026 (euros, Sundrop / fully painted):
+  options on 10 October 2026, and the same on 12 October (euros, Sundrop / fully painted):
 
   | Pledge           | Core Box   | Its Stretch Goals box     | The site charges |
   | ---------------- | ---------- | ------------------------- | ---------------- |
@@ -659,7 +671,8 @@ What the pages turned out to hold, read by OCR and then by eye:
 
 The Legacy figures are in one graphic near the top of the project story ("In retail, you'll
 easily pay twice the price…"). It is replaced as stretch goals are revealed, under a new file
-name each time; on 10 October 2026 it still read €199 and €99.
+name each time; on 10 October 2026 it still read €199 and €99, and on 12 October it was that
+same file.
 
 That is four figures for some eighty items, so the rest needed a rule. **[reading]**, all of it:
 
@@ -985,10 +998,11 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 10 October 2026, and the campaign runs to
-   27 October. Capture again (section 6) whenever Gamefound changes something. Update #10
-   promised an update on Monday 12 October, a stretch goal on Day 7, and a fuller account of
-   Infinity Mode around Day 9 or Day 11 (14 or 16 October): check after each. The pledge
+8. **The prices go stale.** They are a snapshot from 12 October 2026, and the campaign runs to
+   27 October. Capture again (section 6) whenever Gamefound changes something. Update #11
+   promised the next on Wednesday 14 October, with the result of the Techie vote, another
+   stretch goal and more of the Evolved Carnomorphs; and Update #10 a fuller account of
+   Infinity Mode around Day 9 or Day 11 (14 or 16 October). Check after each. The pledge
    manager will later publish add-on shipping, which the site does not have.
 9. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
    look: taking the oldest campaign's price rather than the latest; the region standing in
