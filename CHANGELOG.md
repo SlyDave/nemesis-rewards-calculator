@@ -10,6 +10,19 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-14]
+
+### Changed
+
+- The catalogue was captured again after campaign Update #12. Nothing in it had changed since
+  12 October: no price, bundle, picture, category or option, and no finish priced differently
+  inside a pledge. The footer's date follows the update, and the exchange rates the site falls
+  back on are now those of 14 October.
+- `CONTEXT.md` records Update #12: Sora as the Techie, twenty Metagorgers for the Evolved
+  Carnomorphs, and an account of Infinity Mode — free stretch-goal content and explanation,
+  none of it a product — and the two changes to the campaign's FAQ, neither of which touches
+  what is sold or what it costs.
+
 ## [2026-10-12]
 
 ### Changed
@@ -220,6 +233,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-14]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-14&until=2026-10-14
 [2026-10-12]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-12&until=2026-10-12
 [2026-10-10]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-10&until=2026-10-10
 [2026-10-09]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-09&until=2026-10-09
