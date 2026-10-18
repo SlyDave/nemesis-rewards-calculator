@@ -25,6 +25,13 @@ export const CHANGELOG_URL =
 
 export const CHANGES: readonly ChangeDay[] = [
   {
+    date: '2026-10-18',
+    highlights: [
+      'Prices and bundles read again from Gamefound after campaign Update #14. No price has changed.',
+    ],
+    minor: 0,
+  },
+  {
     date: '2026-10-16',
     highlights: [
       'Prices and bundles read again from Gamefound after campaign Update #13. No price has changed.',

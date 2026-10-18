@@ -9,8 +9,8 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 16 October 2026, after the catalogue was captured again for campaign Update
-#13. Before that, on 10 October, the returning backer's gift was brought into line with the
+State described: 18 October 2026, after the catalogue was captured again for campaign Update
+#14. Before that, on 10 October, the returning backer's gift was brought into line with the
 campaign's FAQ, and the "What's New?" list and the changelog were added. Everything below is
 built, tested, pushed and live unless it says otherwise.
 
@@ -24,7 +24,7 @@ built, tested, pushed and live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 16 October 2026, 18:56 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue        | Captured 18 October 2026, 19:59 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
 | Classified items | 79 requirements in `app/domain/classification.ts`                                       |
 | Tests            | 162, all passing (`bun test`)                                                           |
@@ -102,6 +102,7 @@ called `nemesis-rewards-calculator`:
 25. Campaign Update #12: read it, update the site as required, and push when ready (section 6).
 26. The campaign updates since — only #13 — checked, and the site updated as required (section
     6).
+27. Campaign Update #14: read it, and update the site as required (section 6).
 
 ### Where each decision came from
 
@@ -329,6 +330,14 @@ sculpt won. All of it is free stretch-goal content, not products. The graphic st
 Legacy MSRPs was re-issued with the Techie and the app on it, and the same figures (section
 7.11). The FAQ had not changed. The catalogue was refreshed for the footer's date, as before.
 
+What the 18 October capture changed, against the 16 October one: nothing in any product or in
+the finishes inside the pledges. Campaign Update #14, of the same day, unlocked two stretch
+goals for Infinity Mode — an Infinity Variety Pack of ten cards, and fifteen more TAC cards —
+both free inside the Legacy pledges and not products. The graphic stating the Legacy MSRPs was
+re-issued again, with the same figures (section 7.11). The FAQ had not changed. The catalogue
+was refreshed for the footer's date, as before. The update also gave notice of new pledge
+options and cosmetic add-ons on 20 October (section 13).
+
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
 the graphic stating the MSRPs still reads the same (section 7.11); and read the FAQ, whose
@@ -346,7 +355,7 @@ in pledge manager", so an add-on has no shipping price and none is invented.
 The table typed out is the image under the "Estimated shipping" heading of the project page,
 whose file is `richtext/c1e9f274-85d9-43af-92ab-071d32f91c44.png`. Gamefound gives a replaced
 image a new file name, so a different name there means the table has changed and must be typed
-out again. It was still that file on 16 October 2026.
+out again. It was still that file on 18 October 2026.
 
 ### What is hand-maintained
 
@@ -551,7 +560,7 @@ All sums are in euro cents.
 - **Stretch goals take their Core Box's finish.** Campaign Update #10: "Your Stretch Goal
   miniatures will always MATCH the finish selected for your Core Box", with no choice of their
   own. Gamefound's cart agreed for three games and not the fourth, read from each pledge's own
-  options on 10 October 2026, and the same on 12, 14 and 16 October (euros, Sundrop / fully
+  options on 10 October 2026, and the same on 12, 14, 16 and 18 October (euros, Sundrop / fully
   painted):
 
   | Pledge           | Core Box   | Its Stretch Goals box     | The site charges |
@@ -697,7 +706,8 @@ The Legacy figures are in one graphic near the top of the project story ("In ret
 easily pay twice the price…"). It is replaced as stretch goals are revealed, under a new file
 name each time; on 10 October 2026 it still read €199 and €99, and on 12 and 14 October it was
 that same file. On 16 October it was `richtext/bfb476e8-d9c6-46cb-9a40-4d3df5ad9861.png`,
-still at €199 and €99.
+and on 18 October `richtext/b9fd5770-af09-4981-b2b2-4398e9c5b06d.png`, both still at €199 and
+€99.
 
 That is four figures for some eighty items, so the rest needed a rule. **[reading]**, all of it:
 
@@ -1023,10 +1033,14 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 16 October 2026, and the campaign runs to
-   27 October. Capture again (section 6) whenever Gamefound changes something. Update #13
-   promised the next on Sunday 18 October (Day 13), with another stretch goal. Check after
-   each. The pledge manager will later publish add-on shipping, which the site does not have.
+8. **The prices go stale.** They are a snapshot from 18 October 2026, and the campaign runs to
+   27 October. Capture again (section 6) whenever Gamefound changes something. Check after
+   each update. **Update #14 promised new pledge options and new cosmetic add-ons on Tuesday
+   20 October (Day 15).** Those will be products the catalogue does not know: each needs
+   classifying (`classification.ts`; `bun test` fails until it is), a new pledge needs a
+   shipping tier (`shipping.ts`, which only the campaign's shipping image can give), and each
+   needs an MSRP rule (`msrp.ts`, which falls back to the assumption by itself). Then the
+   reference results (section 14), the "What's New?" list and the changelog. The pledge manager will later publish add-on shipping, which the site does not have.
 9. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
    look: taking the oldest campaign's price rather than the latest; the region standing in
    for the city; and the range quoted beside the assumed uplift.

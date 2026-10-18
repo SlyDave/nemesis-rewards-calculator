@@ -10,6 +10,19 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-18]
+
+### Changed
+
+- The catalogue was captured again after campaign Update #14. Nothing in it had changed since
+  16 October: no price, bundle, picture, category or option, and no finish priced differently
+  inside a pledge. The footer's date follows the update, and the exchange rates the site falls
+  back on are now those of 18 October.
+- `CONTEXT.md` records Update #14: two free stretch goals for Infinity Mode, an Infinity Variety
+  Pack and fifteen more TAC cards; the graphic stating the Legacy MSRPs, re-issued with the same
+  figures; and the campaign's notice of new pledge options and cosmetic add-ons on 20 October,
+  with what the site will need when they come.
+
 ## [2026-10-16]
 
 ### Changed
@@ -246,6 +259,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-18]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-18&until=2026-10-18
 [2026-10-16]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-16&until=2026-10-16
 [2026-10-14]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-14&until=2026-10-14
 [2026-10-12]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-12&until=2026-10-12
