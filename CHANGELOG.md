@@ -33,7 +33,9 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 ### Changed
 
 - The pledges of Update #15 are not in the campaign's shipping table, which has not been
-  reissued, so their shipping is left out of the total rather than guessed.
+  reissued. Their shipping is not guessed: each is counted at the least it can be, the
+  published shipping of the biggest pledge it holds the whole of — the 4 x Core Pledge's for
+  the ULTIMATE Pledge, the Salvation Pledge's for the Vengeance pledges — and the page says so.
 - An order holding the Vengeance pledge with BIG BOX cannot be split, since the campaign sends
   that pledge only in one shipment; the line under the choice says why.
 - The "ADDITIONAL Recharge Pack for FREE" in the new pledges stands for a second Legacy
@@ -47,6 +49,15 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
   brute force eight times slower.
 - `CONTEXT.md` records the new products, the readings taken, and the reference results that
   changed.
+
+### Fixed
+
+- Leaving extras out could raise the total. With every extra but the Big Boxes the answer was
+  the ULTIMATE Pledge; leaving out Hoodies and Cats as well made it the 4 x Core Pledge and
+  add-ons, €7.50 less in rewards but more in all, because the ULTIMATE Pledge's unpublished
+  shipping had been counted as nothing while the 4 x Core Pledge's €97 was counted. Its
+  shipping is now counted at the least it can be, and a test holds that leaving those extras
+  out brings the total down.
 
 ## [2026-10-18]
 

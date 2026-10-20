@@ -27,7 +27,7 @@ built, tested, pushed and live unless it says otherwise.
 | Catalogue        | Captured 20 October 2026, 20:26 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 174, all passing (`bun test`)                                                           |
+| Tests            | 175, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -107,6 +107,9 @@ called `nemesis-rewards-calculator`:
     site (sections 6, 7.1, 7.6 and 7.11).
 29. The Metal Malfunction Markers in a switch of their own, so that the number of extras
     switches is even (section 7.1).
+30. "Some of the maths appears to be wonky": with every extra but the Big Boxes the answer was
+    the ULTIMATE Pledge, and leaving out Hoodies and Cats as well raised the total. Fix it
+    (section 6, shipping).
 
 ### Where each decision came from
 
@@ -392,9 +395,20 @@ image a new file name, so a different name there means the table has changed and
 out again. It was still that file on 20 October 2026.
 
 **The three pledges of campaign Update #15 are not in it** (`UNPRICED_PLEDGES` in
-`shipping.ts`). **[reading]** Their shipping is not invented: like an add-on's, it is left out
-of the total, and the page says so (section 7.6). When the campaign prices them, give each a
-tier and take it out of that set.
+`shipping.ts`). Their shipping is not invented. **[reading]** It is counted at the least it
+can be (`shippingFloorOf`): the dearest published shipping of the pledges it holds the whole
+of, since sending more cannot cost less. The ULTIMATE Pledge holds all of the 4 x Core
+Pledge, so it is at least that pledge's; the Vengeance pledges hold all of the Salvation
+Pledge, so they are at least its. The page says each figure is the least, and why (section
+7.6). When the campaign prices them, give each a tier and take it out of that set.
+
+Why: at first their shipping was left out, as an add-on's is. That made an unpriced pledge
+look cheaper to have than the priced ones it holds. The owner found it on 20 October 2026: with
+every extra but the Big Boxes the answer was the ULTIMATE Pledge (€1,378 in rewards, €1,653.60
+in all to the UK); leaving out Hoodies and Cats too, it was the 4 x Core Pledge and add-ons —
+€7.50 less in rewards, rightly chosen, but €1,761.00 in all, with the 4 x Core Pledge's €97
+shipping counted and the ULTIMATE's counted as nothing. With the floor the first is €1,770.00,
+and a test holds that the second comes to less.
 
 ### What is hand-maintained
 
@@ -658,9 +672,11 @@ All sums are in euro cents.
   shipping for N add-ons, which Awaken Realms will only price in the pledge manager."
 - **Unpriced pledges**: a pledge the shipping table does not price (`Quote.unpricedPledges`)
   is still a pledge — `CartLine.isPledge` is whether it holds a game's core, not whether it
-  has a shipping price — and is flagged apart from the add-ons: "Plus shipping for the …,
-  which the campaign has not priced." Its card says "Shipping not published", the shipping row
-  says "not yet priced" where no pledge is, and "Good to know" explains.
+  has a shipping price — and is flagged apart from the add-ons. Its shipping is counted at
+  the least it can be (`CartLine.shippingFloor`; section 6). Its card says "Shipping at least
+  €…", a line under the shipping total says what that is and why, and "Good to know" explains.
+  A pledge with no floor would be left out instead: "Shipping not published", and "Plus
+  shipping for the …, which the campaign has not priced."
 - **Single shipping only**: the Vengeance pledge with BIG BOX (`SINGLE_SHIPPING_ONLY`). An
   order holding it cannot be split (`Quote.singleOnly`), and is priced and described as single
   shipping, like an order with nothing to split; the line under the choice says why.
@@ -1110,7 +1126,7 @@ Nothing requested is outstanding. These were raised and left with the owner:
    possible small Endgame add-on. The pledge manager will later publish add-on shipping, which
    the site does not have.
 9. **The new pledges have no shipping price** (section 6). Watch the shipping table's file name
-   and the FAQ for one; until then the site leaves it out and says so.
+   and the FAQ for one; until then the site counts the least it can be, and says so.
 10. **Asking for the Legacy Big Box brings the €489 pledge it is sold in.** That is the only way
     to have it, so the site is right to, but it may surprise.
 11. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
@@ -1141,15 +1157,16 @@ catalogue is captured again.
 | Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                                    | 129.00  | 39.00    | 201.60  |
 | Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Classic Crew, Alien Kings            | 330.00  | 63.00    | 471.60  |
 | All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                           | 541.00  | 97.00    | 765.60  |
-| All four games, every extra                 | `mh33r-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 112.00*  | 2206.80 |
-| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Vengeance pledge with BIG BOX; single shipping                                    | 489.00  | 0.00*    | 586.80  |
-| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards                   | 1378.00 | 0.00*    | 1653.60 |
+| All four games, every extra                 | `mh33r-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 148.00*  | 2250.00 |
+| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Vengeance pledge with BIG BOX; single shipping                                    | 489.00  | 36.00*   | 630.00  |
+| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards                   | 1378.00 | 97.00*   | 1770.00 |
 | Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders                    | 212.00  | 24.00    | 283.20  |
 | Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic                      | 217.00  | 24.00    | 289.20  |
 | Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                          | 145.00  | 24.00    | 202.80  |
 | Legacy, Metal Markers                       | `eze3r-GB-EUR-` | Legacy Core Pledge, Metal Malfunction Markers                                     | 134.00  | 39.00    | 207.60  |
 
-\* Plus the shipping of a pledge of campaign Update #15, which is not priced (section 6).
+\* With a pledge of campaign Update #15, whose shipping is not priced and is counted at the
+least it can be: the Salvation Pledge's 36 (single), or the 4 x Core Pledge's 97 (section 6).
 
 ## 15. Working on it
 

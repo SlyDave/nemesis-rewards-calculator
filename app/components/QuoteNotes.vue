@@ -56,8 +56,9 @@ const bonusNames = computed<string>(() =>
             >Shipping for the new pledges is unknown.</span
           >
           The Vengeance and Ultimate pledges came in campaign Update #15, after the campaign
-          published its shipping table, and it has not priced them since. Their shipping is left out
-          of the total.
+          published its shipping table, and it has not priced them since. Each is counted at the
+          least it can be: the shipping of the biggest published pledge whose contents it holds,
+          since sending more cannot cost less. The real figure will likely be higher.
         </p>
       </li>
 

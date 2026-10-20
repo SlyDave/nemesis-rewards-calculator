@@ -20,6 +20,8 @@ const METAL_MARKERS = 129736
 const SAM = 128018
 const CLASSIC_CREW = 125256
 const RETALIATION_SYNTHETIC = 128009
+const FOUR_CORE = 125606
+const SALVATION = 125558
 
 const cart = (quote: Quote): readonly number[] => quote.lines.map((line) => line.product.id)
 
@@ -133,17 +135,20 @@ describe('the Ultimate Pledge', () => {
 })
 
 // The shipping table was published before these pledges, and has not been reissued.
+// The shipping table was published before these pledges, and has not been reissued. Each is
+// counted at the least its shipping can be: that of the biggest priced pledge it holds whole.
 describe('the shipping of the new pledges', () => {
-  test('is not invented, but left out and said to be', () => {
+  const everythingButBigBoxes = ALL_EXTRAS.filter((tag) => tag !== 'bigbox')
+
+  test('is not invented, but counted at the least it can be, and said to be', () => {
+    // To the United Kingdom, split: the 4 x Core Pledge's 97, all of which the Ultimate holds.
     const quote = buildQuote(
-      preferencesWith({
-        ...plain,
-        lines: ALL_LINES,
-        extras: ALL_EXTRAS.filter((tag) => tag !== 'bigbox'),
-      }),
+      preferencesWith({ ...plain, lines: ALL_LINES, extras: everythingButBigBoxes }),
     )
     expect(quote.unpricedPledges.map((pledge) => pledge.id)).toEqual([ULTIMATE])
-    expect(quote.shippingTotal).toBe(0)
+    expect(quote.lines[0]?.shipping).toBeNull()
+    expect(quote.lines[0]?.shippingFloor?.from.id).toBe(FOUR_CORE)
+    expect(quote.shippingTotal).toBe(9700)
     // The add-ons are counted apart from it, as before.
     expect(quote.unpricedShipping.map((product) => product.id)).toEqual([
       SAM,
@@ -151,9 +156,29 @@ describe('the shipping of the new pledges', () => {
     ])
   })
 
-  test('leaves the pledge a pledge in the cart', () => {
+  test('follows the mode: the Big Box pledge goes single, at the Salvation Pledge’s 36', () => {
     const quote = buildQuote(preferencesWith({ ...plain, lines: ['legacy'], extras: ['bigbox'] }))
     expect(quote.lines[0]?.isPledge).toBe(true)
-    expect(quote.lines[0]?.shipping).toBeNull()
+    expect(quote.lines[0]?.shippingFloor?.from.id).toBe(SALVATION)
+    expect(quote.shippingTotal).toBe(3600)
+  })
+
+  // Reported on 20 October 2026: with every extra but the Big Boxes the answer was the Ultimate,
+  // and leaving out the Hoodies and the Cats as well made the total go up. The rewards did
+  // come down, by €7.50, but the Ultimate's shipping had been counted as nothing.
+  test('lets leaving things out bring the total down, not up', () => {
+    const everything = buildQuote(
+      preferencesWith({ lines: ALL_LINES, extras: everythingButBigBoxes }),
+    )
+    const fewer = buildQuote(
+      preferencesWith({
+        lines: ALL_LINES,
+        extras: everythingButBigBoxes.filter((tag) => tag !== 'hoodie' && tag !== 'cats'),
+      }),
+    )
+    expect(cart(everything)[0]).toBe(ULTIMATE)
+    expect(cart(fewer)[0]).toBe(FOUR_CORE)
+    expect(fewer.itemsTotal).toBeLessThan(everything.itemsTotal)
+    expect(fewer.total).toBeLessThan(everything.total)
   })
 })

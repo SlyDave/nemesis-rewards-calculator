@@ -17,12 +17,20 @@ const itemCount = computed<number>(() =>
   props.quote.lines.reduce((count, line) => count + line.contents.length, 0),
 )
 
+/** The pledges the shipping figure counts: those priced, and those counted at the least. */
 const pledgeCount = computed<number>(
-  () => props.quote.lines.filter((line) => line.shipping !== null).length,
+  () =>
+    props.quote.lines.filter((line) => line.shipping !== null || line.shippingFloor !== null)
+      .length,
 )
 
 const plural = (count: number, word: string): string =>
   `${String(count)} ${word}${count === 1 ? '' : 's'}`
+
+/** "the 4 x Core Pledge", but "The ULTIMATE Pledge" as it stands, its name having a "The". */
+const withThe = (name: string): string => (/^the /iu.test(name) ? name : `the ${name}`)
+
+const capitalised = (text: string): string => `${text.charAt(0).toUpperCase()}${text.slice(1)}`
 
 /** How many pledges the shipping figure is for; or, where none is priced, that it is none. */
 const shippingCount = computed<string>(() =>
@@ -31,9 +39,18 @@ const shippingCount = computed<string>(() =>
     : plural(pledgeCount.value, 'pledge'),
 )
 
-/** "the ULTIMATE Pledge", or "the Vengeance pledge and the ULTIMATE Pledge". */
-const unpricedPledgeNames = computed<string>(() =>
-  props.quote.unpricedPledges.map((pledge) => `the ${pledge.name}`).join(' and '),
+/**
+ * What is said of each pledge the campaign has not priced the shipping of: what it is counted
+ * at instead, and why that is the least it can be; or, failing that, that it is left out.
+ */
+const unpricedPledgeNotes = computed<readonly string[]>(() =>
+  props.quote.lines
+    .filter((line) => line.isPledge && line.shipping === null)
+    .map((line) =>
+      line.shippingFloor === null
+        ? `Plus shipping for ${withThe(line.product.name)}, which the campaign has not priced.`
+        : `${capitalised(withThe(line.product.name))}’s shipping is not published. It is counted at ${format(line.shippingFloor.cents)}, what ${withThe(line.shippingFloor.from.name)} it holds costs to send: the least it can be.`,
+    ),
 )
 
 const rateNote = computed<string | null>(() => {
@@ -103,16 +120,15 @@ const rateNote = computed<string | null>(() => {
           <dd class="font-semibold text-highlighted">{{ format(quote.shippingTotal) }}</dd>
         </div>
         <div
-          v-if="quote.unpricedPledges.length > 0"
+          v-for="note in unpricedPledgeNotes"
+          :key="note"
           class="-mt-1 flex items-start gap-2 text-xs text-warning"
         >
           <UIcon
             name="i-fa-triangle-exclamation"
             class="mt-0.5 size-3.5 shrink-0"
           />
-          <span
-            >Plus shipping for {{ unpricedPledgeNames }}, which the campaign has not priced.</span
-          >
+          <span>{{ note }}</span>
         </div>
         <div
           v-if="quote.unpricedShipping.length > 0"

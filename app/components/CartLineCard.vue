@@ -84,6 +84,14 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
             size="sm"
           />
           <UBadge
+            v-else-if="line.shippingFloor !== null"
+            :label="`Shipping at least ${format(line.shippingFloor.cents)}`"
+            icon="i-fa-shipping"
+            color="warning"
+            variant="outline"
+            size="sm"
+          />
+          <UBadge
             v-else-if="line.isPledge"
             label="Shipping not published"
             icon="i-fa-shipping"

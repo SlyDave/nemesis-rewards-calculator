@@ -1,4 +1,5 @@
-import { toCents } from './catalog'
+import { getProduct, leavesOf, toCents } from './catalog'
+import { providedBy } from './classification'
 
 import type { Product } from './catalog'
 import type { Cents, RegionId, ShippingMode } from './types'
@@ -120,6 +121,45 @@ export const SINGLE_SHIPPING_ONLY: ReadonlySet<number> = new Set([129737])
  */
 export const shippingOf = (product: Product, region: RegionId, mode: ShippingMode): Cents | null =>
   TIERS[product.id]?.[mode][region] ?? null
+
+/** The least a pledge's shipping can be, where the table has no price for it. */
+export interface ShippingFloor {
+  readonly cents: Cents
+  /** The priced pledge it holds the whole of, whose shipping this is. */
+  readonly from: Product
+}
+
+/** The requirement ids a product's contents provide. */
+const providing = (product: Product): ReadonlySet<number> =>
+  new Set(leavesOf(product).flatMap((leaf) => providedBy(leaf.id)))
+
+/** For each unpriced pledge, the priced pledges it holds everything of. */
+const heldPledges: ReadonlyMap<number, readonly Product[]> = new Map(
+  [...UNPRICED_PLEDGES].map((id) => {
+    const held = providing(getProduct(id))
+    const pledges = Object.keys(TIERS)
+      .map((pledge) => getProduct(Number(pledge)))
+      .filter((pledge) => [...providing(pledge)].every((item) => held.has(item)))
+    return [id, pledges]
+  }),
+)
+
+/**
+ * For a pledge the table does not price: the dearest published shipping of the pledges it holds
+ * the whole of. Sending more cannot cost less — the ULTIMATE Pledge holds everything in the
+ * 4 x Core Pledge and a great deal besides — so this is the least its shipping can be. It is not
+ * its price, which is unknown, but counting nothing made such a pledge look cheaper to have than
+ * the pledges it holds. Null for a pledge that is priced, or that holds no priced pledge whole.
+ */
+export const shippingFloorOf = (
+  product: Product,
+  region: RegionId,
+  mode: ShippingMode,
+): ShippingFloor | null =>
+  (heldPledges.get(product.id) ?? []).reduce<ShippingFloor | null>((floor, pledge) => {
+    const cents = TIERS[pledge.id]?.[mode][region] ?? 0
+    return floor === null || cents > floor.cents ? { cents, from: pledge } : floor
+  }, null)
 
 /** Whether a set is one of the pledges the shipping table names. */
 export const hasShippingTier = (productId: number): boolean => productId in TIERS

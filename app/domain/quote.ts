@@ -5,12 +5,13 @@ import { isGift, priceFor } from './gift'
 import { msrpOf } from './msrp'
 import { EXTRAS } from './preferences'
 import { wantedRequirements } from './selection'
-import { SINGLE_SHIPPING_ONLY, describeWaves, shippingOf } from './shipping'
+import { SINGLE_SHIPPING_ONLY, describeWaves, shippingFloorOf, shippingOf } from './shipping'
 import { solve } from './solver'
 
 import type { Product } from './catalog'
 import type { Destination } from './destinations'
 import type { ItemMsrp } from './msrp'
+import type { ShippingFloor } from './shipping'
 import type { Offer } from './solver'
 import type { Cents, Finish, GameLine, Preferences, ShippingMode, Tag } from './types'
 
@@ -42,6 +43,11 @@ export interface CartLine {
    * the pledges that came after the shipping table.
    */
   readonly shipping: Cents | null
+  /**
+   * For a pledge the table does not price: the least its shipping can be, which the total
+   * counts in its place (shipping.ts). Null for the rest.
+   */
+  readonly shippingFloor: ShippingFloor | null
   readonly finish: Cents
 }
 
@@ -108,7 +114,10 @@ export const offersFor = (preferences: Preferences): readonly Offer[] => {
     cost: {
       price: priceFor(product, preferences),
       items: 1,
-      shipping: shippingOf(product, region, preferences.shipping) ?? 0,
+      shipping:
+        shippingOf(product, region, preferences.shipping) ??
+        shippingFloorOf(product, region, preferences.shipping)?.cents ??
+        0,
     },
     provides: unique(leavesOf(product).flatMap((leaf) => providedBy(leaf.id))),
   }))
@@ -218,6 +227,7 @@ const priceOrder = (preferences: Preferences): Quote => {
         group: groupOf(product),
         contents,
         shipping: shippingOf(product, destination.region, preferences.shipping),
+        shippingFloor: shippingFloorOf(product, destination.region, preferences.shipping),
         finish: sum(contents.map((content) => content.finish)),
       }
     })
@@ -225,7 +235,7 @@ const priceOrder = (preferences: Preferences): Quote => {
   const listTotal = sum(lines.map((line) => line.product.price))
   const itemsTotal = sum(lines.map((line) => line.price))
   const finishTotal = sum(lines.map((line) => line.finish))
-  const shippingTotal = sum(lines.map((line) => line.shipping ?? 0))
+  const shippingTotal = sum(lines.map((line) => line.shipping ?? line.shippingFloor?.cents ?? 0))
 
   const taxRate = preferences.includeTax ? (preferences.taxRate ?? destination.taxRate) : 0
   const taxTotal = Math.round(((itemsTotal + finishTotal + shippingTotal) * taxRate) / PERCENT)
