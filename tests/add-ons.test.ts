@@ -10,6 +10,7 @@ const LEGACY_PLAYMATS = 125555
 const OG_PLAYMAT = 125217
 const SPACE_CAT_HOODIE = 125234
 const RACOON_HOODIE = 125245
+const BOBER_HOODIE = 129735
 const EVOLVED_VOID_SEEDERS = 125545
 const ZENITH_OF_RUIN = 125546
 const SANGREVORES = 125249
@@ -76,11 +77,17 @@ describe('add-ons and the games they belong to', () => {
     expect(withOriginal.has(SPACE_CAT_HOODIE)).toBe(true)
     expect(withOriginal.has(RACOON_HOODIE)).toBe(false)
 
+    // Legacy has a hoodie of its own since campaign Update #15: the Space Bober.
     const legacyOnly = wantedRequirements(
       preferencesWith({ lines: ['legacy'], extras: ['hoodie'] }),
     )
-    expect(legacyOnly.has(SPACE_CAT_HOODIE)).toBe(true)
-    expect(legacyOnly.has(RACOON_HOODIE)).toBe(true)
+    expect(legacyOnly.has(BOBER_HOODIE)).toBe(true)
+    expect(legacyOnly.has(SPACE_CAT_HOODIE)).toBe(false)
+
+    const noGame = wantedRequirements(preferencesWith({ lines: [], extras: ['hoodie'] }))
+    for (const hoodie of [SPACE_CAT_HOODIE, RACOON_HOODIE, BOBER_HOODIE]) {
+      expect(noGame.has(hoodie)).toBe(true)
+    }
   })
 })
 

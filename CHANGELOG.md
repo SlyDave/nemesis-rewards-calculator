@@ -10,6 +10,43 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-20]
+
+### Added
+
+- The catalogue gains campaign Update #15's products: three pledges — the Nemesis Legacy
+  Vengeance pledge (€449), the Vengeance pledge with BIG BOX (€489) and the ULTIMATE Pledge
+  (€1,350) — and six add-ons for Legacy: Alternative Character Sculpts, New Kings, New Cats,
+  Metal Malfunction Markers, and the Space Bober Plushie and Hoodie. The Legacy Big Box comes
+  with them, sold only inside its pledge.
+- Each add-on is under its switch: the cats under Cats, the kings and character sculpts under
+  Alternative Sculpts, the Bober under Plushes and Hoodies, the Big Box under BIG BOX(es), and
+  the Metal Malfunction Markers under Acrylic Packs. With Legacy on, those switches now reach
+  Legacy's own rather than every game's.
+- An item sold only inside a pledge says so under its switch, with "Pledge only" for a price.
+- A pledge whose shipping the campaign has not priced is flagged as such: "Shipping not
+  published" on its card, a warning under the shipping total, and a note under "Good to know".
+- Tests for the new pledges: what each is the answer for, the Big Box's single shipping, and
+  their unpriced shipping.
+
+### Changed
+
+- The pledges of Update #15 are not in the campaign's shipping table, which has not been
+  reissued, so their shipping is left out of the total rather than guessed.
+- An order holding the Vengeance pledge with BIG BOX cannot be split, since the campaign sends
+  that pledge only in one shipment; the line under the choice says why.
+- The "ADDITIONAL Recharge Pack for FREE" in the new pledges stands for a second Legacy
+  Recharge Pack, and its MSRP is that pack's figure, not half as much again as nothing.
+- A cart line is labelled a pledge for holding a game's core, not for having a shipping price.
+- Several answers change with the new products. Asking for the Legacy Big Box brings the
+  Vengeance pledge with BIG BOX (€489), so all four games with every extra now come to €1,727
+  in rewards, where they were €1,599, and go as single shipping. Without the Big Boxes, the
+  answer for all four games is the ULTIMATE Pledge and two add-ons (€1,378).
+- The solver's two random brute-force checks may take a minute: three more pledges made the
+  brute force eight times slower.
+- `CONTEXT.md` records the new products, the readings taken, and the reference results that
+  changed.
+
 ## [2026-10-18]
 
 ### Changed
@@ -259,6 +296,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-20]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-20&until=2026-10-20
 [2026-10-18]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-18&until=2026-10-18
 [2026-10-16]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-16&until=2026-10-16
 [2026-10-14]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-14&until=2026-10-14

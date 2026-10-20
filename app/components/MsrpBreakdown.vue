@@ -35,7 +35,8 @@ const percent = (share: number, decimals = 0): string => `${(share * PERCENT).to
 
 const assumed = percent(ASSUMED_UPLIFT)
 
-const noteFor = (item: ItemMsrp): string => {
+/** How the figure was arrived at, for the item it was arrived at for. */
+const figureNote = (item: ItemMsrp, priced: ItemMsrp['product']): string => {
   const { basis, earlier, countedWith } = item
   if (earlier !== null) {
     const what = basis === 'earlierMsrp' ? 'Retail MSRP' : 'Price'
@@ -53,9 +54,15 @@ const noteFor = (item: ItemMsrp): string => {
     case 'assumed':
     case 'earlierMsrp':
     case 'earlierPrice':
-      return `No MSRP published. Assumed: this campaign’s price of ${format(item.product.price)}, plus ${assumed}.`
+      return `No MSRP published. Assumed: this campaign’s price of ${format(priced.price)}, plus ${assumed}.`
   }
 }
+
+/** A second copy of an item is worth what the first is, and says so first. */
+const noteFor = (item: ItemMsrp): string =>
+  item.copyOf === null
+    ? figureNote(item, item.product)
+    : `A second ${item.copyOf.name}, at its figure. ${figureNote(item, item.copyOf)}`
 
 const workingOf = (item: ItemMsrp): Working => {
   if (item.earlier !== null) {

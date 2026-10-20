@@ -44,6 +44,24 @@ const bonusNames = computed<string>(() =>
       </li>
 
       <li
+        v-if="quote.unpricedPledges.length > 0"
+        class="flex items-start gap-3"
+      >
+        <UIcon
+          name="i-fa-shipping"
+          class="mt-0.5 size-4 shrink-0 text-warning"
+        />
+        <p class="text-toned">
+          <span class="font-semibold text-highlighted"
+            >Shipping for the new pledges is unknown.</span
+          >
+          The Vengeance and Ultimate pledges came in campaign Update #15, after the campaign
+          published its shipping table, and it has not priced them since. Their shipping is left out
+          of the total.
+        </p>
+      </li>
+
+      <li
         v-if="quote.unpricedShipping.length > 0"
         class="flex items-start gap-3"
       >

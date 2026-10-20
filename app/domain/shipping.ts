@@ -97,7 +97,27 @@ const TIERS: Readonly<Record<number, Tier>> = {
   125529: RETALIATION_VETERAN,
 }
 
-/** A pledge's shipping price, or null for anything the table does not price (the add-ons). */
+/**
+ * Pledges the table does not price. Campaign Update #15 (20 October 2026) added them after the
+ * table was published, and it has not been reissued; Gamefound's own data has no shipping
+ * price for any pledge. So, like an add-on's, their shipping is left out and said to be.
+ */
+export const UNPRICED_PLEDGES: ReadonlySet<number> = new Set([
+  125604, // Nemesis Legacy Vengeance pledge
+  129737, // Nemesis Legacy Vengeance pledge with BIG BOX
+  129738, // The ULTIMATE Pledge
+])
+
+/**
+ * Pledges sent in one shipment, whatever is chosen: "This pledge is available only in the
+ * SINGLE shipping option", since everything in it is packed into its Big Box.
+ */
+export const SINGLE_SHIPPING_ONLY: ReadonlySet<number> = new Set([129737])
+
+/**
+ * A pledge's shipping price, or null for anything the table does not price: the add-ons, and
+ * the pledges that came after it.
+ */
 export const shippingOf = (product: Product, region: RegionId, mode: ShippingMode): Cents | null =>
   TIERS[product.id]?.[mode][region] ?? null
 

@@ -53,6 +53,9 @@ const shippingNote = computed<string>(() => {
   if (props.quote.lines.length === 0) {
     return 'Split shipping sends an order in two parts, so it needs something in each: nothing is ordered yet.'
   }
+  if (props.quote.singleOnly !== null) {
+    return `The ${props.quote.singleOnly.name} is only sent in one shipment, packed in its Big Box, so split shipping is not on offer. ${props.quote.waves}`
+  }
   return `Nothing here to split, so split shipping is not on offer. ${props.quote.waves}`
 })
 

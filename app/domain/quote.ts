@@ -5,7 +5,7 @@ import { isGift, priceFor } from './gift'
 import { msrpOf } from './msrp'
 import { EXTRAS } from './preferences'
 import { wantedRequirements } from './selection'
-import { describeWaves, shippingOf } from './shipping'
+import { SINGLE_SHIPPING_ONLY, describeWaves, shippingOf } from './shipping'
 import { solve } from './solver'
 
 import type { Product } from './catalog'
@@ -33,9 +33,14 @@ export interface CartLine {
   readonly price: Cents
   /** A returning backer's gift: added like the rest, as the one Gamefound lists at nothing. */
   readonly isGift: boolean
+  /** Whether it is a pledge — it holds a game's core — rather than an add-on. */
+  readonly isPledge: boolean
   readonly group: CartGroup
   readonly contents: readonly ContentLine[]
-  /** The published shipping price, or null for add-ons, which have none yet. */
+  /**
+   * The published shipping price, or null where there is none yet: for the add-ons, and for
+   * the pledges that came after the shipping table.
+   */
   readonly shipping: Cents | null
   readonly finish: Cents
 }
@@ -56,11 +61,16 @@ export interface Quote {
   readonly finishTotal: Cents
   /** The shipping the campaign has published a price for: the pledges'. */
   readonly shippingTotal: Cents
-  /** The cart lines whose shipping will only be priced in the pledge manager. */
+  /** The add-ons in the cart, whose shipping will only be priced in the pledge manager. */
   readonly unpricedShipping: readonly Product[]
+  /** The pledges in the cart that the shipping table does not price, having come after it. */
+  readonly unpricedPledges: readonly Product[]
+  /** A pledge in the cart that is only ever sent as single shipping; null where there is none. */
+  readonly singleOnly: Product | null
   /**
    * Whether the order can be sent in two parts: whether it has something for each of the
-   * campaign's two shipments. An order that all goes out together has nothing to split.
+   * campaign's two shipments, and nothing that must go as one. An order that all goes out
+   * together has nothing to split.
    */
   readonly canSplit: boolean
   /** The mode the order is priced in: the one chosen, or single where it cannot be split. */
@@ -204,6 +214,7 @@ const priceOrder = (preferences: Preferences): Quote => {
         product,
         price: priceFor(product, preferences),
         isGift: isGift(product.id, preferences),
+        isPledge: categoryOf(product) === CATEGORY_ORDER.indexOf('core'),
         group: groupOf(product),
         contents,
         shipping: shippingOf(product, destination.region, preferences.shipping),
@@ -224,6 +235,8 @@ const priceOrder = (preferences: Preferences): Quote => {
   const msrpTotal = sum(msrp.map((item) => item.amount))
   const games = new Set(contents.map((content) => lineOf(content.product.id)))
   const shipments = new Set(contents.map((content) => waveOf(content.product)))
+  const singleOnly = lines.find((line) => SINGLE_SHIPPING_ONLY.has(line.product.id))?.product
+  const unpriced = lines.filter((line) => line.shipping === null)
 
   return {
     lines,
@@ -236,8 +249,10 @@ const priceOrder = (preferences: Preferences): Quote => {
     finishTotal,
     shippingTotal,
     // A gift is one of these too: it is free, but by the FAQ its shipping is not.
-    unpricedShipping: lines.filter((line) => line.shipping === null).map((line) => line.product),
-    canSplit: shipments.has(1) && shipments.has(2),
+    unpricedShipping: unpriced.filter((line) => !line.isPledge).map((line) => line.product),
+    unpricedPledges: unpriced.filter((line) => line.isPledge).map((line) => line.product),
+    singleOnly: singleOnly ?? null,
+    canSplit: shipments.has(1) && shipments.has(2) && singleOnly === undefined,
     shipping: preferences.shipping,
     waves: describeWaves(preferences.shipping, {
       legacy: games.has('legacy'),

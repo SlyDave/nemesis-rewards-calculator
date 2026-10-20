@@ -37,21 +37,26 @@ const hint = computed<string>(() => {
 })
 
 /**
- * The small print under an item: that a pledge brings it already, or, for one the switch
- * passes over, whose it is and that it can be had.
+ * The small print under an item: that a pledge brings it already; that only a pledge sells
+ * it; and, for one the switch passes over, whose it is and that it can be had.
  */
 const noteFor = (item: ExtraItem): { description?: string } => {
   if (item.included !== null) {
     return { description: `${item.included}.` }
   }
-  return item.passedOver === null
-    ? {}
-    : { description: `${item.passedOver}. Tick it to take it anyway.` }
+  const notes = [
+    item.soldIn === null ? null : `${item.soldIn}.`,
+    item.passedOver === null ? null : `${item.passedOver}. Tick it to take it anyway.`,
+  ].filter((note) => note !== null)
+  return notes.length === 0 ? {} : { description: notes.join(' ') }
 }
 
 const priceOf = (item: ExtraItem): string => {
   if (item.included !== null) {
     return 'Included'
+  }
+  if (item.soldIn !== null) {
+    return 'Pledge only'
   }
   return item.price === 0 ? 'Free' : format(item.price)
 }

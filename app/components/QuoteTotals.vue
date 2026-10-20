@@ -24,6 +24,18 @@ const pledgeCount = computed<number>(
 const plural = (count: number, word: string): string =>
   `${String(count)} ${word}${count === 1 ? '' : 's'}`
 
+/** How many pledges the shipping figure is for; or, where none is priced, that it is none. */
+const shippingCount = computed<string>(() =>
+  pledgeCount.value === 0 && props.quote.unpricedPledges.length > 0
+    ? 'not yet priced'
+    : plural(pledgeCount.value, 'pledge'),
+)
+
+/** "the ULTIMATE Pledge", or "the Vengeance pledge and the ULTIMATE Pledge". */
+const unpricedPledgeNames = computed<string>(() =>
+  props.quote.unpricedPledges.map((pledge) => `the ${pledge.name}`).join(' and '),
+)
+
 const rateNote = computed<string | null>(() => {
   const { currency } = preferences.value
   if (currency === 'EUR') {
@@ -86,9 +98,21 @@ const rateNote = computed<string | null>(() => {
         <div class="flex items-baseline justify-between gap-4">
           <dt class="text-toned">
             Shipping to {{ quote.destination.name }}
-            <span class="text-muted">· {{ plural(pledgeCount, 'pledge') }}</span>
+            <span class="text-muted">· {{ shippingCount }}</span>
           </dt>
           <dd class="font-semibold text-highlighted">{{ format(quote.shippingTotal) }}</dd>
+        </div>
+        <div
+          v-if="quote.unpricedPledges.length > 0"
+          class="-mt-1 flex items-start gap-2 text-xs text-warning"
+        >
+          <UIcon
+            name="i-fa-triangle-exclamation"
+            class="mt-0.5 size-3.5 shrink-0"
+          />
+          <span
+            >Plus shipping for {{ unpricedPledgeNames }}, which the campaign has not priced.</span
+          >
         </div>
         <div
           v-if="quote.unpricedShipping.length > 0"

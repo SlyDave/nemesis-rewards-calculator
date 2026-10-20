@@ -9,8 +9,8 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 18 October 2026, after the catalogue was captured again for campaign Update
-#14. Before that, on 10 October, the returning backer's gift was brought into line with the
+State described: 20 October 2026, after campaign Update #15 added three pledges and six
+add-ons, and the catalogue, the classification and the shipping rules took them in. Before that, on 10 October, the returning backer's gift was brought into line with the
 campaign's FAQ, and the "What's New?" list and the changelog were added. Everything below is
 built, tested, pushed and live unless it says otherwise.
 
@@ -24,10 +24,10 @@ built, tested, pushed and live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 18 October 2026, 19:59 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
-| Catalogue size   | 98 products: 16 pledges (sets), 72 sold singly, 10 parts sold only inside pledges       |
-| Classified items | 79 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 162, all passing (`bun test`)                                                           |
+| Catalogue        | Captured 20 October 2026, 20:26 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
+| Classified items | 86 requirements in `app/domain/classification.ts`                                       |
+| Tests            | 170, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -103,6 +103,8 @@ called `nemesis-rewards-calculator`:
 26. The campaign updates since — only #13 — checked, and the site updated as required (section
     6).
 27. Campaign Update #14: read it, and update the site as required (section 6).
+28. Campaign Update #15, with three new pledges and six new add-ons: read it and update the
+    site (sections 6, 7.1, 7.6 and 7.11).
 
 ### Where each decision came from
 
@@ -338,6 +340,36 @@ re-issued again, with the same figures (section 7.11). The FAQ had not changed. 
 was refreshed for the footer's date, as before. The update also gave notice of new pledge
 options and cosmetic add-ons on 20 October (section 13).
 
+What the 20 October capture changed, against the 18 October one, after campaign Update #15:
+eleven new products, and nothing else but the places in Gamefound's listing that they pushed
+along. No price, bundle, picture, category or option of an existing product changed.
+
+| Id     | Product                                      | Price          | Sold                      |
+| ------ | -------------------------------------------- | -------------- | ------------------------- |
+| 125604 | Nemesis Legacy Vengeance pledge              | 489.50 → 449   | Pledge                    |
+| 129737 | Nemesis Legacy Vengeance pledge with BIG BOX | 539.50 → 489   | Pledge                    |
+| 129738 | The ULTIMATE Pledge                          | 1578.50 → 1350 | Pledge                    |
+| 125549 | Nemesis Legacy Alternative Character Sculpts | 19             | By itself                 |
+| 125553 | Nemesis Legacy New Kings                     | 29             | By itself                 |
+| 125554 | Nemesis Legacy New Cats                      | 18             | By itself                 |
+| 129736 | Metal Malfunction Markers                    | 5              | By itself                 |
+| 129734 | Space Bober Plushie                          | 15             | By itself                 |
+| 129735 | Space Bober Hoodie                           | 30             | By itself                 |
+| 125556 | BIG BOX Nemesis Legacy                       | 50             | Only in 129737            |
+| 125605 | ADDITIONAL Recharge Pack for FREE            | 0              | Only in the three pledges |
+
+- The Vengeance pledge is everything Legacy sells but the Big Box and the SAM Robot Pack, with
+  a second Recharge Pack free. The one with the Big Box adds it, and is "available only in the
+  SINGLE shipping option", everything being packed into the Big Box.
+- The Ultimate Pledge is nearly everything of all four games: the Vengeance pledge's contents,
+  and each older game's biggest pledge, less the trilogy's Big Boxes and Retaliation's Premium
+  Synthetic Cards.
+- The update also revealed the Xeno-Hunter, a third free crew class, put to a vote, and said it
+  is the last to add pledges or cosmetic add-ons, but for a possible small Endgame add-on.
+- The shipping table's image is the same file as before, so it does not price the new pledges;
+  nor does Gamefound's data, which has no shipping price for any pledge, nor the FAQ, which had
+  not changed. The graphic stating the Legacy MSRPs was re-issued with the same figures.
+
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
 the graphic stating the MSRPs still reads the same (section 7.11); and read the FAQ, whose
@@ -355,7 +387,12 @@ in pledge manager", so an add-on has no shipping price and none is invented.
 The table typed out is the image under the "Estimated shipping" heading of the project page,
 whose file is `richtext/c1e9f274-85d9-43af-92ab-071d32f91c44.png`. Gamefound gives a replaced
 image a new file name, so a different name there means the table has changed and must be typed
-out again. It was still that file on 18 October 2026.
+out again. It was still that file on 20 October 2026.
+
+**The three pledges of campaign Update #15 are not in it** (`UNPRICED_PLEDGES` in
+`shipping.ts`). **[reading]** Their shipping is not invented: like an add-on's, it is left out
+of the total, and the page says so (section 7.6). When the campaign prices them, give each a
+tier and take it out of that set.
 
 ### What is hand-maintained
 
@@ -373,27 +410,30 @@ out again. It was still that file on 18 October 2026.
 
 Prices are euros, list then effective where they differ. The tier is the shipping column.
 
-| Id     | Pledge                           | Price        | Shipping tier                    |
-| ------ | -------------------------------- | ------------ | -------------------------------- |
-| 125535 | Legacy Core Pledge (Standard)    | 89           | `LEGACY_CORE`                    |
-| 120364 | Legacy Core Pledge (Special)     | 129          | `LEGACY_CORE`                    |
-| 125557 | Legacy Collector's Pledge        | 212 → 205    | `LEGACY_COLLECTOR`               |
-| 125558 | Legacy Salvation Pledge          | 281.50 → 269 | `LEGACY_SALVATION`               |
-| 125606 | 4 x Core Pledge (all four games) | 462 → 419    | `FOUR_CORE`                      |
-| 125507 | Nemesis OG pledge                | 109          | `CORE`                           |
-| 125510 | OG Collector's Pledge            | 201 → 195    | `OG_COLLECTOR_CAPTAIN`           |
-| 125511 | OG Captain's Pledge              | 241 → 229    | `OG_COLLECTOR_CAPTAIN`           |
-| 125512 | OG Intruder Pledge               | 435 → 399    | `OG_INTRUDER`                    |
-| 125514 | Lockdown pledge                  | 115          | `CORE`                           |
-| 125519 | Lockdown Collector's Pledge      | 149 → 145    | `LOCKDOWN_COLLECTOR`             |
-| 125522 | Lockdown Martian Pledge          | 253 → 235    | `LOCKDOWN_MARTIAN`               |
-| 125523 | Retaliation pledge               | 109          | `CORE`                           |
-| 125527 | Retaliation Collector's Pledge   | 182 → 175    | `RETALIATION_COLLECTOR_MILITARY` |
-| 125528 | Retaliation Military Pledge      | 223 → 209    | `RETALIATION_COLLECTOR_MILITARY` |
-| 125529 | Retaliation Veteran Pledge       | 401 → 369    | `RETALIATION_VETERAN`            |
+| Id     | Pledge                           | Price          | Shipping tier                    |
+| ------ | -------------------------------- | -------------- | -------------------------------- |
+| 125535 | Legacy Core Pledge (Standard)    | 89             | `LEGACY_CORE`                    |
+| 120364 | Legacy Core Pledge (Special)     | 129            | `LEGACY_CORE`                    |
+| 125557 | Legacy Collector's Pledge        | 212 → 205      | `LEGACY_COLLECTOR`               |
+| 125558 | Legacy Salvation Pledge          | 281.50 → 269   | `LEGACY_SALVATION`               |
+| 125606 | 4 x Core Pledge (all four games) | 462 → 419      | `FOUR_CORE`                      |
+| 125507 | Nemesis OG pledge                | 109            | `CORE`                           |
+| 125510 | OG Collector's Pledge            | 201 → 195      | `OG_COLLECTOR_CAPTAIN`           |
+| 125511 | OG Captain's Pledge              | 241 → 229      | `OG_COLLECTOR_CAPTAIN`           |
+| 125512 | OG Intruder Pledge               | 435 → 399      | `OG_INTRUDER`                    |
+| 125514 | Lockdown pledge                  | 115            | `CORE`                           |
+| 125519 | Lockdown Collector's Pledge      | 149 → 145      | `LOCKDOWN_COLLECTOR`             |
+| 125522 | Lockdown Martian Pledge          | 253 → 235      | `LOCKDOWN_MARTIAN`               |
+| 125523 | Retaliation pledge               | 109            | `CORE`                           |
+| 125527 | Retaliation Collector's Pledge   | 182 → 175      | `RETALIATION_COLLECTOR_MILITARY` |
+| 125528 | Retaliation Military Pledge      | 223 → 209      | `RETALIATION_COLLECTOR_MILITARY` |
+| 125529 | Retaliation Veteran Pledge       | 401 → 369      | `RETALIATION_VETERAN`            |
+| 125604 | Legacy Vengeance Pledge          | 489.50 → 449   | Not priced                       |
+| 129737 | Legacy Vengeance with BIG BOX    | 539.50 → 489   | Not priced; single shipping only |
+| 129738 | The ULTIMATE Pledge              | 1578.50 → 1350 | Not priced                       |
 
-A test holds the invariant: every set containing a core box has a shipping tier, and nothing
-else has one.
+A test holds the invariant: every set containing a core box has a shipping tier or is named
+as not priced, never both, and nothing else has either.
 
 ## 7. How it decides — the rules
 
@@ -453,6 +493,21 @@ else has one.
   pledge where every pledge for its game holds it.
 - Every other item was checked against Gamefound's category and description on 8 October 2026
   and is classified as Gamefound has it.
+- Campaign Update #15's add-ons are all Legacy's: the New Cats under Cats; the New Kings and
+  the Alternative Character Sculpts under Alternative Sculpts; the Space Bober under Plushes and
+  Hoodies; the Legacy Big Box under BIG BOX(es). So each of those switches, with Legacy on, now
+  reaches Legacy's own instead of every game's.
+- **[reading]** The Metal Malfunction Markers, which replace the Core Box's plastic ones, are
+  under **Acrylic Packs**, as an upgrade to the components like the acrylic tokens. No switch
+  fits them better, and a switch of their own would mean placing a new bit in the share code
+  by hand (section 7.9). With Legacy on, Acrylic Packs takes them too; they can be unticked.
+- **[reading]** The Legacy Big Box is not sold by itself, only inside the Vengeance pledge with
+  it. It is under its switch like any other, so asking for it brings that whole pledge (€489),
+  with the rest as bonuses. Its row says "Only sold in the Nemesis Legacy Vengeance pledge
+  with BIG BOX", and "Pledge only" where a price would be (`ExtraItem.soldIn`).
+- "ADDITIONAL Recharge Pack for FREE", inside the three new pledges, stands in for the Legacy
+  Recharge Pack (`PROVIDES`), which they also hold: a second copy, at nothing. It is the only
+  product priced at nothing, and a test allows that only for a part of a pledge.
 
 ### 7.2 What the switches ask for
 
@@ -598,6 +653,14 @@ All sums are in euro cents.
   core box out: the older games first, the Legacy add-ons second.
 - **Unpriced shipping**: add-ons in the cart, a gift among them, are counted and flagged: "Plus
   shipping for N add-ons, which Awaken Realms will only price in the pledge manager."
+- **Unpriced pledges**: a pledge the shipping table does not price (`Quote.unpricedPledges`)
+  is still a pledge — `CartLine.isPledge` is whether it holds a game's core, not whether it
+  has a shipping price — and is flagged apart from the add-ons: "Plus shipping for the …,
+  which the campaign has not priced." Its card says "Shipping not published", the shipping row
+  says "not yet priced" where no pledge is, and "Good to know" explains.
+- **Single shipping only**: the Vengeance pledge with BIG BOX (`SINGLE_SHIPPING_ONLY`). An
+  order holding it cannot be split (`Quote.singleOnly`), and is priced and described as single
+  shipping, like an order with nothing to split; the line under the choice says why.
 
 ### 7.7 Tax and destinations
 
@@ -706,8 +769,8 @@ The Legacy figures are in one graphic near the top of the project story ("In ret
 easily pay twice the price…"). It is replaced as stretch goals are revealed, under a new file
 name each time; on 10 October 2026 it still read €199 and €99, and on 12 and 14 October it was
 that same file. On 16 October it was `richtext/bfb476e8-d9c6-46cb-9a40-4d3df5ad9861.png`,
-and on 18 October `richtext/b9fd5770-af09-4981-b2b2-4398e9c5b06d.png`, both still at €199 and
-€99.
+on 18 October `richtext/b9fd5770-af09-4981-b2b2-4398e9c5b06d.png`, and on 20 October
+`richtext/dbe3cbb1-53bf-48ed-82e3-300be205ca38.png`, all still at €199 and €99.
 
 That is four figures for some eighty items, so the rest needed a rule. **[reading]**, all of it:
 
@@ -720,8 +783,9 @@ That is four figures for some eighty items, so the rest needed a rule. **[readin
 3. **[owner] Otherwise an assumption: this campaign's own list price plus 50%**
    (`ASSUMED_UPLIFT`). That is everything new with Legacy except its two stated figures, and
    the few older items no earlier campaign sold: the BIG BOXes, the Premium Synthetic Cards,
-   Retaliation's promo cards. Twenty-four items in all. Each says in the breakdown that it is
-   assumed, and from what price.
+   Retaliation's promo cards. Thirty-two items in all, with those of Update #15. Each says in
+   the breakdown that it is assumed, and from what price. The free second Recharge Pack takes
+   the first one's figure (`copyOf`), and says so, rather than half as much again as nothing.
 4. **Two core boxes were only ever priced together with their stretch goals** (OG's "Core Box
    Pledge", Lockdown's "Lockdown Pledge"). The figure is given to the core box, and the stretch
    goals inside the pledges are counted with it, at nothing. A test holds that such a pair is
@@ -1006,6 +1070,7 @@ Each of these cost time once. The fix is in the code; this is why it is there.
 | The MSRP is not in the page's data                                      | The campaign states it only inside story images                                                                         | Fetch the images from the image CDN, find the text with OCR, then read the figures by eye                                                                |
 | The header's last control overhangs the panels beneath it               | The right-hand column keeps a gap and a scrollbar clear of the page's edge, and the scrollbar's width differs by system | The column reserves its scrollbar always (`scrollbar-gutter: stable`); the header row has the same gap, and a hidden scrollbar as a spacer for the width |
 | A new capture differs from the last on every line                       | The products were in the order Gamefound listed them, which shifts                                                      | The capture script sorts them by id                                                                                                                      |
+| The solver's random checks time out                                     | The brute force they compare against tries every combination of bundles; three more pledges made it eight times slower  | Those two tests have a 60-second limit. Keep them: they are the proof the solver is exact                                                                |
 
 Two facts about the data that are easy to assume wrong:
 
@@ -1033,22 +1098,25 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 18 October 2026, and the campaign runs to
-   27 October. Capture again (section 6) whenever Gamefound changes something. Check after
-   each update. **Update #14 promised new pledge options and new cosmetic add-ons on Tuesday
-   20 October (Day 15).** Those will be products the catalogue does not know: each needs
-   classifying (`classification.ts`; `bun test` fails until it is), a new pledge needs a
-   shipping tier (`shipping.ts`, which only the campaign's shipping image can give), and each
-   needs an MSRP rule (`msrp.ts`, which falls back to the assumption by itself). Then the
-   reference results (section 14), the "What's New?" list and the changelog. The pledge manager will later publish add-on shipping, which the site does not have.
-9. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
-   look: taking the oldest campaign's price rather than the latest; the region standing in
-   for the city; and the range quoted beside the assumed uplift.
-10. **Retaliation's Stretch Goals have a finish price of their own**, which sits oddly with
+8. **The prices go stale.** They are a snapshot from 20 October 2026, and the campaign runs to
+   27 October. Capture again (section 6) whenever Gamefound changes something, and check after
+   each update. Update #15 said it was the last to add pledges or cosmetic add-ons, but for a
+   possible small Endgame add-on. The pledge manager will later publish add-on shipping, which
+   the site does not have.
+9. **The new pledges have no shipping price** (section 6). Watch the shipping table's file name
+   and the FAQ for one; until then the site leaves it out and says so.
+10. **The Metal Malfunction Markers under Acrylic Packs** is a reading (section 7.1). The owner
+    may prefer a switch of their own.
+11. **Asking for the Legacy Big Box brings the €489 pledge it is sold in.** That is the only way
+    to have it, so the site is right to, but it may surprise.
+12. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
+    look: taking the oldest campaign's price rather than the latest; the region standing in
+    for the city; and the range quoted beside the assumed uplift.
+13. **Retaliation's Stretch Goals have a finish price of their own**, which sits oddly with
     Update #10 (section 7.6). If Awaken Realms take the option away, the next capture shows it
     as a change to product 125526's options, a test fails, and the site's finish for
     Retaliation falls by €13 or €59.
-11. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
+14. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
     October 2026: add the line to `inflation.ts`.
 
 ## 14. Reference results
@@ -1057,22 +1125,26 @@ From the catalogue as captured, delivering to the UK with Split shipping and VAT
 stated. Use them to check that a rebuild or a refactor still agrees. They change when the
 catalogue is captured again.
 
-| Choices                             | Code            | Cart                                                           | Rewards | Shipping | Total   |
-| ----------------------------------- | --------------- | -------------------------------------------------------------- | ------- | -------- | ------- |
-| Defaults: Legacy, Special           | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                   | 129.00  | 39.00    | 201.60  |
-| Legacy, Standard                    | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                  | 89.00   | 39.00    | 153.60  |
-| Defaults, Single shipping           | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                   | 129.00  | 27.00    | 187.20  |
-| Defaults, Painted                   | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish               | 129.00  | 39.00    | 350.40  |
-| All four games, either edition      | `af-GB-EUR-`    | 4 x Core Pledge                                                | 419.00  | 97.00    | 619.20  |
-| Legacy and the Dice Tray            | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                          | 139.00  | 39.00    | 213.60  |
-| No game, the Dice Tray              | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                              | 10.00   | 0.00     | 12.00   |
-| Legacy, returning backer            | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                 | 129.00  | 39.00    | 201.60  |
-| Legacy and OG, Alternative Sculpts  | `8fl3-GB-EUR-`  | Two core pledges, Classic Crew, Alien Kings                    | 282.00  | 63.00    | 414.00  |
-| All four games, Alternative Sculpts | `8fp3-GB-EUR-`  | 4 x Core Pledge and four sculpt add-ons; no Classic Crew       | 493.00  | 97.00    | 708.00  |
-| All four games, every extra         | `7hp13-GB-EUR-` | Salvation, Veteran, Martian, Intruder and 11 add-ons           | 1599.00 | 169.00   | 2121.60 |
-| Retaliation, Expansions             | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders | 212.00  | 24.00    | 283.20  |
-| Lockdown, Expansions                | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic   | 217.00  | 24.00    | 289.20  |
-| Lockdown, Terrain Pack(s)           | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                       | 145.00  | 24.00    | 202.80  |
+| Choices                                     | Code            | Cart                                                                              | Rewards | Shipping | Total   |
+| ------------------------------------------- | --------------- | --------------------------------------------------------------------------------- | ------- | -------- | ------- |
+| Defaults: Legacy, Special                   | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                                      | 129.00  | 39.00    | 201.60  |
+| Legacy, Standard                            | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                                     | 89.00   | 39.00    | 153.60  |
+| Defaults, Single shipping                   | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                                      | 129.00  | 27.00    | 187.20  |
+| Defaults, Painted                           | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish                                  | 129.00  | 39.00    | 350.40  |
+| All four games, either edition              | `af-GB-EUR-`    | 4 x Core Pledge                                                                   | 419.00  | 97.00    | 619.20  |
+| Legacy and the Dice Tray                    | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                                             | 139.00  | 39.00    | 213.60  |
+| No game, the Dice Tray                      | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                                                 | 10.00   | 0.00     | 12.00   |
+| Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                                    | 129.00  | 39.00    | 201.60  |
+| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Classic Crew, Alien Kings            | 330.00  | 63.00    | 471.60  |
+| All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                           | 541.00  | 97.00    | 765.60  |
+| All four games, every extra                 | `7hp13-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 112.00*  | 2206.80 |
+| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Vengeance pledge with BIG BOX; single shipping                                    | 489.00  | 0.00*    | 586.80  |
+| All four games, every extra but BIG BOX(es) | `7dhbr-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards                   | 1378.00 | 0.00*    | 1653.60 |
+| Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders                    | 212.00  | 24.00    | 283.20  |
+| Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic                      | 217.00  | 24.00    | 289.20  |
+| Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                          | 145.00  | 24.00    | 202.80  |
+
+\* Plus the shipping of a pledge of campaign Update #15, which is not priced (section 6).
 
 ## 15. Working on it
 
@@ -1094,7 +1166,7 @@ For common jobs:
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | Prices changed on Gamefound   | Capture, `bun run catalog:build`, `bun test` (section 6)                                                                             |
 | Gamefound added a product     | Classify it in `classification.ts`; add a `PROVIDES` entry if it equals something else, `alsoWith` if it is played in a second game  |
-| A new pledge                  | Also give it a tier in `shipping.ts`                                                                                                 |
+| A new pledge                  | Also give it a tier in `shipping.ts`, or name it in `UNPRICED_PLEDGES` until the campaign prices it                                  |
 | The shipping table changed    | `shipping.ts`, by hand from the campaign's image                                                                                     |
 | A new extras switch           | `ExtraTag`, `EXTRAS`, `DEFAULT_PREFERENCES`, an icon — and its bit in the share code, placed by hand (section 7.9)                   |
 | A new destination or tax rate | `destinations.ts`                                                                                                                    |

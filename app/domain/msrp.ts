@@ -76,6 +76,8 @@ type Source =
     }
   /** Nothing of its own: the earlier figure for another item already covers it. */
   | { readonly kind: 'with'; readonly id: number }
+  /** A second copy of another item, and worth what that item is. */
+  | { readonly kind: 'copy'; readonly id: number }
 
 const stated = (euros: number): Source => ({ kind: 'stated', euros })
 
@@ -95,6 +97,8 @@ const msrp = (campaign: CampaignId, amount: number): Source => ({
 
 const countedWith = (id: number): Source => ({ kind: 'with', id })
 
+const copyOf = (id: number): Source => ({ kind: 'copy', id })
+
 /**
  * By Gamefound product id. An item not listed has no figure anywhere but this campaign's
  * price. The name each figure was found under is noted where it differs from today's.
@@ -103,6 +107,9 @@ const SOURCES: Readonly<Record<number, Source>> = {
   // --- Nemesis Legacy: "RETAIL MSRP: €199" and "SAVE €99 [RETAIL MSRP]" on the project page.
   120365: stated(199), // Core Box (Special Edition)
   125532: stated(99), // Stretch Goals (Special Edition)
+  // "ADDITIONAL Recharge Pack for FREE", in the Vengeance and Ultimate pledges: free there, but
+  // a Recharge Pack all the same.
+  125605: copyOf(125536),
 
   // --- Nemesis (the original) ---------------------------------------------------------------
   // "Core Box Pledge: Nemesis Core Box including all unlocked Stretch Goals" — one price for
@@ -203,6 +210,8 @@ export interface ItemMsrp {
   readonly earlier: EarlierFigure | null
   /** The item whose figure covers this one, for one that has none of its own. */
   readonly countedWith: Product | null
+  /** The item this one is a second copy of, whose figure it takes. */
+  readonly copyOf: Product | null
 }
 
 const CENTS_PER_UNIT = 100
@@ -242,6 +251,7 @@ const fromSource = (product: Product, source: Source | undefined): ItemMsrp => {
       basis: 'assumed',
       earlier: null,
       countedWith: null,
+      copyOf: null,
     }
   }
   switch (source.kind) {
@@ -252,6 +262,7 @@ const fromSource = (product: Product, source: Source | undefined): ItemMsrp => {
         basis: 'stated',
         earlier: null,
         countedWith: null,
+        copyOf: null,
       }
     case 'with':
       return {
@@ -260,7 +271,12 @@ const fromSource = (product: Product, source: Source | undefined): ItemMsrp => {
         basis: 'counted',
         earlier: null,
         countedWith: getProduct(source.id),
+        copyOf: null,
       }
+    case 'copy': {
+      const original = getProduct(source.id)
+      return { ...fromSource(original, SOURCES[source.id]), product, copyOf: original }
+    }
     case 'earlier': {
       const campaign = CAMPAIGNS[source.campaign]
       const euros = Math.round((source.amount / campaign.perEuro) * CENTS_PER_UNIT)
@@ -271,6 +287,7 @@ const fromSource = (product: Product, source: Source | undefined): ItemMsrp => {
         basis: source.isMsrp ? 'earlierMsrp' : 'earlierPrice',
         earlier: { campaign, amount: source.amount, euros, rise },
         countedWith: null,
+        copyOf: null,
       }
     }
   }

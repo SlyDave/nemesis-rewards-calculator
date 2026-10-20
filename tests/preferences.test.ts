@@ -44,7 +44,8 @@ describe('what is wanted', () => {
 describe('counting what a switch stands for', () => {
   test('counts across the included games', () => {
     expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'playmat').size).toBe(1)
-    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'hoodie').size).toBe(3)
+    // A hoodie for each game: Space Cat, Space Racoon, Space Platypus and Space Bober.
+    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'hoodie').size).toBe(4)
     expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'playmat').size).toBe(4)
   })
 })

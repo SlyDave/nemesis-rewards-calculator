@@ -140,41 +140,53 @@ describe('solve, against the real catalogue', () => {
     }
   })
 
-  test('random combinations of the switches', () => {
-    const random = seededRandom(20261006)
-    const chance = (probability: number): boolean => random() < probability
-    for (let run = 0; run < 120; run += 1) {
-      const lines = ALL_LINES.filter(() => chance(0.6))
-      const extras = ALL_EXTRAS.filter(() => chance(0.5))
-      check(
-        `run ${String(run)}: ${lines.join('+')} / ${extras.join('+')}`,
-        preferencesWith({
-          lines,
-          extras,
-          edition: chance(0.5) ? 'standard' : 'special',
-          shipping: chance(0.5) ? 'split' : 'single',
-        }),
-      )
-    }
-  })
+  // The brute force tries every combination of the bundles, and the pledges of campaign
+  // Update #15 took them from sixteen to nineteen: these take some seconds now, not one.
+  const SLOW_CHECK_MS = 60_000
 
-  test('random combinations with single items picked out against their switches', () => {
-    const random = seededRandom(8524)
-    const chance = (probability: number): boolean => random() < probability
-    const extraIds = REQUIREMENTS.filter((requirement) => requirement.tag !== 'core').map(
-      (requirement) => requirement.id,
-    )
-    for (let run = 0; run < 80; run += 1) {
-      const lines = ALL_LINES.filter(() => chance(0.7))
-      const overrides = Object.fromEntries(
-        extraIds.filter(() => chance(0.15)).map((id) => [id, chance(0.5)]),
+  test(
+    'random combinations of the switches',
+    () => {
+      const random = seededRandom(20261006)
+      const chance = (probability: number): boolean => random() < probability
+      for (let run = 0; run < 120; run += 1) {
+        const lines = ALL_LINES.filter(() => chance(0.6))
+        const extras = ALL_EXTRAS.filter(() => chance(0.5))
+        check(
+          `run ${String(run)}: ${lines.join('+')} / ${extras.join('+')}`,
+          preferencesWith({
+            lines,
+            extras,
+            edition: chance(0.5) ? 'standard' : 'special',
+            shipping: chance(0.5) ? 'split' : 'single',
+          }),
+        )
+      }
+    },
+    SLOW_CHECK_MS,
+  )
+
+  test(
+    'random combinations with single items picked out against their switches',
+    () => {
+      const random = seededRandom(8524)
+      const chance = (probability: number): boolean => random() < probability
+      const extraIds = REQUIREMENTS.filter((requirement) => requirement.tag !== 'core').map(
+        (requirement) => requirement.id,
       )
-      check(
-        `picked run ${String(run)}: ${lines.join('+')}`,
-        preferencesWith({ lines, extras: ALL_EXTRAS.filter(() => chance(0.4)), overrides }),
-      )
-    }
-  })
+      for (let run = 0; run < 80; run += 1) {
+        const lines = ALL_LINES.filter(() => chance(0.7))
+        const overrides = Object.fromEntries(
+          extraIds.filter(() => chance(0.15)).map((id) => [id, chance(0.5)]),
+        )
+        check(
+          `picked run ${String(run)}: ${lines.join('+')}`,
+          preferencesWith({ lines, extras: ALL_EXTRAS.filter(() => chance(0.4)), overrides }),
+        )
+      }
+    },
+    SLOW_CHECK_MS,
+  )
 
   test('answers at once, even with every switch on', () => {
     const preferences = preferencesWith({ lines: ALL_LINES, extras: ALL_EXTRAS })

@@ -42,9 +42,10 @@ describe('the Classic Crew', () => {
   })
 
   test('is counted under its switch only when it is on offer', () => {
-    expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'sculpts').size).toBe(1)
-    // Alien Kings, Lockdown Kings, and Retaliation's Queen and Kings: no Classic Crew.
-    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'sculpts').size).toBe(4)
+    // The Classic Crew, and Legacy's own Alternative Character Sculpts and New Kings.
+    expect(describeExtra(preferencesWith({ lines: ['legacy'] }), 'sculpts').size).toBe(3)
+    // Alien Kings, Lockdown Kings, Retaliation's Queen and Kings, Legacy's two: no Classic Crew.
+    expect(describeExtra(preferencesWith({ lines: ALL_LINES }), 'sculpts').size).toBe(6)
   })
 
   test('goes in the cart as an add-on for Legacy with one classic game', () => {

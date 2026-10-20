@@ -62,8 +62,8 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
 
         <div class="flex flex-wrap items-center gap-1.5">
           <UBadge
-            :label="line.shipping === null ? 'Add-on' : 'Pledge'"
-            :color="line.shipping === null ? 'neutral' : 'primary'"
+            :label="line.isPledge ? 'Pledge' : 'Add-on'"
+            :color="line.isPledge ? 'primary' : 'neutral'"
             variant="subtle"
             size="sm"
           />
@@ -80,6 +80,14 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
             :label="`Shipping ${format(line.shipping)}`"
             icon="i-fa-shipping"
             color="neutral"
+            variant="outline"
+            size="sm"
+          />
+          <UBadge
+            v-else-if="line.isPledge"
+            label="Shipping not published"
+            icon="i-fa-shipping"
+            color="warning"
             variant="outline"
             size="sm"
           />

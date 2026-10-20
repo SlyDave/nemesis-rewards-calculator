@@ -57,7 +57,8 @@ everything separately.
   footer. They change while the campaign runs; see below for refreshing them.
 - **Shipping** is the campaign's shipping table, typed out from the image it is published as.
   Split shipping is only offered for an order with something in each of the campaign's two
-  shipments; one that all goes out together is priced as single.
+  shipments; one that all goes out together is priced as single. The pledges added in campaign
+  Update #15 are not in the table yet, so their shipping is left out of the total and flagged.
 - **VAT** is charged on rewards and shipping at the destination's standard rate, for the
   places the campaign collects it. The rate can be corrected on the page.
 - **Returning backers** get the SAM Robot Pack free (campaign Update #6). With that switch on

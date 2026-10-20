@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 
 import { buyableProducts, catalog, findProduct, leavesOf } from '../app/domain/catalog'
 import { PROVIDES, REQUIREMENTS, findRequirement, providedBy } from '../app/domain/classification'
-import { hasShippingTier } from '../app/domain/shipping'
+import { UNPRICED_PLEDGES, hasShippingTier } from '../app/domain/shipping'
 
 describe('the catalogue', () => {
   test('has products, and every set is made of products it knows', () => {
@@ -29,7 +29,12 @@ describe('the catalogue', () => {
       expect(Number.isInteger(product.price), product.name).toBe(true)
       expect(Number.isInteger(product.effectivePrice), product.name).toBe(true)
       expect(product.effectivePrice, product.name).toBeLessThanOrEqual(product.price)
-      expect(product.effectivePrice, product.name).toBeGreaterThan(0)
+      // Only a part of a pledge can be free: "ADDITIONAL Recharge Pack for FREE".
+      if (product.buyable) {
+        expect(product.effectivePrice, product.name).toBeGreaterThan(0)
+      } else {
+        expect(product.effectivePrice, product.name).toBeGreaterThanOrEqual(0)
+      }
     }
   })
 })
@@ -80,6 +85,7 @@ describe('the classification', () => {
     }
   })
 
+  // The table predates the pledges of campaign Update #15, which are named as unpriced instead.
   test('prices shipping for every pledge that contains a core box, and nothing else', () => {
     const coreBoxes = new Set(
       REQUIREMENTS.filter(
@@ -91,7 +97,15 @@ describe('the classification', () => {
       const isPledge = leavesOf(product).some((leaf) =>
         providedBy(leaf.id).some((id) => coreBoxes.has(id)),
       )
-      expect(hasShippingTier(product.id), product.name).toBe(isPledge)
+      expect(hasShippingTier(product.id) || UNPRICED_PLEDGES.has(product.id), product.name).toBe(
+        isPledge,
+      )
+      expect(hasShippingTier(product.id) && UNPRICED_PLEDGES.has(product.id), product.name).toBe(
+        false,
+      )
+    }
+    for (const id of UNPRICED_PLEDGES) {
+      expect(findProduct(id)?.buyable, String(id)).toBe(true)
     }
   })
 })

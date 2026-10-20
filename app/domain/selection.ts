@@ -1,5 +1,5 @@
-import { getProduct } from './catalog'
-import { REQUIREMENTS, boxOf, goesWith } from './classification'
+import { buyableProducts, getProduct, leavesOf } from './catalog'
+import { REQUIREMENTS, boxOf, goesWith, providedBy } from './classification'
 import { isGift, priceFor } from './gift'
 import { EXTRAS, LINES } from './preferences'
 
@@ -112,6 +112,12 @@ export interface ExtraItem {
    * for the rest.
    */
   readonly included: string | null
+  /**
+   * The pledges it comes in, for an item Gamefound does not sell by itself: the Legacy Big Box,
+   * which is only in the Vengeance pledge with it. Taking it means taking such a pledge. Null
+   * for the rest.
+   */
+  readonly soldIn: string | null
 }
 
 export interface ExtraCategory {
@@ -155,6 +161,19 @@ const howIncluded = (requirement: Requirement): string => {
   return `Comes with the ${gameName(requirement.line)} pledge${where}`
 }
 
+/** "Only sold in the …", for an item that cannot be bought by itself; null for the rest. */
+const soldOnlyIn = (requirement: Requirement): string | null => {
+  if (getProduct(requirement.id).buyable) {
+    return null
+  }
+  const pledges = buyableProducts.filter((product) =>
+    leavesOf(product).some((leaf) => providedBy(leaf.id).includes(requirement.id)),
+  )
+  return pledges.length === 0
+    ? null
+    : `Only sold in the ${pledges.map((pledge) => pledge.name).join(' or the ')}`
+}
+
 /** A category as the page shows it: its items, and how much of it is asked for. */
 export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCategory => {
   const items = REQUIREMENTS.filter((requirement) => requirement.tag === tag)
@@ -170,6 +189,7 @@ export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCat
           wanted: isWanted(requirement, preferences),
           passedOver: isIncluded ? null : reasonPassedOver(requirement, preferences),
           included: isIncluded ? howIncluded(requirement) : null,
+          soldIn: soldOnlyIn(requirement),
         },
       }
     })

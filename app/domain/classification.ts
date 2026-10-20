@@ -96,6 +96,16 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('legacy', 'artbook', 125540),
   ...extra('legacy', 'sleeves', 128436), // Core Box + Stretch Goals
   ...forExpansions('legacy', 'sleeves', 128437), // … + Add-ons
+  // Added in campaign Update #15.
+  ...extra('legacy', 'sculpts', 125549, 125553), // Alternative Character Sculpts, New Kings
+  ...extra('legacy', 'cats', 125554),
+  // Metal Malfunction Markers, "instead of the classic plastic ones": an upgrade to the
+  // components, as the acrylic tokens are, and so with them.
+  ...extra('legacy', 'acrylic', 129736),
+  // The Big Box is not sold by itself: only inside the Vengeance pledge that is named for it.
+  ...extra('legacy', 'bigbox', 125556),
+  ...extra('legacy', 'plush', 129734), // Space Bober Plushie
+  ...extra('legacy', 'hoodie', 129735), // Space Bober Hoodie
 
   // --- Nemesis (the original) -------------------------------------------------------------
   ...core('og', 125508), // Core Box
@@ -185,6 +195,9 @@ export const PROVIDES: Readonly<Record<number, readonly number[]>> = {
   125513: [125224, 125225, 125226, 125227],
   // The larger sleeve set covers what the smaller one does.
   128437: [128436, 128437],
+  // "ADDITIONAL Recharge Pack for FREE", in the Vengeance and Ultimate pledges: a second copy
+  // of the Legacy Recharge Pack, which those pledges hold as well.
+  125605: [125536],
 }
 
 /**

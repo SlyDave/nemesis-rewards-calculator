@@ -4,12 +4,13 @@ import { decodePreferences, encodePreferences } from '../app/domain/preferences'
 import { buildQuote } from '../app/domain/quote'
 import { describeExtra, wantedRequirements } from '../app/domain/selection'
 
-import { ALL_EXTRAS, ALL_LINES, preferencesWith } from './support'
+import { ALL_LINES, preferencesWith } from './support'
 
 const LEGACY_ACRYLIC = 125550
 const LEGACY_ACRYLIC_STRETCH_GOALS = 125551
 const LEGACY_ACRYLIC_ADD_ONS = 125552
 const LEGACY_PLAYMATS = 125555
+const METAL_MARKERS = 129736
 const ZENITH_OF_RUIN = 125546
 
 describe('picking single items out of a category', () => {
@@ -30,10 +31,11 @@ describe('picking single items out of a category', () => {
     expect(wanted.has(LEGACY_ACRYLIC)).toBe(true)
     expect(wanted.has(LEGACY_ACRYLIC_STRETCH_GOALS)).toBe(false)
 
+    // The Acrylic Pack and the Metal Malfunction Markers, of three.
     const category = describeExtra(preferences, 'acrylic')
     expect(category.state).toBe('some')
-    expect(category.wantedCount).toBe(1)
-    expect(category.size).toBe(2)
+    expect(category.wantedCount).toBe(2)
+    expect(category.size).toBe(3)
   })
 
   test('shows a category as all, none or some', () => {
@@ -41,7 +43,11 @@ describe('picking single items out of a category', () => {
     expect(describeExtra(preferencesWith({ extras: ['acrylic'] }), 'acrylic').state).toBe('on')
     // Every item ticked by hand is as good as the switch.
     const byHand = preferencesWith({
-      overrides: { [LEGACY_ACRYLIC]: true, [LEGACY_ACRYLIC_STRETCH_GOALS]: true },
+      overrides: {
+        [LEGACY_ACRYLIC]: true,
+        [LEGACY_ACRYLIC_STRETCH_GOALS]: true,
+        [METAL_MARKERS]: true,
+      },
     })
     expect(describeExtra(byHand, 'acrylic').state).toBe('on')
   })
@@ -112,21 +118,30 @@ describe('picks in the preferences string', () => {
 
 describe('the order of the cart', () => {
   test('is by game, then category, then name', () => {
-    const quote = buildQuote(preferencesWith({ lines: ALL_LINES, extras: ALL_EXTRAS }))
+    const quote = buildQuote(
+      preferencesWith({ lines: ALL_LINES, extras: ['gameplay', 'acrylic', 'terrain'] }),
+    )
     const groups = quote.lines.map((line) => line.group)
     const order = ['legacy', 'retaliation', 'lockdown', 'og', 'other']
     expect(groups).toEqual([...groups].sort((a, b) => order.indexOf(a) - order.indexOf(b)))
 
-    // Within Legacy: the pledge, then the expansion left over, then acrylics in name order.
+    // Within Legacy: the pledge, then the expansions, the acrylics and the terrain, each in name
+    // order.
     const legacy = quote.lines
       .filter((line) => line.group === 'legacy')
       .map((line) => line.product.name)
-    expect(legacy.slice(0, 5)).toEqual([
-      'Nemesis Legacy Salvation Pledge',
+    expect(legacy).toEqual([
+      '4 x Core Pledge (Nemesis OG + Lockdown + Retaliation + Legacy)',
+      'Evolved Void Seeders',
+      'Nemesis Legacy Crew Logs',
       'SAM - Support and Maintenace Robot add-on',
+      'Zenith of Ruin - a Prequel Campaign Expansion',
+      'Zenith of Ruin Recharge Pack',
       'Acrylic Pack for Nemesis Legacy',
       'Acrylic Pack for Nemesis Legacy (Add-ons)',
       'Acrylic Pack for Nemesis Legacy (Stretch Goals)',
+      'Metal Malfunction Markers',
+      'Terrain Pack for Nemesis Legacy',
     ])
   })
 

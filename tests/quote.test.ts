@@ -15,6 +15,7 @@ const OG_PLEDGE = 125507
 const PROMO_BUNDLE = 125513
 const SAM = 128018
 const SLEEVES_WITH_ADDONS = 128437
+const METAL_MARKERS = 129736
 const LEGACY_CORE_BOX = 120365
 const OG_CORE_BOX = 125508
 const LOCKDOWN_CORE_BOX = 125515
@@ -68,9 +69,14 @@ describe('the best combination', () => {
     expect(quote.itemsTotal).toBe(12900 + 10900 + 11500)
   })
 
+  // The Metal Malfunction Markers are under Acrylic Packs, and not in the Collector's Pledge.
   test("is the Collector's Pledge for exactly what it contains", () => {
     const quote = buildQuote(
-      preferencesWith({ ...itemsOnly, extras: ['acrylic', 'terrain', 'playmat'] }),
+      preferencesWith({
+        ...itemsOnly,
+        extras: ['acrylic', 'terrain', 'playmat'],
+        overrides: { [METAL_MARKERS]: false },
+      }),
     )
     expect(cart(quote)).toEqual([COLLECTOR])
     expect(quote.itemsTotal).toBe(20500)
@@ -79,7 +85,13 @@ describe('the best combination', () => {
 
   // 129 + 17 + 7 + 39 = 192 beats the 205 pledge when the playmats are not wanted.
   test("is not the Collector's Pledge when its parts are cheaper", () => {
-    const quote = buildQuote(preferencesWith({ ...itemsOnly, extras: ['acrylic', 'terrain'] }))
+    const quote = buildQuote(
+      preferencesWith({
+        ...itemsOnly,
+        extras: ['acrylic', 'terrain'],
+        overrides: { [METAL_MARKERS]: false },
+      }),
+    )
     expect(cart(quote)).not.toContain(COLLECTOR)
     expect(quote.itemsTotal).toBe(19200)
   })

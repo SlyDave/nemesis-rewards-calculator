@@ -25,6 +25,16 @@ export const CHANGELOG_URL =
 
 export const CHANGES: readonly ChangeDay[] = [
   {
+    date: '2026-10-20',
+    highlights: [
+      'Campaign Update #15’s three new pledges are in: the Legacy Vengeance pledge, the Vengeance pledge with BIG BOX, and the ULTIMATE Pledge.',
+      'New Legacy add-ons under their switches: New Cats, New Kings, Alternative Character Sculpts, Metal Malfunction Markers (under Acrylic Packs), and the Space Bober Plushie and Hoodie.',
+      'The campaign has not priced shipping for the new pledges yet, so it is left out of the total and flagged.',
+      'The Legacy BIG BOX is only sold in the Vengeance pledge with it, which is sent as single shipping only. Asking for the Big Box brings that pledge.',
+    ],
+    minor: 1,
+  },
+  {
     date: '2026-10-18',
     highlights: [
       'Prices and bundles read again from Gamefound after campaign Update #14. No price has changed.',
