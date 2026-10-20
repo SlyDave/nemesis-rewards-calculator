@@ -99,9 +99,8 @@ export const REQUIREMENTS: readonly Requirement[] = [
   // Added in campaign Update #15.
   ...extra('legacy', 'sculpts', 125549, 125553), // Alternative Character Sculpts, New Kings
   ...extra('legacy', 'cats', 125554),
-  // Metal Malfunction Markers, "instead of the classic plastic ones": an upgrade to the
-  // components, as the acrylic tokens are, and so with them.
-  ...extra('legacy', 'acrylic', 129736),
+  // Metal Malfunction Markers, "instead of the classic plastic ones": a switch of their own.
+  ...extra('legacy', 'markers', 129736),
   // The Big Box is not sold by itself: only inside the Vengeance pledge that is named for it.
   ...extra('legacy', 'bigbox', 125556),
   ...extra('legacy', 'plush', 129734), // Space Bober Plushie

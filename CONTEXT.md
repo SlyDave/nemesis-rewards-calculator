@@ -27,7 +27,7 @@ built, tested, pushed and live unless it says otherwise.
 | Catalogue        | Captured 20 October 2026, 20:26 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 170, all passing (`bun test`)                                                           |
+| Tests            | 174, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -105,6 +105,8 @@ called `nemesis-rewards-calculator`:
 27. Campaign Update #14: read it, and update the site as required (section 6).
 28. Campaign Update #15, with three new pledges and six new add-ons: read it and update the
     site (sections 6, 7.1, 7.6 and 7.11).
+29. The Metal Malfunction Markers in a switch of their own, so that the number of extras
+    switches is even (section 7.1).
 
 ### Where each decision came from
 
@@ -153,7 +155,7 @@ These were set by the owner during the work, and still hold.
 | Part                   | A leaf that cannot be bought alone (`buyable: false`), such as a core box                               |
 | Requirement            | One single item a visitor can want, by product id (`REQUIREMENTS`)                                      |
 | Core                   | The tag for a game's own contents: what its basic pledge holds                                          |
-| Extra / category / tag | One of the fifteen add-on categories, each with a switch (`ExtraTag`)                                   |
+| Extra / category / tag | One of the sixteen add-on categories, each with a switch (`ExtraTag`)                                   |
 | Stand-in               | A leaf that satisfies requirements other than its own id (`PROVIDES`)                                   |
 | Edition                | Standard (standees) or Special (miniatures). Applies to Legacy only                                     |
 | Finish                 | Plain, Sundrop or Painted miniatures; a surcharge per item that offers it                               |
@@ -440,7 +442,7 @@ as not priced, never both, and nothing else has either.
 ### 7.1 Classification
 
 - Every single item is one `Requirement`: an id, the game it belongs to, and a tag (`core` or
-  one of the fifteen extras).
+  one of the sixteen extras).
 - **[reading]** Two switches exist that the brief did not list, because the catalogue needs
   them: **Nemesis Legacy** (on by default; it is the campaign's own game) and **Expansions**
   (tag `gameplay`: the gameplay add-ons, such as Carnomorphs or Zenith of Ruin).
@@ -497,10 +499,11 @@ as not priced, never both, and nothing else has either.
   the Alternative Character Sculpts under Alternative Sculpts; the Space Bober under Plushes and
   Hoodies; the Legacy Big Box under BIG BOX(es). So each of those switches, with Legacy on, now
   reaches Legacy's own instead of every game's.
-- **[reading]** The Metal Malfunction Markers, which replace the Core Box's plastic ones, are
-  under **Acrylic Packs**, as an upgrade to the components like the acrylic tokens. No switch
-  fits them better, and a switch of their own would mean placing a new bit in the share code
-  by hand (section 7.9). With Legacy on, Acrylic Packs takes them too; they can be unticked.
+- **[owner]** The Metal Malfunction Markers, which replace the Core Box's plastic ones, have a
+  switch of their own, **Metal Markers** (tag `markers`), shown after Acrylic Packs. The owner's
+  reason: it makes sixteen switches, an even number of cards. It was briefly under Acrylic
+  Packs, before anything was pushed. Being Legacy's alone, the switch takes them with any
+  games or none, as the Dice Tray's does.
 - **[reading]** The Legacy Big Box is not sold by itself, only inside the Vengeance pledge with
   it. It is under its switch like any other, so asking for it brings that whole pledge (€489),
   with the rest as bonuses. Its row says "Only sold in the Nemesis Legacy Vengeance pledge
@@ -723,7 +726,9 @@ The format, for example `13-GB-EUR-` (the defaults) or `af-GB-EUR-` (all four ga
 - `packed` is a base-36 number: the on/off choices as bits, times three, plus the finish
   (0 plain, 1 sundrop, 2 painted).
 - The bits, lowest first: Special edition; Single shipping; tax included; the four games in
-  `LINES` order; the fifteen extras in `EXTRAS` order; returning backer.
+  `LINES` order; the first fifteen extras (`FIRST_EXTRAS`: the switches as they were shown when
+  the format was made); returning backer; then every switch added since, in the order it was
+  added (`LATER_EXTRAS`): so far only Metal Markers.
 - The two optional lists are the picks, as base-36 product ids joined by `.`: first those
   taken against their switch, then those left. They come together or not at all.
 - Decoding is strict. Anything that is not a well-formed code is ignored. Picked ids that the
@@ -731,11 +736,12 @@ The format, for example `13-GB-EUR-` (the defaults) or `af-GB-EUR-` (all four ga
   outlives a withdrawn product.
 
 **Do not reorder the bits.** Old links must keep working, so a new flag is appended at the end
-of `flags()` and read last; a code written before it existed then reads it as off. Note that
-the games' and extras' bits come from the `LINES` and `EXTRAS` arrays. Reordering either one
-breaks every existing link, and so does adding to one — even at its end, since the
-returning-backer bit sits after them and would move. A new game or extra therefore needs its
-bit placed explicitly after the last one, not picked up from the array.
+of `flags()` and read last; a code written before it existed then reads it as off. The games'
+bits come from the `LINES` array, so reordering it or adding to it breaks every link. The
+extras' do not come from `EXTRAS`, which only decides where a switch is shown: a new switch
+goes wherever it belongs in `EXTRAS`, and its bit at the end of `LATER_EXTRAS`. A test holds
+that every switch is packed exactly once, and another that a link made before Metal Markers
+reads as it did.
 
 ### 7.10 The order of the cart
 
@@ -836,7 +842,7 @@ to the bottom carries the total and a link down to the cart.
 | ----- | ---------------- | ----------------- | ---------------------------------------------------------- |
 | 1     | Returning backer | `ChoicesBacker`   | The switch, the pack's picture, the explanation            |
 | 2     | Games            | `ChoicesGames`    | Four game switches; Standard or Special; miniatures finish |
-| 3     | Extras           | `ChoicesExtras`   | Fifteen `ExtraChoice` cards; "All" and "None"              |
+| 3     | Extras           | `ChoicesExtras`   | Sixteen `ExtraChoice` cards; "All" and "None"              |
 | 4     | Delivery & tax   | `ChoicesDelivery` | Deliver to; Split or Single; Include Tax / VAT and rate    |
 
 | Order | Right: answer              | Component     | Holds                                                                                |
@@ -854,9 +860,9 @@ prices were read, that the tool is unofficial, and links to the source.
 
 - **[owner]** Labels in Games and Extras do not say "Include". "Include Tax / VAT" keeps it.
 - Labels as shipped — games: Nemesis Legacy, Nemesis Retaliation, Nemesis Lockdown, Nemesis OG.
-  Extras, in order: Expansions, Acrylic Packs, Playmat(s), Artbook(s), Synthetic Cards, Sleeves,
-  Terrain Pack(s), Untold Stories, Promo Cards, BIG BOX(es), Alternative Sculpts, Cats, Hoodies,
-  Dice Tray, Plushes.
+  Extras, in order: Expansions, Acrylic Packs, Metal Markers, Playmat(s), Artbook(s), Synthetic
+  Cards, Sleeves, Terrain Pack(s), Untold Stories, Promo Cards, BIG BOX(es), Alternative Sculpts,
+  Cats, Hoodies, Dice Tray, Plushes.
 - **[owner]** Extras cards are all the same height, with the icon, the arrow and the switch
   aligned along the top. Every label fits one line at normal widths; a container query keeps
   room for a second line only in a card too narrow for the longest label.
@@ -920,7 +926,7 @@ and has not yet said (section 13).
 
 - Components use semantic names — `i-fa-legacy`, `i-fa-dicetray`, `i-fa-cart`. The mapping to
   Font Awesome icons is the `ICONS` table in `scripts/generate-fa-icons.ts`.
-- That script writes each of the 67 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
+- That script writes each of the 68 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
   as a local collection (`provider: 'none'`) and bundles what the page uses, because there is
   no server to fetch icons from.
 - Nuxt UI's own internal icons are pointed at the same collection in `app.config.ts`.
@@ -1105,18 +1111,16 @@ Nothing requested is outstanding. These were raised and left with the owner:
    the site does not have.
 9. **The new pledges have no shipping price** (section 6). Watch the shipping table's file name
    and the FAQ for one; until then the site leaves it out and says so.
-10. **The Metal Malfunction Markers under Acrylic Packs** is a reading (section 7.1). The owner
-    may prefer a switch of their own.
-11. **Asking for the Legacy Big Box brings the €489 pledge it is sold in.** That is the only way
+10. **Asking for the Legacy Big Box brings the €489 pledge it is sold in.** That is the only way
     to have it, so the site is right to, but it may surprise.
-12. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
+11. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
     look: taking the oldest campaign's price rather than the latest; the region standing in
     for the city; and the range quoted beside the assumed uplift.
-13. **Retaliation's Stretch Goals have a finish price of their own**, which sits oddly with
+12. **Retaliation's Stretch Goals have a finish price of their own**, which sits oddly with
     Update #10 (section 7.6). If Awaken Realms take the option away, the next capture shows it
     as a change to product 125526's options, a test fails, and the site's finish for
     Retaliation falls by €13 or €59.
-14. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
+13. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
     October 2026: add the line to `inflation.ts`.
 
 ## 14. Reference results
@@ -1137,12 +1141,13 @@ catalogue is captured again.
 | Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                                    | 129.00  | 39.00    | 201.60  |
 | Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Classic Crew, Alien Kings            | 330.00  | 63.00    | 471.60  |
 | All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                           | 541.00  | 97.00    | 765.60  |
-| All four games, every extra                 | `7hp13-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 112.00*  | 2206.80 |
+| All four games, every extra                 | `mh33r-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 112.00*  | 2206.80 |
 | Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Vengeance pledge with BIG BOX; single shipping                                    | 489.00  | 0.00*    | 586.80  |
-| All four games, every extra but BIG BOX(es) | `7dhbr-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards                   | 1378.00 | 0.00*    | 1653.60 |
+| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards                   | 1378.00 | 0.00*    | 1653.60 |
 | Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders                    | 212.00  | 24.00    | 283.20  |
 | Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic                      | 217.00  | 24.00    | 289.20  |
 | Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                          | 145.00  | 24.00    | 202.80  |
+| Legacy, Metal Markers                       | `eze3r-GB-EUR-` | Legacy Core Pledge, Metal Malfunction Markers                                     | 134.00  | 39.00    | 207.60  |
 
 \* Plus the shipping of a pledge of campaign Update #15, which is not priced (section 6).
 
@@ -1168,7 +1173,7 @@ For common jobs:
 | Gamefound added a product     | Classify it in `classification.ts`; add a `PROVIDES` entry if it equals something else, `alsoWith` if it is played in a second game  |
 | A new pledge                  | Also give it a tier in `shipping.ts`, or name it in `UNPRICED_PLEDGES` until the campaign prices it                                  |
 | The shipping table changed    | `shipping.ts`, by hand from the campaign's image                                                                                     |
-| A new extras switch           | `ExtraTag`, `EXTRAS`, `DEFAULT_PREFERENCES`, an icon — and its bit in the share code, placed by hand (section 7.9)                   |
+| A new extras switch           | `ExtraTag`, `EXTRAS`, `DEFAULT_PREFERENCES`, an icon — and its bit at the end of `LATER_EXTRAS` in `preferences.ts` (section 7.9)    |
 | A new destination or tax rate | `destinations.ts`                                                                                                                    |
 | A new theme                   | A palette and a `:root[data-theme]` block in `main.css`; `ThemeName`; `useTheme`; `AppHeader`; the inline script in `nuxt.config.ts` |
 | A new icon                    | `ICONS` in `generate-fa-icons.ts`, then `bun run icons:generate`                                                                     |

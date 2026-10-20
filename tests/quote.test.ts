@@ -15,7 +15,6 @@ const OG_PLEDGE = 125507
 const PROMO_BUNDLE = 125513
 const SAM = 128018
 const SLEEVES_WITH_ADDONS = 128437
-const METAL_MARKERS = 129736
 const LEGACY_CORE_BOX = 120365
 const OG_CORE_BOX = 125508
 const LOCKDOWN_CORE_BOX = 125515
@@ -69,14 +68,9 @@ describe('the best combination', () => {
     expect(quote.itemsTotal).toBe(12900 + 10900 + 11500)
   })
 
-  // The Metal Malfunction Markers are under Acrylic Packs, and not in the Collector's Pledge.
   test("is the Collector's Pledge for exactly what it contains", () => {
     const quote = buildQuote(
-      preferencesWith({
-        ...itemsOnly,
-        extras: ['acrylic', 'terrain', 'playmat'],
-        overrides: { [METAL_MARKERS]: false },
-      }),
+      preferencesWith({ ...itemsOnly, extras: ['acrylic', 'terrain', 'playmat'] }),
     )
     expect(cart(quote)).toEqual([COLLECTOR])
     expect(quote.itemsTotal).toBe(20500)
@@ -85,13 +79,7 @@ describe('the best combination', () => {
 
   // 129 + 17 + 7 + 39 = 192 beats the 205 pledge when the playmats are not wanted.
   test("is not the Collector's Pledge when its parts are cheaper", () => {
-    const quote = buildQuote(
-      preferencesWith({
-        ...itemsOnly,
-        extras: ['acrylic', 'terrain'],
-        overrides: { [METAL_MARKERS]: false },
-      }),
-    )
+    const quote = buildQuote(preferencesWith({ ...itemsOnly, extras: ['acrylic', 'terrain'] }))
     expect(cart(quote)).not.toContain(COLLECTOR)
     expect(quote.itemsTotal).toBe(19200)
   })
@@ -125,12 +113,13 @@ describe('the best combination', () => {
 
   test('lists what a bundle brings that was not asked for', () => {
     // Everything for the original game except the dice tray: the all-in Intruder Pledge and
-    // a Big Box (468) beat the Captain's Pledge topped up one item at a time (482).
+    // a Big Box (468) beat the Captain's Pledge topped up one item at a time (482). Metal
+    // Markers are left out, being Legacy's alone.
     const quote = buildQuote(
       preferencesWith({
         ...itemsOnly,
         lines: ['og'],
-        extras: ALL_EXTRAS.filter((tag) => tag !== 'dicetray'),
+        extras: ALL_EXTRAS.filter((tag) => tag !== 'dicetray' && tag !== 'markers'),
       }),
     )
     expect(cart(quote)).toEqual([125512, 125235])
@@ -144,7 +133,7 @@ describe('the best combination', () => {
       preferencesWith({
         ...itemsOnly,
         lines: ['og'],
-        extras: ALL_EXTRAS.filter((tag) => tag !== 'hoodie'),
+        extras: ALL_EXTRAS.filter((tag) => tag !== 'hoodie' && tag !== 'markers'),
       }),
     )
     expect(cart(quote)).toContain(125511)
@@ -237,11 +226,12 @@ describe('split shipping', () => {
   })
 
   test('is not one for the older games alone, which all go out together', () => {
-    // Every extra but the expansions: Retaliation's bring Evolved Void Seeders, a Legacy add-on.
+    // Every extra but the expansions, whose Evolved Void Seeders are a Legacy add-on, and the
+    // Metal Markers, which are Legacy's alone: either would go in the second shipment.
     const order = {
       ...itemsOnly,
       lines: ['og', 'lockdown', 'retaliation'],
-      extras: ALL_EXTRAS.filter((tag) => tag !== 'gameplay'),
+      extras: ALL_EXTRAS.filter((tag) => tag !== 'gameplay' && tag !== 'markers'),
     } as const
     const asked = buildQuote(preferencesWith({ ...order, shipping: 'split' }))
     expect(asked.lines.length).toBeGreaterThan(3)

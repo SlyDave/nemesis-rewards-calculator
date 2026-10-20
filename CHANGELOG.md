@@ -19,15 +19,16 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
   (€1,350) — and six add-ons for Legacy: Alternative Character Sculpts, New Kings, New Cats,
   Metal Malfunction Markers, and the Space Bober Plushie and Hoodie. The Legacy Big Box comes
   with them, sold only inside its pledge.
-- Each add-on is under its switch: the cats under Cats, the kings and character sculpts under
-  Alternative Sculpts, the Bober under Plushes and Hoodies, the Big Box under BIG BOX(es), and
-  the Metal Malfunction Markers under Acrylic Packs. With Legacy on, those switches now reach
-  Legacy's own rather than every game's.
+- A sixteenth extras switch, Metal Markers, for the Metal Malfunction Markers, after Acrylic
+  Packs. A link made before it reads it as off, and otherwise as it did.
+- Each other add-on is under its switch: the cats under Cats, the kings and character sculpts
+  under Alternative Sculpts, the Bober under Plushes and Hoodies, and the Big Box under BIG
+  BOX(es). With Legacy on, those switches now reach Legacy's own rather than every game's.
 - An item sold only inside a pledge says so under its switch, with "Pledge only" for a price.
 - A pledge whose shipping the campaign has not priced is flagged as such: "Shipping not
   published" on its card, a warning under the shipping total, and a note under "Good to know".
 - Tests for the new pledges: what each is the answer for, the Big Box's single shipping, and
-  their unpriced shipping.
+  their unpriced shipping; and for the Metal Markers switch and the links made before it.
 
 ### Changed
 

@@ -5,6 +5,7 @@ export type GameLine = 'legacy' | 'og' | 'lockdown' | 'retaliation'
 export type ExtraTag =
   | 'gameplay'
   | 'acrylic'
+  | 'markers'
   | 'playmat'
   | 'artbook'
   | 'synthetic'

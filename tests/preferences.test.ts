@@ -2,6 +2,8 @@ import { describe, expect, test } from 'bun:test'
 
 import {
   DEFAULT_PREFERENCES,
+  EXTRAS,
+  PACKED_EXTRAS,
   decodePreferences,
   encodePreferences,
 } from '../app/domain/preferences'
@@ -51,6 +53,23 @@ describe('counting what a switch stands for', () => {
 })
 
 describe('the preferences as a string', () => {
+  // A switch added later is packed after all the others, so an older link keeps its meaning.
+  test('pack every extra exactly once', () => {
+    expect([...PACKED_EXTRAS].sort()).toEqual(EXTRAS.map(({ tag }) => tag).sort())
+  })
+
+  test('read a link made before Metal Markers as having them off, and the rest as it was', () => {
+    // All four games and every extra there was then, made on 20 October 2026.
+    const older = decodePreferences('7hp13-GB-EUR-')
+    expect(older?.extras.markers).toBe(false)
+    expect(older?.extras.plush).toBe(true)
+    expect(older?.returningBacker).toBe(false)
+    expect(older?.lines).toEqual({ legacy: true, retaliation: true, lockdown: true, og: true })
+
+    const withMarkers = preferencesWith({ lines: ALL_LINES, extras: ALL_EXTRAS })
+    expect(decodePreferences(encodePreferences(withMarkers))).toEqual(withMarkers)
+  })
+
   test('survive the round trip', () => {
     const random = seededRandom(7)
     for (let run = 0; run < 200; run += 1) {

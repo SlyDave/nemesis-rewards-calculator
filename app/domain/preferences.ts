@@ -45,6 +45,7 @@ export const EXTRAS: readonly {
 }[] = [
   { tag: 'gameplay', label: 'Expansions', icon: 'i-fa-gameplay' },
   { tag: 'acrylic', label: 'Acrylic Packs', icon: 'i-fa-acrylic' },
+  { tag: 'markers', label: 'Metal Markers', icon: 'i-fa-markers' },
   { tag: 'playmat', label: 'Playmat(s)', icon: 'i-fa-playmat' },
   { tag: 'artbook', label: 'Artbook(s)', icon: 'i-fa-artbook' },
   { tag: 'synthetic', label: 'Synthetic Cards', icon: 'i-fa-synthetic' },
@@ -71,6 +72,7 @@ export const DEFAULT_PREFERENCES: Preferences = {
   extras: {
     gameplay: false,
     acrylic: false,
+    markers: false,
     playmat: false,
     artbook: false,
     synthetic: false,
@@ -106,14 +108,49 @@ const LIST_SEPARATOR = '.'
 const RADIX = 36
 const MAX_TAX_RATE = 100
 
+/**
+ * The extras' bits, in the order they were first packed: the fifteen switches there were
+ * then, in the order they were shown. Not `EXTRAS`, which may show a newer switch among them.
+ */
+const FIRST_EXTRAS: readonly ExtraTag[] = [
+  'gameplay',
+  'acrylic',
+  'playmat',
+  'artbook',
+  'synthetic',
+  'sleeves',
+  'terrain',
+  'untold',
+  'promo',
+  'bigbox',
+  'sculpts',
+  'cats',
+  'hoodie',
+  'dicetray',
+  'plush',
+]
+
+/**
+ * Switches added since, packed after the returning backer's bit, which followed the first
+ * fifteen. A new one goes at the end of this list, wherever `EXTRAS` shows it, so that a link
+ * made before it existed reads it as off.
+ */
+const LATER_EXTRAS: readonly ExtraTag[] = [
+  'markers', // Metal Markers, campaign Update #15
+]
+
+/** Every extra's bit, in packing order; for the tests, which hold it to `EXTRAS`. */
+export const PACKED_EXTRAS: readonly ExtraTag[] = [...FIRST_EXTRAS, ...LATER_EXTRAS]
+
 /** The either/or and on/off choices, in the order their bits are packed. Append, never reorder. */
 const flags = (preferences: Preferences): readonly boolean[] => [
   preferences.edition === 'special',
   preferences.shipping === 'single',
   preferences.includeTax,
   ...LINES.map(({ line }) => preferences.lines[line]),
-  ...EXTRAS.map(({ tag }) => preferences.extras[tag]),
+  ...FIRST_EXTRAS.map((tag) => preferences.extras[tag]),
   preferences.returningBacker,
+  ...LATER_EXTRAS.map((tag) => preferences.extras[tag]),
 ]
 
 const FINISH_BASE = FINISHES.length
@@ -202,10 +239,13 @@ export const decodePreferences = (code: string): Preferences | null => {
     lines[line] = next()
   }
   const extras = { ...DEFAULT_PREFERENCES.extras }
-  for (const { tag } of EXTRAS) {
+  for (const tag of FIRST_EXTRAS) {
     extras[tag] = next()
   }
   const returningBacker = next()
+  for (const tag of LATER_EXTRAS) {
+    extras[tag] = next()
+  }
 
   const taken = decodeList(takenText)
   const left = decodeList(leftText)

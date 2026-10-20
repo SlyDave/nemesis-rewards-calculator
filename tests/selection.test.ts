@@ -10,7 +10,6 @@ const LEGACY_ACRYLIC = 125550
 const LEGACY_ACRYLIC_STRETCH_GOALS = 125551
 const LEGACY_ACRYLIC_ADD_ONS = 125552
 const LEGACY_PLAYMATS = 125555
-const METAL_MARKERS = 129736
 const ZENITH_OF_RUIN = 125546
 
 describe('picking single items out of a category', () => {
@@ -31,11 +30,10 @@ describe('picking single items out of a category', () => {
     expect(wanted.has(LEGACY_ACRYLIC)).toBe(true)
     expect(wanted.has(LEGACY_ACRYLIC_STRETCH_GOALS)).toBe(false)
 
-    // The Acrylic Pack and the Metal Malfunction Markers, of three.
     const category = describeExtra(preferences, 'acrylic')
     expect(category.state).toBe('some')
-    expect(category.wantedCount).toBe(2)
-    expect(category.size).toBe(3)
+    expect(category.wantedCount).toBe(1)
+    expect(category.size).toBe(2)
   })
 
   test('shows a category as all, none or some', () => {
@@ -43,11 +41,7 @@ describe('picking single items out of a category', () => {
     expect(describeExtra(preferencesWith({ extras: ['acrylic'] }), 'acrylic').state).toBe('on')
     // Every item ticked by hand is as good as the switch.
     const byHand = preferencesWith({
-      overrides: {
-        [LEGACY_ACRYLIC]: true,
-        [LEGACY_ACRYLIC_STRETCH_GOALS]: true,
-        [METAL_MARKERS]: true,
-      },
+      overrides: { [LEGACY_ACRYLIC]: true, [LEGACY_ACRYLIC_STRETCH_GOALS]: true },
     })
     expect(describeExtra(byHand, 'acrylic').state).toBe('on')
   })
@@ -140,7 +134,6 @@ describe('the order of the cart', () => {
       'Acrylic Pack for Nemesis Legacy',
       'Acrylic Pack for Nemesis Legacy (Add-ons)',
       'Acrylic Pack for Nemesis Legacy (Stretch Goals)',
-      'Metal Malfunction Markers',
       'Terrain Pack for Nemesis Legacy',
     ])
   })

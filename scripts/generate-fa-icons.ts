@@ -106,6 +106,7 @@ const ICONS: Readonly<Record<string, IconSource>> = {
   // The extras, one per switch.
   gameplay: light('faPuzzlePiece'),
   acrylic: light('faGem'),
+  markers: light('faWrench'),
   playmat: light('faMap'),
   artbook: light('faBookOpen'),
   synthetic: light('faCards', 'clone'),

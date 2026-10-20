@@ -3,7 +3,7 @@ import { describe, expect, test } from 'bun:test'
 import { getProduct } from '../app/domain/catalog'
 import { msrpOf } from '../app/domain/msrp'
 import { buildQuote } from '../app/domain/quote'
-import { describeExtra } from '../app/domain/selection'
+import { describeExtra, wantedRequirements } from '../app/domain/selection'
 import { WAVE_TWO } from '../app/domain/shipping'
 
 import { ALL_EXTRAS, ALL_LINES, preferencesWith } from './support'
@@ -30,6 +30,7 @@ const plain = { includeTax: false } as const
 const LEGACY_EXTRAS = [
   'gameplay',
   'acrylic',
+  'markers',
   'terrain',
   'playmat',
   'artbook',
@@ -66,6 +67,26 @@ describe('the Vengeance pledge', () => {
     expect(second.copyOf?.id).toBe(RECHARGE_PACK)
     expect(second.amount).toBe(msrpOf(getProduct(RECHARGE_PACK)).amount)
     expect(second.amount).toBeGreaterThan(0)
+  })
+})
+
+// The owner's choice: a switch of their own, which makes sixteen, an even number of cards.
+describe('the Metal Malfunction Markers', () => {
+  test('have a switch of their own, and are not among the acrylics', () => {
+    const preferences = preferencesWith({ lines: ['legacy'] })
+    expect(describeExtra(preferences, 'markers').items.map((item) => item.id)).toEqual([
+      METAL_MARKERS,
+    ])
+    expect(describeExtra(preferences, 'acrylic').items.map((item) => item.id)).not.toContain(
+      METAL_MARKERS,
+    )
+  })
+
+  test('come with that switch alone', () => {
+    const acrylic = wantedRequirements(preferencesWith({ lines: ['legacy'], extras: ['acrylic'] }))
+    expect(acrylic.has(METAL_MARKERS)).toBe(false)
+    const markers = wantedRequirements(preferencesWith({ lines: ['legacy'], extras: ['markers'] }))
+    expect(markers.has(METAL_MARKERS)).toBe(true)
   })
 })
 
