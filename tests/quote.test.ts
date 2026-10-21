@@ -280,8 +280,24 @@ describe('tax', () => {
     expect(quote.total).toBe(12900 + 3900 + quote.taxTotal)
   })
 
+  // Shown as two lines, one for the rewards and one for the shipping, which add up.
+  test('is two figures, on the rewards and on the shipping', () => {
+    const quote = buildQuote(preferencesWith({ destination: 'GB' }))
+    expect(quote.rewardsTax).toBe(2580)
+    expect(quote.shippingTax).toBe(780)
+    expect(quote.rewardsTax + quote.shippingTax).toBe(quote.taxTotal)
+  })
+
+  test('counts the finish with the rewards', () => {
+    const quote = buildQuote(preferencesWith({ destination: 'GB', finish: 'painted' }))
+    expect(quote.rewardsTax).toBe(Math.round((12900 + 12400) * 0.2))
+    expect(quote.shippingTax).toBe(780)
+  })
+
   test('can be switched off', () => {
     const quote = buildQuote(preferencesWith({ destination: 'GB', includeTax: false }))
+    expect(quote.rewardsTax).toBe(0)
+    expect(quote.shippingTax).toBe(0)
     expect(quote.taxTotal).toBe(0)
     expect(quote.total).toBe(12900 + 3900)
   })

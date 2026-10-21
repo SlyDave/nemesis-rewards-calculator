@@ -144,22 +144,30 @@ const rateNote = computed<string | null>(() => {
           >
         </div>
 
-        <div class="flex items-baseline justify-between gap-4">
-          <dt class="text-toned">
-            <template v-if="preferences.includeTax"
-              >{{ quote.destination.taxName }}
-              <span class="text-muted">· {{ quote.taxRate }}%</span></template
-            >
-            <template v-else>Tax</template>
-          </dt>
-          <dd class="font-semibold text-highlighted">
-            <template v-if="preferences.includeTax">{{ format(quote.taxTotal) }}</template>
-            <span
-              v-else
-              class="font-normal text-muted"
-              >not included</span
-            >
-          </dd>
+        <template v-if="preferences.includeTax">
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="text-toned">
+              {{ quote.destination.taxName }} on rewards{{
+                quote.finishTotal > 0 ? ' and finish' : ''
+              }}
+              <span class="text-muted">· {{ quote.taxRate }}%</span>
+            </dt>
+            <dd class="font-semibold text-highlighted">{{ format(quote.rewardsTax) }}</dd>
+          </div>
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="text-toned">
+              {{ quote.destination.taxName }} on shipping
+              <span class="text-muted">· {{ quote.taxRate }}%</span>
+            </dt>
+            <dd class="font-semibold text-highlighted">{{ format(quote.shippingTax) }}</dd>
+          </div>
+        </template>
+        <div
+          v-else
+          class="flex items-baseline justify-between gap-4"
+        >
+          <dt class="text-toned">Tax</dt>
+          <dd class="font-normal text-muted">not included</dd>
         </div>
 
         <div class="flex items-baseline justify-between gap-4 border-t border-default pt-3">

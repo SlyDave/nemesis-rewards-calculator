@@ -27,7 +27,7 @@ built, tested, pushed and live unless it says otherwise.
 | Catalogue        | Captured 20 October 2026, 20:26 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 175, all passing (`bun test`)                                                           |
+| Tests            | 177, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -110,6 +110,7 @@ called `nemesis-rewards-calculator`:
 30. "Some of the maths appears to be wonky": with every extra but the Big Boxes the answer was
     the ULTIMATE Pledge, and leaving out Hoodies and Cats as well raised the total. Fix it
     (section 6, shipping).
+31. VAT as two line items, one for the rewards and one for the shipping (section 7.6).
 
 ### Where each decision came from
 
@@ -622,8 +623,10 @@ All sums are in euro cents.
 | `itemsTotal`    | What the lines cost: effective prices, nothing for a gift. Shown as "Rewards" |
 | `savings`       | `listTotal − itemsTotal`: bundle discounts plus any gift. Shown as "Saving"   |
 | `finishTotal`   | The miniatures surcharge (below)                                              |
-| `shippingTotal` | The pledges' published shipping for the destination and mode                  |
-| `taxTotal`      | `round((items + finish + shipping) × rate ÷ 100)`                             |
+| `shippingTotal` | The pledges' published shipping, and the least for one not priced (§6)        |
+| `rewardsTax`    | `round((items + finish) × rate ÷ 100)`. Shown as "VAT on rewards"             |
+| `shippingTax`   | `round(shipping × rate ÷ 100)`. Shown as "VAT on shipping"                    |
+| `taxTotal`      | `rewardsTax + shippingTax`                                                    |
 | `total`         | `items + finish + shipping + tax`. Shown as "Total to pay"                    |
 
 - **Finish** **[reading]**: an addition to the brief. Each wanted item that offers Sundrop or
@@ -685,6 +688,11 @@ All sums are in euro cents.
 
 - Campaign prices are net of tax. **[reading]** Tax is charged on rewards, finish and shipping,
   at the destination's standard rate.
+- **[owner]** It is shown as two lines, on the rewards and on the shipping, each worked out and
+  rounded by itself so that the lines add up. The finish surcharge counts with the rewards, and
+  the line says "on rewards and finish" when there is one. The tax's own name stands in front:
+  "VAT on shipping", "Sales tax on shipping". With tax switched off there is one line, "not
+  included".
 - The EU, the UK and Monaco are charged VAT at checkout. The US (sales tax, 0% by default) and
   Canada (GST 5%) are collected later in the pledge manager. Everywhere else the campaign
   collects nothing, and a note warns of import charges.

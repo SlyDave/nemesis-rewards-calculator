@@ -85,6 +85,11 @@ export interface Quote {
   readonly destination: Destination
   /** The rate applied, in percent: zero when tax is switched off. */
   readonly taxRate: number
+  /** The tax on the rewards, and on the miniatures finish where there is one. */
+  readonly rewardsTax: Cents
+  /** The tax on the shipping counted. */
+  readonly shippingTax: Cents
+  /** The two together. */
   readonly taxTotal: Cents
   readonly total: Cents
   /** Items in the cart that nobody asked for, because a bundle was the cheaper way. */
@@ -237,8 +242,12 @@ const priceOrder = (preferences: Preferences): Quote => {
   const finishTotal = sum(lines.map((line) => line.finish))
   const shippingTotal = sum(lines.map((line) => line.shipping ?? line.shippingFloor?.cents ?? 0))
 
+  // Shown as two lines, so worked out as two, each rounded to the cent: what is listed adds up.
   const taxRate = preferences.includeTax ? (preferences.taxRate ?? destination.taxRate) : 0
-  const taxTotal = Math.round(((itemsTotal + finishTotal + shippingTotal) * taxRate) / PERCENT)
+  const taxOn = (amount: Cents): Cents => Math.round((amount * taxRate) / PERCENT)
+  const rewardsTax = taxOn(itemsTotal + finishTotal)
+  const shippingTax = taxOn(shippingTotal)
+  const taxTotal = rewardsTax + shippingTax
 
   const contents = lines.flatMap((line) => line.contents)
   const msrp = contents.map((content) => msrpOf(content.product))
@@ -271,6 +280,8 @@ const priceOrder = (preferences: Preferences): Quote => {
     }),
     destination,
     taxRate,
+    rewardsTax,
+    shippingTax,
     taxTotal,
     total: itemsTotal + finishTotal + shippingTotal + taxTotal,
     bonus: contents.filter((content) => !content.wanted).map((content) => content.product),

@@ -25,6 +25,11 @@ export const CHANGELOG_URL =
 
 export const CHANGES: readonly ChangeDay[] = [
   {
+    date: '2026-10-21',
+    highlights: ['VAT is shown in two lines: on the rewards, and on the shipping.'],
+    minor: 0,
+  },
+  {
     date: '2026-10-20',
     highlights: [
       'Campaign Update #15’s three new pledges are in: the Legacy Vengeance pledge, the Vengeance pledge with BIG BOX, and the ULTIMATE Pledge.',

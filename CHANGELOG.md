@@ -10,6 +10,15 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-21]
+
+### Changed
+
+- VAT is shown as two lines, one on the rewards and one on the shipping, where it was one. The
+  finish surcharge counts with the rewards, and that line says so when there is one. Each is
+  worked out and rounded to the cent by itself, so the lines add up to what is charged; no
+  reference total moved.
+
 ## [2026-10-20]
 
 ### Added
@@ -308,6 +317,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-21]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-21&until=2026-10-21
 [2026-10-20]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-20&until=2026-10-20
 [2026-10-18]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-18&until=2026-10-18
 [2026-10-16]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-16&until=2026-10-16
