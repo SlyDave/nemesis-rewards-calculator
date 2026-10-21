@@ -97,6 +97,8 @@ export type CategoryState = 'on' | 'off' | 'some'
 export interface ExtraItem {
   readonly id: number
   readonly name: string
+  /** Path of its stored picture, relative to the site root, shown when it is pointed at. */
+  readonly image: string | null
   /** What it costs this visitor: nothing, for a returning backer's gift. */
   readonly price: Cents
   readonly wanted: boolean
@@ -118,6 +120,11 @@ export interface ExtraItem {
    * for the rest.
    */
   readonly soldIn: string | null
+  /**
+   * The games it is for, where its name does not say: "for Nemesis OG". Given for the
+   * Alternative Sculpts, whose names mostly say only what they are. Null for the rest.
+   */
+  readonly fits: string | null
 }
 
 export interface ExtraCategory {
@@ -161,6 +168,34 @@ const howIncluded = (requirement: Requirement): string => {
   return `Comes with the ${gameName(requirement.line)} pledge${where}`
 }
 
+/**
+ * How an item's name says which game it is for. The original game's items are "Nemesis …" with
+ * no other game after it; the rest name theirs.
+ */
+const NAMES_GAME: Readonly<Record<GameLine, RegExp>> = {
+  legacy: /\bLegacy\b/u,
+  retaliation: /\bRetaliation\b/u,
+  lockdown: /\bLockdown\b/u,
+  og: /\bNemesis\b(?!\s+(?:Legacy|Retaliation|Lockdown)\b)/u,
+}
+
+/**
+ * "for Nemesis OG", or "for Nemesis OG and Nemesis Lockdown": the games an Alternative Sculpt
+ * is for, as Gamefound has them, where its name does not already say. Null otherwise.
+ */
+const fitsOf = (requirement: Requirement, name: string): string | null => {
+  if (requirement.tag !== 'sculpts') {
+    return null
+  }
+  const games =
+    requirement.alsoWith === undefined
+      ? [requirement.line]
+      : [requirement.line, requirement.alsoWith]
+  return games.every((game) => NAMES_GAME[game].test(name))
+    ? null
+    : `for ${games.map(gameName).join(' and ')}`
+}
+
 /** "Only sold in the …", for an item that cannot be bought by itself; null for the rest. */
 const soldOnlyIn = (requirement: Requirement): string | null => {
   if (getProduct(requirement.id).buyable) {
@@ -185,11 +220,13 @@ export const describeExtra = (preferences: Preferences, tag: ExtraTag): ExtraCat
         item: {
           id: requirement.id,
           name: product.name,
+          image: product.image,
           price: priceFor(product, preferences),
           wanted: isWanted(requirement, preferences),
           passedOver: isIncluded ? null : reasonPassedOver(requirement, preferences),
           included: isIncluded ? howIncluded(requirement) : null,
           soldIn: soldOnlyIn(requirement),
+          fits: fitsOf(requirement, product.name),
         },
       }
     })

@@ -12,6 +12,15 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
 ## [2026-10-21]
 
+### Added
+
+- Pointing at an item in an open extras category shows its picture beside the card, level with
+  the item, framed like the card and twice the size of the cart's; for an item a pledge already
+  includes too. It sits off the card's left side, or its right where the left has no room.
+- The Alternative Sculpts say which game they are for where the name does not: Alien Kings
+  (for Nemesis OG), the Alternative Queen miniature and the Classic Crew (for Nemesis
+  Retaliation), as Gamefound describes them.
+
 ### Changed
 
 - VAT is shown as two lines, one on the rewards and one on the shipping, where it was one. The

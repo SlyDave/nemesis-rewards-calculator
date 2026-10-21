@@ -30,6 +30,8 @@ export const CHANGES: readonly ChangeDay[] = [
       'VAT is shown in two lines: on the rewards, and on the shipping.',
       'Shipping for the Vengeance and ULTIMATE pledges, from the campaign’s reissued shipping table: the ULTIMATE Pledge is €145 to the EU or UK sent at once, €165 split.',
       'Prices and bundles read again from Gamefound, with the campaign page checked for changes. No price has changed.',
+      'Point at an item in an open extras list to see its picture beside the card.',
+      'The Alternative Sculpts say which game they are for, where the name does not.',
     ],
     minor: 1,
   },

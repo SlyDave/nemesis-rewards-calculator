@@ -29,7 +29,7 @@ built, tested, pushed and live unless it says otherwise.
 | Catalogue        | Captured 21 October 2026, 21:30 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 178, all passing (`bun test`)                                                           |
+| Tests            | 180, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -117,6 +117,11 @@ called `nemesis-rewards-calculator`:
     (section 6, shipping).
 33. Check the rest of the campaign page for changes to its text or graphics, and update as
     required (section 6).
+34. Pointing at an item in an open extras category shows its picture off the card's left side,
+    as far from it as the cards are apart, framed like the card, twice the size of the cart's,
+    and for an item a pledge includes too (section 8.2).
+35. The Alternative Sculpts say which game or games they are for, where the name does not
+    (section 8.2).
 
 ### Where each decision came from
 
@@ -929,6 +934,21 @@ prices were read, that the tool is unofficial, and links to the source.
   Gamefound. Each cart line links out to its Gamefound page.
 - Every grid states `grid-cols-1` and its children `min-w-0`; without both, long product names
   push the page sideways on a phone.
+- **[owner]** Pointing at an item in an open extras category shows its stored picture beside
+  the card (`ExtraChoice`): off the card's left side, level with the item, 8px from it (the
+  `gap-2` between the cards), framed in the card's own border colour, and twice the size of
+  the cart's pictures (160px, 224px from the `sm` width, against 80px and 112px). It shows for
+  an item a pledge includes as well. **[reading]** It is a hover card (`UPopover`) anchored to
+  a virtual box — the card's left and right, the item's top and bottom — and drawn in a portal,
+  since the panel's cut corners (`clip-path`) would clip it. Where the left has no room, as
+  on most laptop widths for the left-hand cards, it goes to the card's right instead. Touch
+  taps do not show it: they are for ticking.
+- **[owner]** The Alternative Sculpts say which game or games they are for, after the name,
+  where the name does not say: "Alien Kings (for Nemesis OG)", "Alternative Queen miniature
+  (for Nemesis Retaliation)", "The Classic Crew Expansion (for Nemesis Retaliation)". The
+  games are the item's own and any `alsoWith`, as Gamefound describes them (`ExtraItem.fits`,
+  tested). The Classic Crew's is "compatible with Nemesis Retaliation", so that is all it says
+  (section 13).
 
 ### 8.3 Wording the owner dictated
 
@@ -1179,6 +1199,12 @@ Nothing requested is outstanding. These were raised and left with the owner:
     Retaliation falls by €13 or €59.
 13. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
     October 2026: add the line to `inflation.ts`.
+14. **The Classic Crew and Legacy.** The rule (section 7.3) takes the Classic Crew for Legacy
+    without both of the older games. But Gamefound calls it "compatible with Nemesis
+    Retaliation", and the campaign's FAQ says "The content from previous campaigns will NOT be
+    compatible with Nemesis: Legacy". So for a Legacy order it may be something the backer cannot
+    use. Its label says "for Nemesis Retaliation"; whether the rule should stop taking it for
+    Legacy is the owner's to say.
 
 ## 14. Reference results
 

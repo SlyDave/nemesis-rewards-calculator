@@ -150,3 +150,32 @@ describe('the order of the cart', () => {
     expect(quote.lines[0]?.group).toBe('legacy')
   })
 })
+
+// Asked for by the owner: an Alternative Sculpt says which game it is for, unless its name does.
+describe('the Alternative Sculpts', () => {
+  const fits = (): Record<string, string | null> =>
+    Object.fromEntries(
+      describeExtra(preferencesWith({ lines: ALL_LINES }), 'sculpts').items.map((item) => [
+        item.name,
+        item.fits,
+      ]),
+    )
+
+  test('say which game they are for, as Gamefound has it, where the name does not', () => {
+    expect(fits()).toEqual({
+      'Nemesis Legacy Alternative Character Sculpts': null,
+      'Nemesis Legacy New Kings': null,
+      'Alternative Queen miniature': 'for Nemesis Retaliation',
+      'Nemesis Retaliation New Kings & Queen': null,
+      // "compatible with Nemesis Retaliation"
+      'The Classic Crew Expansion': 'for Nemesis Retaliation',
+      'Nemesis Lockdown Kings': null,
+      'Alien Kings': 'for Nemesis OG',
+    })
+  })
+
+  test('are the only extras that do', () => {
+    const others = describeExtra(preferencesWith({ lines: ALL_LINES }), 'cats').items
+    expect(others.every((item) => item.fits === null)).toBe(true)
+  })
+})
