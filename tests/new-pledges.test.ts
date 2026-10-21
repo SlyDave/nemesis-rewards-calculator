@@ -21,7 +21,6 @@ const SAM = 128018
 const CLASSIC_CREW = 125256
 const RETALIATION_SYNTHETIC = 128009
 const FOUR_CORE = 125606
-const SALVATION = 125558
 
 const cart = (quote: Quote): readonly number[] => quote.lines.map((line) => line.product.id)
 
@@ -137,30 +136,50 @@ describe('the Ultimate Pledge', () => {
 // The shipping table was published before these pledges, and has not been reissued.
 // The shipping table was published before these pledges, and has not been reissued. Each is
 // counted at the least its shipping can be: that of the biggest priced pledge it holds whole.
+// The shipping table was reissued after campaign Update #15, with the Vengeance and ULTIMATE
+// pledges in it but not the Vengeance pledge with BIG BOX.
 describe('the shipping of the new pledges', () => {
   const everythingButBigBoxes = ALL_EXTRAS.filter((tag) => tag !== 'bigbox')
+  /** All four games and every extra the Ultimate holds, which is then the whole cart. */
+  const ultimateAlone = {
+    ...plain,
+    lines: ALL_LINES,
+    extras: everythingButBigBoxes,
+    overrides: { [SAM]: false, [RETALIATION_SYNTHETIC]: false },
+  }
 
-  test('is not invented, but counted at the least it can be, and said to be', () => {
-    // To the United Kingdom, split: the 4 x Core Pledge's 97, all of which the Ultimate holds.
-    const quote = buildQuote(
-      preferencesWith({ ...plain, lines: ALL_LINES, extras: everythingButBigBoxes }),
-    )
-    expect(quote.unpricedPledges.map((pledge) => pledge.id)).toEqual([ULTIMATE])
-    expect(quote.lines[0]?.shipping).toBeNull()
-    expect(quote.lines[0]?.shippingFloor?.from.id).toBe(FOUR_CORE)
-    expect(quote.shippingTotal).toBe(9700)
-    // The add-ons are counted apart from it, as before.
-    expect(quote.unpricedShipping.map((product) => product.id)).toEqual([
-      SAM,
-      RETALIATION_SYNTHETIC,
-    ])
+  // "ULTIMATE PLEDGE … EU €145 … UK €145" under single shipping; €165 under split.
+  test('is the table’s for the ULTIMATE Pledge: 145 sent at once, 165 split', () => {
+    const single = buildQuote(preferencesWith({ ...ultimateAlone, shipping: 'single' }))
+    expect(cart(single)).toEqual([ULTIMATE])
+    expect(single.shippingTotal).toBe(14500)
+    expect(single.unpricedPledges).toEqual([])
+    expect(
+      buildQuote(preferencesWith({ ...ultimateAlone, shipping: 'single', destination: 'DE' }))
+        .shippingTotal,
+    ).toBe(14500)
+    expect(buildQuote(preferencesWith(ultimateAlone)).shippingTotal).toBe(16500)
   })
 
-  test('follows the mode: the Big Box pledge goes single, at the Salvation Pledge’s 36', () => {
+  test('is the table’s for the Vengeance pledge: 49 at once to the UK, 65 split', () => {
+    const preferences = preferencesWith({
+      ...plain,
+      lines: ['legacy'],
+      extras: [...LEGACY_EXTRAS],
+      overrides: { [SAM]: false, [CLASSIC_CREW]: false },
+    })
+    expect(buildQuote(preferences).shippingTotal).toBe(6500)
+    expect(buildQuote({ ...preferences, shipping: 'single' }).shippingTotal).toBe(4900)
+  })
+
+  test('is counted at the least it can be for the one the table leaves out, and said to be', () => {
+    // The Big Box pledge holds all of the Vengeance pledge, so costs no less to send: 49, single.
     const quote = buildQuote(preferencesWith({ ...plain, lines: ['legacy'], extras: ['bigbox'] }))
+    expect(quote.unpricedPledges.map((pledge) => pledge.id)).toEqual([VENGEANCE_WITH_BIG_BOX])
     expect(quote.lines[0]?.isPledge).toBe(true)
-    expect(quote.lines[0]?.shippingFloor?.from.id).toBe(SALVATION)
-    expect(quote.shippingTotal).toBe(3600)
+    expect(quote.lines[0]?.shipping).toBeNull()
+    expect(quote.lines[0]?.shippingFloor?.from.id).toBe(VENGEANCE)
+    expect(quote.shippingTotal).toBe(4900)
   })
 
   // Reported on 20 October 2026: with every extra but the Big Boxes the answer was the Ultimate,

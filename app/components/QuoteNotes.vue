@@ -8,6 +8,10 @@ const props = defineProps<{
 const bonusNames = computed<string>(() =>
   props.quote.bonus.map((product) => product.name).join(', '),
 )
+
+const unpricedPledgeNames = computed<string>(() =>
+  props.quote.unpricedPledges.map((pledge) => pledge.name).join(' or the '),
+)
 </script>
 
 <template>
@@ -52,13 +56,11 @@ const bonusNames = computed<string>(() =>
           class="mt-0.5 size-4 shrink-0 text-warning"
         />
         <p class="text-toned">
-          <span class="font-semibold text-highlighted"
-            >Shipping for the new pledges is unknown.</span
-          >
-          The Vengeance and Ultimate pledges came in campaign Update #15, after the campaign
-          published its shipping table, and it has not priced them since. Each is counted at the
-          least it can be: the shipping of the biggest published pledge whose contents it holds,
-          since sending more cannot cost less. The real figure will likely be higher.
+          <span class="font-semibold text-highlighted">Some shipping is not published.</span>
+          The campaign’s shipping table does not price the {{ unpricedPledgeNames }}, so
+          {{ quote.unpricedPledges.length === 1 ? 'it is' : 'each is' }} counted at the least it can
+          be: the shipping of the biggest published pledge whose contents it holds, since sending
+          more cannot cost less. The real figure may be higher.
         </p>
       </li>
 

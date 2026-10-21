@@ -26,7 +26,10 @@ export const CHANGELOG_URL =
 export const CHANGES: readonly ChangeDay[] = [
   {
     date: '2026-10-21',
-    highlights: ['VAT is shown in two lines: on the rewards, and on the shipping.'],
+    highlights: [
+      'VAT is shown in two lines: on the rewards, and on the shipping.',
+      'Shipping for the Vengeance and ULTIMATE pledges, from the campaign’s reissued shipping table: the ULTIMATE Pledge is €145 to the EU or UK sent at once, €165 split.',
+    ],
     minor: 0,
   },
   {

@@ -18,6 +18,11 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
   finish surcharge counts with the rewards, and that line says so when there is one. Each is
   worked out and rounded to the cent by itself, so the lines add up to what is charged; no
   reference total moved.
+- Shipping for the Vengeance and ULTIMATE pledges is the campaign's own, from its shipping
+  table, reissued with a column for each: the ULTIMATE Pledge is €165 split or €145 sent at
+  once to the EU or the UK, where the site had counted at least the 4 x Core Pledge's €97 or
+  €76. The table has no column for the Vengeance pledge with BIG BOX, which is still counted at
+  the least it can be, now the Vengeance pledge's.
 
 ## [2026-10-20]
 

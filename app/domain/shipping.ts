@@ -66,6 +66,15 @@ const FOUR_CORE: Tier = {
   split: row(93, 135, 99, 119, 119, 119, 239, 239, 39, 97),
   single: row(73, 107, 79, 99, 99, 99, 188, 188, 32, 76),
 }
+// Added when the table was reissued after campaign Update #15 (seen on 21 October 2026).
+const LEGACY_VENGEANCE: Tier = {
+  split: row(63, 89, 69, 85, 85, 85, 149, 149, 29, 65),
+  single: row(47, 69, 52, 65, 65, 65, 119, 119, 22, 49),
+}
+const ULTIMATE: Tier = {
+  split: row(165, 239, 179, 219, 219, 219, 415, 415, 75, 165),
+  single: row(145, 199, 149, 189, 189, 189, 359, 359, 65, 145),
+}
 
 const CORE = once(row(23, 33, 25, 29, 29, 29, 59, 59, 9, 24))
 const OG_COLLECTOR_CAPTAIN = once(row(32, 47, 35, 43, 43, 43, 85, 85, 15, 33))
@@ -82,6 +91,8 @@ const TIERS: Readonly<Record<number, Tier>> = {
   125557: LEGACY_COLLECTOR,
   125558: LEGACY_SALVATION,
   125606: FOUR_CORE,
+  125604: LEGACY_VENGEANCE,
+  129738: ULTIMATE,
 
   125507: CORE, // Nemesis OG pledge
   125510: OG_COLLECTOR_CAPTAIN, // Collector's
@@ -99,14 +110,13 @@ const TIERS: Readonly<Record<number, Tier>> = {
 }
 
 /**
- * Pledges the table does not price. Campaign Update #15 (20 October 2026) added them after the
- * table was published, and it has not been reissued; Gamefound's own data has no shipping
- * price for any pledge. So, like an add-on's, their shipping is left out and said to be.
+ * Pledges the table does not price. Campaign Update #15 (20 October 2026) added three after the
+ * table was published; the table reissued since prices the Vengeance and ULTIMATE pledges, but
+ * has no column for the Vengeance pledge with BIG BOX. Gamefound's own data has no shipping
+ * price for any pledge. Such a pledge is counted at the least it can be (below).
  */
 export const UNPRICED_PLEDGES: ReadonlySet<number> = new Set([
-  125604, // Nemesis Legacy Vengeance pledge
   129737, // Nemesis Legacy Vengeance pledge with BIG BOX
-  129738, // The ULTIMATE Pledge
 ])
 
 /**
