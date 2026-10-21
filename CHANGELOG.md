@@ -23,6 +23,11 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
 ### Changed
 
+- The Classic Crew is only taken for Retaliation, without both the original game and Lockdown;
+  no longer for Legacy. Gamefound calls it "compatible with Nemesis Retaliation", and the
+  campaign's FAQ says content from the earlier campaigns will not work with Nemesis: Legacy. It
+  can still be ticked for a Legacy order. Legacy and the original game with Alternative Sculpts
+  now come to €317 in rewards, where they were €330.
 - VAT is shown as two lines, one on the rewards and one on the shipping, where it was one. The
   finish surcharge counts with the rewards, and that line says so when there is one. Each is
   worked out and rounded to the cent by itself, so the lines add up to what is charged; no

@@ -18,7 +18,6 @@ const RECHARGE_PACK = 125536
 const ADDITIONAL_RECHARGE_PACK = 125605
 const METAL_MARKERS = 129736
 const SAM = 128018
-const CLASSIC_CREW = 125256
 const RETALIATION_SYNTHETIC = 128009
 const FOUR_CORE = 125606
 
@@ -50,8 +49,8 @@ describe('the Vengeance pledge', () => {
         ...plain,
         lines: ['legacy'],
         extras: [...LEGACY_EXTRAS],
-        // The robot is not in it, and the Classic Crew is Retaliation's.
-        overrides: { [SAM]: false, [CLASSIC_CREW]: false },
+        // The robot is not in it.
+        overrides: { [SAM]: false },
       }),
     )
     expect(cart(quote)).toEqual([VENGEANCE])
@@ -166,7 +165,7 @@ describe('the shipping of the new pledges', () => {
       ...plain,
       lines: ['legacy'],
       extras: [...LEGACY_EXTRAS],
-      overrides: { [SAM]: false, [CLASSIC_CREW]: false },
+      overrides: { [SAM]: false },
     })
     expect(buildQuote(preferences).shippingTotal).toBe(6500)
     expect(buildQuote({ ...preferences, shipping: 'single' }).shippingTotal).toBe(4900)

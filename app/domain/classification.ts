@@ -70,11 +70,14 @@ const forExpansions = (
 
 /**
  * The Classic Crew is the twelve characters of the original game and of Lockdown, as
- * miniatures to play them in the newer games. Whoever includes both of those games has all
- * twelve already; anyone with only one of them, or neither, is short of some.
+ * miniatures to play them in Retaliation. Whoever includes both of those games has all twelve
+ * already; anyone with only one of them, or neither, is short of some.
+ *
+ * Not for Legacy: Gamefound calls it "compatible with Nemesis Retaliation", and the campaign's
+ * FAQ says content from the earlier campaigns will not work with Nemesis: Legacy.
  */
 const needsClassicCrew = (lines: LineSelection): boolean =>
-  (lines.retaliation || lines.legacy) && !(lines.og && lines.lockdown)
+  lines.retaliation && !(lines.og && lines.lockdown)
 
 export const REQUIREMENTS: readonly Requirement[] = [
   // --- Nemesis Legacy ---------------------------------------------------------------------
@@ -160,7 +163,7 @@ export const REQUIREMENTS: readonly Requirement[] = [
     line: 'retaliation',
     tag: 'sculpts',
     when: needsClassicCrew,
-    whenNote: 'Only needed for Retaliation or Legacy without both Nemesis OG and Lockdown',
+    whenNote: 'Only needed for Retaliation without both Nemesis OG and Lockdown',
   },
   ...extra('retaliation', 'cats', 125254),
   ...extra('retaliation', 'acrylic', 125257, 125258), // Core Box, Stretch Goals

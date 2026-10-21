@@ -32,6 +32,7 @@ export const CHANGES: readonly ChangeDay[] = [
       'Prices and bundles read again from Gamefound, with the campaign page checked for changes. No price has changed.',
       'Point at an item in an open extras list to see its picture beside the card.',
       'The Alternative Sculpts say which game they are for, where the name does not.',
+      'The Classic Crew is only added for Retaliation now: the campaign says earlier campaigns’ content does not work with Legacy.',
     ],
     minor: 1,
   },

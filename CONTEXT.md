@@ -29,7 +29,7 @@ built, tested, pushed and live unless it says otherwise.
 | Catalogue        | Captured 21 October 2026, 21:30 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 180, all passing (`bun test`)                                                           |
+| Tests            | 182, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -122,6 +122,7 @@ called `nemesis-rewards-calculator`:
     and for an item a pledge includes too (section 8.2).
 35. The Alternative Sculpts say which game or games they are for, where the name does not
     (section 8.2).
+36. The Classic Crew only for Retaliation, not for Legacy (section 7.3).
 
 ### Where each decision came from
 
@@ -589,15 +590,22 @@ as not priced, never both, and nothing else has either.
 
 ### 7.3 The Classic Crew
 
-**[owner]** "The Classic Crew is not needed if both Nemesis and Nemesis Lockdown are enabled,
-but is needed if only one is and any combination of Retaliation and/or Legacy."
+**[owner]** At first: "The Classic Crew is not needed if both Nemesis and Nemesis Lockdown are
+enabled, but is needed if only one is and any combination of Retaliation and/or Legacy."
 
-As built (`needsClassicCrew`): wanted when Retaliation or Legacy is included **and not both**
-OG and Lockdown are.
+**[owner]** Changed on 21 October 2026: **only for Retaliation**, not for Legacy. Gamefound
+calls the Classic Crew "compatible with Nemesis Retaliation", and the campaign's FAQ says
+"The content from previous campaigns will NOT be compatible with Nemesis: Legacy". The owner
+had understood that whatever works in Retaliation works in Legacy's Infinity Mode; the FAQ
+says otherwise, so the owner chose to follow it.
+
+As built (`needsClassicCrew`): wanted when Retaliation is included **and not both** OG and
+Lockdown are.
 
 - **[reading]** That includes the case where neither OG nor Lockdown is included.
 - **[reading]** It still sits behind the Alternative Sculpts switch, like any other sculpt.
-- With no newer game to play it in, the switch passes it over; it can still be ticked.
+- Without Retaliation the switch passes it over, saying "Only needed for Retaliation without
+  both Nemesis OG and Lockdown"; it can still be ticked, for a Legacy order too.
 - It is a Retaliation product, so the cart lists it under Retaliation.
 
 ### 7.4 The returning backer's gift
@@ -948,7 +956,7 @@ prices were read, that the tool is unofficial, and links to the source.
   (for Nemesis Retaliation)", "The Classic Crew Expansion (for Nemesis Retaliation)". The
   games are the item's own and any `alsoWith`, as Gamefound describes them (`ExtraItem.fits`,
   tested). The Classic Crew's is "compatible with Nemesis Retaliation", so that is all it says
-  (section 13).
+  (and all the rule takes it for: section 7.3).
 
 ### 8.3 Wording the owner dictated
 
@@ -1199,12 +1207,6 @@ Nothing requested is outstanding. These were raised and left with the owner:
     Retaliation falls by €13 or €59.
 13. **Inflation goes stale too.** It runs to Q2 2026. Statistics Poland publishes Q3 in late
     October 2026: add the line to `inflation.ts`.
-14. **The Classic Crew and Legacy.** The rule (section 7.3) takes the Classic Crew for Legacy
-    without both of the older games. But Gamefound calls it "compatible with Nemesis
-    Retaliation", and the campaign's FAQ says "The content from previous campaigns will NOT be
-    compatible with Nemesis: Legacy". So for a Legacy order it may be something the backer cannot
-    use. Its label says "for Nemesis Retaliation"; whether the rule should stop taking it for
-    Legacy is the owner's to say.
 
 ## 14. Reference results
 
@@ -1222,7 +1224,7 @@ catalogue is captured again.
 | Legacy and the Dice Tray                    | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                                             | 139.00  | 39.00    | 213.60  |
 | No game, the Dice Tray                      | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                                                 | 10.00   | 0.00     | 12.00   |
 | Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                                    | 129.00  | 39.00    | 201.60  |
-| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Classic Crew, Alien Kings            | 330.00  | 63.00    | 471.60  |
+| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Alien Kings; no Classic Crew         | 317.00  | 63.00    | 456.00  |
 | All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                           | 541.00  | 97.00    | 765.60  |
 | All four games, every extra                 | `mh33r-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 161.00*  | 2265.60 |
 | Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Vengeance pledge with BIG BOX; single shipping                                    | 489.00  | 49.00*   | 645.60  |
