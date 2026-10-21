@@ -96,7 +96,7 @@ describe('the Legacy Big Box', () => {
     const item = describeExtra(preferencesWith({ lines: ['legacy'] }), 'bigbox').items.find(
       (candidate) => candidate.id === LEGACY_BIG_BOX,
     )
-    expect(item?.soldIn).toBe('Only sold in the Nemesis Legacy Vengeance pledge with BIG BOX')
+    expect(item?.soldIn).toBe('Only sold in the Nemesis Legacy Vengeance Pledge with BIG BOX')
   })
 
   test('brings that pledge, and everything in it, when asked for', () => {

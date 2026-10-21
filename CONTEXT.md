@@ -9,9 +9,11 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 20 October 2026, after campaign Update #15 added three pledges and six
-add-ons, and the catalogue, the classification and the shipping rules took them in. Before that, on 10 October, the returning backer's gift was brought into line with the
-campaign's FAQ, and the "What's New?" list and the changelog were added. Everything below is
+State described: 21 October 2026, after the campaign reissued its shipping table with the new
+pledges in it and the whole campaign page was checked again. Before that, on 20 October,
+campaign Update #15 added three pledges and six add-ons; on 10 October the returning backer's
+gift was brought into line with the campaign's FAQ, and the "What's New?" list and the
+changelog were added. Everything below is
 built, tested, pushed and live unless it says otherwise.
 
 ## 1. Snapshot
@@ -24,7 +26,7 @@ built, tested, pushed and live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 20 October 2026, 20:26 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue        | Captured 21 October 2026, 21:30 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
 | Tests            | 178, all passing (`bun test`)                                                           |
@@ -113,6 +115,8 @@ called `nemesis-rewards-calculator`:
 31. VAT as two line items, one for the rewards and one for the shipping (section 7.6).
 32. Check that the ULTIMATE Pledge alone ships for €145, as the shipping graphic now says
     (section 6, shipping).
+33. Check the rest of the campaign page for changes to its text or graphics, and update as
+    required (section 6).
 
 ### Where each decision came from
 
@@ -377,6 +381,22 @@ along. No price, bundle, picture, category or option of an existing product chan
 - The shipping table's image is the same file as before, so it does not price the new pledges;
   nor does Gamefound's data, which has no shipping price for any pledge, nor the FAQ, which had
   not changed. The graphic stating the Legacy MSRPs was re-issued with the same figures.
+
+The whole campaign page was checked on 21 October 2026, at the owner's asking, after the
+shipping table was found reissued (below). Every image in the story was listed and compared
+with those seen before. New since: the pictures of Update #15's products, which the catalogue
+has already; and in "Infinity Mode" and "Stretch Goals Spotlight", the graphics of Updates #12
+to #15 — the Shamblers, the companion app, the Infinity Variety Pack and TAC cards, the
+Xeno-Hunter vote — with no price or value in them. The graphic stating the Legacy MSRPs was the
+one of 20 October. The rewards section's prices match the catalogue; the Vengeance pledge with
+BIG BOX is the one pledge it dates to September 2028, the others to November 2027, as the
+site's two waves have it. "Risks and challenges", "Refunds and cancellation" (a Stable Pledge
+refund if a price estimate moves by more than 10%, and a tariff note for the US) and the rest
+change nothing the site does. The FAQ had not changed, and there was no update after #15.
+
+What the 21 October capture changed, against the 20 October one: the two Vengeance pledges'
+names, now "Nemesis Legacy Vengeance Pledge" and "… Pledge with BIG BOX", with a capital P.
+Nothing else.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that

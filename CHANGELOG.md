@@ -23,6 +23,12 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
   once to the EU or the UK, where the site had counted at least the 4 x Core Pledge's €97 or
   €76. The table has no column for the Vengeance pledge with BIG BOX, which is still counted at
   the least it can be, now the Vengeance pledge's.
+- The catalogue was captured again, and the rest of the campaign page checked for changes to
+  its text and graphics. Only the two Vengeance pledges' names had changed, to "Nemesis Legacy
+  Vengeance Pledge" and "… Pledge with BIG BOX"; the site uses them. No price, bundle, picture
+  or option changed, and the exchange rates the site falls back on are those of 21 October.
+- `CONTEXT.md` records the reissued shipping table, read row by row against the old one, and
+  the check of the campaign page.
 
 ## [2026-10-20]
 

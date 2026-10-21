@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-10-20T20:26:31.208Z",
+  "capturedAt": "2026-10-21T21:30:41.859Z",
   "source": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards",
   "projectId": 8524,
   "baseCurrency": "EUR",
@@ -8,74 +8,74 @@
     {
       "code": "AUD",
       "symbol": "A$",
-      "eurPerUnit": 0.62235499,
-      "eurPerUnitWithCommission": 0.60836265
+      "eurPerUnit": 0.62282013,
+      "eurPerUnitWithCommission": 0.60881733
     },
     {
       "code": "CAD",
       "symbol": "C$",
-      "eurPerUnit": 0.63299152,
-      "eurPerUnitWithCommission": 0.61876004
+      "eurPerUnit": 0.6345983,
+      "eurPerUnitWithCommission": 0.62033069
     },
     {
       "code": "CHF",
       "symbol": "Fr.",
-      "eurPerUnit": 1.079797,
-      "eurPerUnitWithCommission": 1.05552004
+      "eurPerUnit": 1.08260258,
+      "eurPerUnitWithCommission": 1.05826254
     },
     {
       "code": "DKK",
       "symbol": "kr.",
-      "eurPerUnit": 0.13378463,
-      "eurPerUnitWithCommission": 0.13077676
+      "eurPerUnit": 0.13378642,
+      "eurPerUnitWithCommission": 0.13077851
     },
     {
       "code": "GBP",
       "symbol": "£",
-      "eurPerUnit": 1.18757793,
-      "eurPerUnitWithCommission": 1.16087774
+      "eurPerUnit": 1.1900795,
+      "eurPerUnitWithCommission": 1.16332307
     },
     {
       "code": "HKD",
       "symbol": "HK$",
-      "eurPerUnit": 0.11351124,
-      "eurPerUnitWithCommission": 0.11095918
+      "eurPerUnit": 0.11360667,
+      "eurPerUnitWithCommission": 0.11105246
     },
     {
       "code": "NOK",
       "symbol": "kr",
-      "eurPerUnit": 0.09473734,
-      "eurPerUnitWithCommission": 0.09260737
+      "eurPerUnit": 0.09501639,
+      "eurPerUnitWithCommission": 0.09288015
     },
     {
       "code": "NZD",
       "symbol": "NZ$",
-      "eurPerUnit": 0.50525465,
-      "eurPerUnitWithCommission": 0.49389506
+      "eurPerUnit": 0.50638039,
+      "eurPerUnitWithCommission": 0.49499549
     },
     {
       "code": "PLN",
       "symbol": "zł",
-      "eurPerUnit": 0.2287649,
-      "eurPerUnitWithCommission": 0.2236216
+      "eurPerUnit": 0.22847743,
+      "eurPerUnitWithCommission": 0.2233406
     },
     {
       "code": "SEK",
       "symbol": "kr",
-      "eurPerUnit": 0.09005764,
-      "eurPerUnitWithCommission": 0.08803288
+      "eurPerUnit": 0.0899038,
+      "eurPerUnitWithCommission": 0.0878825
     },
     {
       "code": "SGD",
       "symbol": "S$",
-      "eurPerUnit": 0.69652434,
-      "eurPerUnitWithCommission": 0.68086446
+      "eurPerUnit": 0.69744734,
+      "eurPerUnitWithCommission": 0.68176671
     },
     {
       "code": "USD",
       "symbol": "$",
-      "eurPerUnit": 0.8908686,
-      "eurPerUnitWithCommission": 0.8708393
+      "eurPerUnit": 0.89166295,
+      "eurPerUnitWithCommission": 0.87161579
     }
   ],
   "categories": [
@@ -3941,7 +3941,7 @@
     },
     {
       "id": 125604,
-      "name": "Nemesis Legacy Vengeance pledge",
+      "name": "Nemesis Legacy Vengeance Pledge",
       "price": 489.5,
       "effectivePrice": 449,
       "categoryId": 19053,
@@ -4472,7 +4472,7 @@
     },
     {
       "id": 129737,
-      "name": "Nemesis Legacy Vengeance pledge with BIG BOX",
+      "name": "Nemesis Legacy Vengeance Pledge with BIG BOX",
       "price": 539.5,
       "effectivePrice": 489,
       "categoryId": 19053,
