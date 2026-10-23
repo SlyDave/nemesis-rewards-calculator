@@ -16,6 +16,8 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
 - Campaign Update #16's standalone Big Box Nemesis Legacy add-on, for €89. The Vengeance pledge
   still contains the same box under its older internal product listing.
+- Each card in the Gamefound cart list shows the tax applied to that line directly beneath its
+  price, including tax on the miniatures finish where one is selected.
 - Orders with that add-on repeat the campaign's specific shipping warning: it has no final figure,
   will cost less to send than a Standard or Special Edition pledge, and more than a normal add-on.
 - Links made while the Big Box was pledge-only carry a single-item pick over to the new add-on.

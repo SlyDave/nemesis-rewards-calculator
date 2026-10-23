@@ -5,6 +5,8 @@ const props = defineProps<{
   line: CartLine
   /** Its place among the things to add, from 1. */
   position: number
+  taxName: string
+  taxRate: number
 }>()
 
 const { format } = useMoney()
@@ -50,13 +52,22 @@ const isDiscounted = computed<boolean>(() => props.line.price < props.line.produ
           <h4 class="text-sm leading-snug font-semibold text-highlighted sm:text-base">
             {{ line.product.name }}
           </h4>
-          <p class="shrink-0 text-right text-base font-bold text-highlighted sm:text-lg">
+          <p class="shrink-0 text-right">
             <s
               v-if="isDiscounted"
               class="block text-xs font-normal text-dimmed"
               >{{ format(line.product.price) }}</s
             >
-            {{ line.price === 0 ? 'Free' : format(line.price) }}
+            <span class="block text-base font-bold text-highlighted sm:text-lg">
+              {{ line.price === 0 ? 'Free' : format(line.price) }}
+            </span>
+            <span
+              v-if="taxRate > 0"
+              class="block text-xs font-normal text-muted"
+            >
+              {{ taxName }} {{ taxRate }}%{{ line.finish > 0 ? ', incl. finish' : '' }}:
+              {{ format(line.tax) }}
+            </span>
           </p>
         </div>
 

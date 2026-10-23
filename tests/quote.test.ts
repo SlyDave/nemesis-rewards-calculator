@@ -307,6 +307,25 @@ describe('tax', () => {
     expect(quote.taxTotal).toBe(Math.round((12900 + 3900) * 0.0825))
   })
 
+  test('apportions rewards tax by cart line, including finish, without changing its total', () => {
+    const quote = buildQuote(
+      preferencesWith({
+        lines: [],
+        overrides: { 125537: true, 125554: true },
+        destination: 'US',
+        taxRate: 8.25,
+      }),
+    )
+    expect(quote.lines.map((line) => [line.price, line.tax])).toEqual([
+      [350, 29],
+      [1800, 148],
+    ])
+    expect(quote.lines.reduce((total, line) => total + line.tax, 0)).toBe(quote.rewardsTax)
+
+    const painted = buildQuote(preferencesWith({ destination: 'GB', finish: 'painted' }))
+    expect(painted.lines[0]?.tax).toBe(painted.rewardsTax)
+  })
+
   test('is nothing where the campaign collects none', () => {
     expect(buildQuote(preferencesWith({ destination: 'AU' })).taxTotal).toBe(0)
   })

@@ -29,7 +29,7 @@ pushed unless the git history says otherwise.
 | Catalogue        | Captured 23 October 2026, 08:48 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 110 products: 19 pledges (sets), 79 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 184, all passing (`bun test`)                                                           |
+| Tests            | 185, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -124,6 +124,7 @@ called `nemesis-rewards-calculator`:
     (section 8.2).
 36. The Classic Crew only for Retaliation, not for Legacy (section 7.3).
 37. Campaign Update #16: read it and update the calculator as required (sections 6 and 7.1).
+38. Show the tax applied to each cart item under its price (sections 7.7 and 8.2).
 
 ### Where each decision came from
 
@@ -764,6 +765,9 @@ All sums are in euro cents.
   the line says "on rewards and finish" when there is one. The tax's own name stands in front:
   "VAT on shipping", "Sales tax on shipping". With tax switched off there is one line, "not
   included".
+- **[owner]** Each card in the Gamefound cart list shows that line's tax directly under its
+  price, with the rate and tax name. It includes the line's miniatures finish. Fractional cents
+  are apportioned by largest remainder so that every card's figure adds exactly to `rewardsTax`.
 - The EU, the UK and Monaco are charged VAT at checkout. The US (sales tax, 0% by default) and
   Canada (GST 5%) are collected later in the pledge manager. Everywhere else the campaign
   collects nothing, and a note warns of import charges.

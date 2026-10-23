@@ -85,6 +85,8 @@ const sections = computed<readonly Section[]>(() => {
               :key="line.product.id"
               :line="line"
               :position="position"
+              :tax-name="quote.destination.taxName"
+              :tax-rate="quote.taxRate"
             />
           </ul>
         </section>

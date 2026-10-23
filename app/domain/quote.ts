@@ -49,6 +49,8 @@ export interface CartLine {
    */
   readonly shippingFloor: ShippingFloor | null
   readonly finish: Cents
+  /** This line's share of the tax on rewards and finish; all lines add to `rewardsTax`. */
+  readonly tax: Cents
 }
 
 /** The best combination for a set of preferences, and what it comes to. All sums in euro cents. */
@@ -148,6 +150,29 @@ const contentsOf = (
 
 const sum = (values: readonly Cents[]): Cents => values.reduce((total, value) => total + value, 0)
 
+/**
+ * Rounds tax per cart line without making the cards disagree with the rewards-tax total.
+ * Whole cents go to the largest fractional remainders first, as on an apportioned invoice.
+ */
+const taxByLine = (amounts: readonly Cents[], rate: number, total: Cents): readonly Cents[] => {
+  const exact = amounts.map((amount) => (amount * rate) / PERCENT)
+  const taxes = exact.map(Math.floor)
+  const pennies = total - sum(taxes)
+  const order = exact
+    .map((amount, index) => ({ index, remainder: amount - Math.floor(amount) }))
+    .sort((a, b) => {
+      const byRemainder = b.remainder - a.remainder
+      return byRemainder !== 0 ? byRemainder : a.index - b.index
+    })
+  for (let index = 0; index < pennies; index += 1) {
+    const line = order[index]
+    if (line !== undefined) {
+      taxes[line.index] = (taxes[line.index] ?? 0) + 1
+    }
+  }
+  return taxes
+}
+
 /** The games in the order the cart lists them, then whatever belongs to none of them. */
 const CART_GROUPS: readonly CartGroup[] = ['legacy', 'retaliation', 'lockdown', 'og', 'other']
 
@@ -219,7 +244,7 @@ const priceOrder = (preferences: Preferences): Quote => {
   const unavailable = [...wanted].filter((id) => !obtainable.has(id))
   const solution = solve(new Set([...wanted].filter((id) => obtainable.has(id))), offers)
 
-  const lines: readonly CartLine[] = (solution?.offerIds ?? [])
+  const untaxedLines = (solution?.offerIds ?? [])
     .map((id) => getProduct(id))
     .sort(byCartOrder)
     .map((product) => {
@@ -237,10 +262,12 @@ const priceOrder = (preferences: Preferences): Quote => {
       }
     })
 
-  const listTotal = sum(lines.map((line) => line.product.price))
-  const itemsTotal = sum(lines.map((line) => line.price))
-  const finishTotal = sum(lines.map((line) => line.finish))
-  const shippingTotal = sum(lines.map((line) => line.shipping ?? line.shippingFloor?.cents ?? 0))
+  const listTotal = sum(untaxedLines.map((line) => line.product.price))
+  const itemsTotal = sum(untaxedLines.map((line) => line.price))
+  const finishTotal = sum(untaxedLines.map((line) => line.finish))
+  const shippingTotal = sum(
+    untaxedLines.map((line) => line.shipping ?? line.shippingFloor?.cents ?? 0),
+  )
 
   // Shown as two lines, so worked out as two, each rounded to the cent: what is listed adds up.
   const taxRate = preferences.includeTax ? (preferences.taxRate ?? destination.taxRate) : 0
@@ -248,6 +275,15 @@ const priceOrder = (preferences: Preferences): Quote => {
   const rewardsTax = taxOn(itemsTotal + finishTotal)
   const shippingTax = taxOn(shippingTotal)
   const taxTotal = rewardsTax + shippingTax
+  const lineTaxes = taxByLine(
+    untaxedLines.map((line) => line.price + line.finish),
+    taxRate,
+    rewardsTax,
+  )
+  const lines: readonly CartLine[] = untaxedLines.map((line, index) => ({
+    ...line,
+    tax: lineTaxes[index] ?? 0,
+  }))
 
   const contents = lines.flatMap((line) => line.contents)
   const msrp = contents.map((content) => msrpOf(content.product))

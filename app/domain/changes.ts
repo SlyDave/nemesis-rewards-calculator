@@ -29,6 +29,7 @@ export const CHANGES: readonly ChangeDay[] = [
     highlights: [
       'Campaign Update #16’s Legacy Big Box is a standalone €89 add-on. With the game and Big Box alone, the answer is now the €129 Core Pledge plus that add-on — €218 instead of the €489 Vengeance pledge with BIG BOX.',
       'All four games with every extra now costs €1,674 in rewards, down from €1,727.',
+      'Each item in the Gamefound cart list shows its tax beneath its price.',
       'The Legacy Big Box’s shipping is not final. The campaign says it will cost less than shipping a Standard or Special Edition pledge, but more than a normal add-on.',
       'Prices and bundles read again from Gamefound. The standalone Big Box is the only product added; no existing product has changed.',
     ],
