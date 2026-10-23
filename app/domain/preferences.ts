@@ -1,4 +1,4 @@
-import { findRequirement } from './classification'
+import { REPLACED_REQUIREMENTS, findRequirement } from './classification'
 import { isCurrencyCode } from './currencies'
 import { DEFAULT_DESTINATION, findDestination } from './destinations'
 
@@ -195,12 +195,16 @@ const decodeList = (text: string | undefined): readonly number[] | null => {
   if (!parts.every((part) => /^[0-9a-z]+$/.test(part))) {
     return null
   }
-  return parts
-    .map((part) => Number.parseInt(part, RADIX))
-    .filter((id) => {
-      const requirement = findRequirement(id)
-      return requirement !== undefined && requirement.tag !== 'core'
-    })
+  return (
+    parts
+      .map((part) => Number.parseInt(part, RADIX))
+      // Keep links made before Gamefound replaced a product listing.
+      .map((id) => REPLACED_REQUIREMENTS[id] ?? id)
+      .filter((id) => {
+        const requirement = findRequirement(id)
+        return requirement !== undefined && requirement.tag !== 'core'
+      })
+  )
 }
 
 /** Reads a string written by encodePreferences; null for anything else. */

@@ -79,6 +79,9 @@ const forExpansions = (
 const needsClassicCrew = (lines: LineSelection): boolean =>
   lines.retaliation && !(lines.og && lines.lockdown)
 
+/** The standalone listing added in Update #16; pledges use an older id for the same box. */
+export const LEGACY_BIG_BOX_ID = 130111
+
 export const REQUIREMENTS: readonly Requirement[] = [
   // --- Nemesis Legacy ---------------------------------------------------------------------
   { id: 120365, line: 'legacy', tag: 'core', edition: 'special' }, // Core Box, miniatures
@@ -104,8 +107,8 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('legacy', 'cats', 125554),
   // Metal Malfunction Markers, "instead of the classic plastic ones": a switch of their own.
   ...extra('legacy', 'markers', 129736),
-  // The Big Box is not sold by itself: only inside the Vengeance pledge that is named for it.
-  ...extra('legacy', 'bigbox', 125556),
+  // Added as a separate €89 add-on in campaign Update #16.
+  ...extra('legacy', 'bigbox', LEGACY_BIG_BOX_ID),
   ...extra('legacy', 'plush', 129734), // Space Bober Plushie
   ...extra('legacy', 'hoodie', 129735), // Space Bober Hoodie
 
@@ -187,6 +190,8 @@ export const PROVIDES: Readonly<Record<number, readonly number[]>> = {
   // Standard one. It is what makes the four-game bundle a candidate for a Standard backer.
   120365: [120365, 125533],
   125532: [125532, 125534],
+  // The Vengeance pledge has the same Legacy Big Box under its older, pledge-only product id.
+  125556: [LEGACY_BIG_BOX_ID],
   // "Nemesis Stretch Goals (Special Edition)", sold only inside pledges, is the two
   // expansions that are also sold separately.
   125509: [125198, 125203],
@@ -200,6 +205,14 @@ export const PROVIDES: Readonly<Record<number, readonly number[]>> = {
   // "ADDITIONAL Recharge Pack for FREE", in the Vengeance and Ultimate pledges: a second copy
   // of the Legacy Recharge Pack, which those pledges hold as well.
   125605: [125536],
+}
+
+/**
+ * Requirements whose Gamefound product id was replaced while the campaign was live.
+ * Old shared links use the key; new selections and the catalogue use the value.
+ */
+export const REPLACED_REQUIREMENTS: Readonly<Record<number, number>> = {
+  125556: LEGACY_BIG_BOX_ID, // Pledge-only listing -> standalone add-on from Update #16
 }
 
 /**

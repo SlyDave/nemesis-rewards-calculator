@@ -4,7 +4,6 @@ import { getProduct } from '../app/domain/catalog'
 import { msrpOf } from '../app/domain/msrp'
 import { buildQuote } from '../app/domain/quote'
 import { describeExtra, wantedRequirements } from '../app/domain/selection'
-import { WAVE_TWO } from '../app/domain/shipping'
 
 import { ALL_EXTRAS, ALL_LINES, preferencesWith } from './support'
 
@@ -13,7 +12,8 @@ import type { Quote } from '../app/domain/quote'
 const VENGEANCE = 125604
 const VENGEANCE_WITH_BIG_BOX = 129737
 const ULTIMATE = 129738
-const LEGACY_BIG_BOX = 125556
+const LEGACY_CORE = 120364
+const LEGACY_BIG_BOX = 130111
 const RECHARGE_PACK = 125536
 const ADDITIONAL_RECHARGE_PACK = 125605
 const METAL_MARKERS = 129736
@@ -41,7 +41,7 @@ const LEGACY_EXTRAS = [
   'plush',
 ] as const
 
-// Campaign Update #15 added three pledges, six add-ons and a Big Box that is only in a pledge.
+// Campaign Update #15 added three pledges and six add-ons.
 describe('the Vengeance pledge', () => {
   test('is everything Legacy sells, but the Big Box and the SAM Robot Pack', () => {
     const quote = buildQuote(
@@ -91,29 +91,43 @@ describe('the Metal Malfunction Markers', () => {
 })
 
 describe('the Legacy Big Box', () => {
-  test('is only sold in the Vengeance pledge with it, and says so', () => {
+  test('is sold separately for €89 after campaign Update #16', () => {
     const item = describeExtra(preferencesWith({ lines: ['legacy'] }), 'bigbox').items.find(
       (candidate) => candidate.id === LEGACY_BIG_BOX,
     )
-    expect(item?.soldIn).toBe('Only sold in the Nemesis Legacy Vengeance Pledge with BIG BOX')
+    expect(item?.price).toBe(8900)
+    expect(item?.soldIn).toBeNull()
   })
 
-  test('brings that pledge, and everything in it, when asked for', () => {
+  test('is bought beside the Core Pledge when asked for on its own', () => {
     const quote = buildQuote(preferencesWith({ ...plain, lines: ['legacy'], extras: ['bigbox'] }))
-    expect(cart(quote)).toEqual([VENGEANCE_WITH_BIG_BOX])
-    expect(quote.itemsTotal).toBe(48900)
-    expect(quote.bonus.map((product) => product.id)).toContain(METAL_MARKERS)
+    expect(cart(quote)).toEqual([LEGACY_CORE, LEGACY_BIG_BOX])
+    expect(quote.itemsTotal).toBe(21800)
+    expect(quote.bonus).toEqual([])
   })
 
-  // "This pledge is available only in the SINGLE shipping option."
-  test('rules out split shipping, since everything is packed into it', () => {
+  test('can split from the Core Pledge, with its shipping left unpriced', () => {
     const quote = buildQuote(
       preferencesWith({ ...plain, lines: ['legacy'], extras: ['bigbox'], shipping: 'split' }),
     )
-    expect(quote.canSplit).toBe(false)
-    expect(quote.singleOnly?.id).toBe(VENGEANCE_WITH_BIG_BOX)
-    expect(quote.shipping).toBe('single')
-    expect(quote.waves).toBe(`Everything ships together in the 2nd wave (${WAVE_TWO}).`)
+    expect(quote.canSplit).toBe(true)
+    expect(quote.singleOnly).toBeNull()
+    expect(quote.shipping).toBe('split')
+    expect(quote.unpricedShipping.map((product) => product.id)).toEqual([LEGACY_BIG_BOX])
+  })
+
+  test('makes the ULTIMATE pledge and separate Big Boxes cheapest for everything', () => {
+    const quote = buildQuote(preferencesWith({ ...plain, lines: ALL_LINES, extras: ALL_EXTRAS }))
+    expect(cart(quote)).toEqual([
+      ULTIMATE,
+      SAM,
+      LEGACY_BIG_BOX,
+      RETALIATION_SYNTHETIC,
+      125268,
+      125246,
+      125235,
+    ])
+    expect(quote.itemsTotal).toBe(167400)
   })
 })
 
@@ -173,7 +187,14 @@ describe('the shipping of the new pledges', () => {
 
   test('is counted at the least it can be for the one the table leaves out, and said to be', () => {
     // The Big Box pledge holds all of the Vengeance pledge, so costs no less to send: 49, single.
-    const quote = buildQuote(preferencesWith({ ...plain, lines: ['legacy'], extras: ['bigbox'] }))
+    const quote = buildQuote(
+      preferencesWith({
+        ...plain,
+        lines: ['legacy'],
+        extras: [...LEGACY_EXTRAS, 'bigbox'],
+        overrides: { [SAM]: false },
+      }),
+    )
     expect(quote.unpricedPledges.map((pledge) => pledge.id)).toEqual([VENGEANCE_WITH_BIG_BOX])
     expect(quote.lines[0]?.isPledge).toBe(true)
     expect(quote.lines[0]?.shipping).toBeNull()

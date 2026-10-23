@@ -70,6 +70,10 @@ describe('the preferences as a string', () => {
     expect(decodePreferences(encodePreferences(withMarkers))).toEqual(withMarkers)
   })
 
+  test('moves an old Legacy Big Box pick to its standalone Update #16 listing', () => {
+    expect(decodePreferences('13-GB-EUR--2ovo-')?.overrides).toEqual({ 130111: true })
+  })
+
   test('survive the round trip', () => {
     const random = seededRandom(7)
     for (let run = 0; run < 200; run += 1) {

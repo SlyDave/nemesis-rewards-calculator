@@ -9,12 +9,12 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 21 October 2026, after the campaign reissued its shipping table with the new
-pledges in it and the whole campaign page was checked again. Before that, on 20 October,
-campaign Update #15 added three pledges and six add-ons; on 10 October the returning backer's
-gift was brought into line with the campaign's FAQ, and the "What's New?" list and the
-changelog were added. Everything below is
-built, tested, pushed and live unless it says otherwise.
+State described: 23 October 2026, after campaign Update #16 made the Legacy Big Box a separate
+add-on. On 21 October the campaign reissued its shipping table with two of Update #15's three
+new pledges in it and the whole campaign page was checked again. On 10 October the returning
+backer's gift was brought into line with the campaign's FAQ, and the "What's New?" list and the
+changelog were added. Everything below is built and tested, but the 23 October work is not
+pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
@@ -26,10 +26,10 @@ built, tested, pushed and live unless it says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 21 October 2026, 21:30 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
-| Catalogue size   | 109 products: 19 pledges (sets), 78 sold singly, 12 parts sold only inside pledges      |
+| Catalogue        | Captured 23 October 2026, 08:48 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue size   | 110 products: 19 pledges (sets), 79 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 182, all passing (`bun test`)                                                           |
+| Tests            | 184, all passing (`bun test`)                                                           |
 
 ## 2. The brief
 
@@ -123,6 +123,7 @@ called `nemesis-rewards-calculator`:
 35. The Alternative Sculpts say which game or games they are for, where the name does not
     (section 8.2).
 36. The Classic Crew only for Retaliation, not for Legacy (section 7.3).
+37. Campaign Update #16: read it and update the calculator as required (sections 6 and 7.1).
 
 ### Where each decision came from
 
@@ -404,6 +405,23 @@ What the 21 October capture changed, against the 20 October one: the two Vengean
 names, now "Nemesis Legacy Vengeance Pledge" and "… Pledge with BIG BOX", with a capital P.
 Nothing else.
 
+What the 23 October capture changed, after campaign Update #16: one product was added, the
+standalone `130111 Big Box Nemesis Legacy`, sold for €89 under the Legacy Cosmetic add-ons.
+The `125556 BIG BOX Nemesis Legacy` remains a non-buyable €50 part inside the Vengeance pledge
+with BIG BOX. They are the same physical box: `PROVIDES` maps the pledge's older id onto the
+new requirement. No existing product's price, bundle, main picture, category, option or finish
+changed. Gamefound changed every cart thumbnail URL from its `infoboxthumb` path to
+`productimagethumb`; the main image URLs the site stores did not change.
+
+Update #16, published 22 October, says Maria O'Sullivan won the Xeno-Hunter vote and Erik
+O'Sullivan joins the Alternative Character Sculpts; adds twenty Metagorgers to the free Evolved
+Carnomorphs stretch goals, with a vote on the second sculpt; and explains character progression
+and deckbuilding. None is a separately priced product. The one catalogue change reverses
+Update #15: the Legacy Big Box is now a separate add-on, after backer feedback. Its estimated
+size is 660 × 380 × 280 mm. Its shipping has no final figure; the update says it will be less
+than a Standard or Special Edition pledge's and more than a normal add-on's. The campaign page
+still uses the 21 October shipping-table image, and no FAQ entry was edited after 19 October.
+
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
 the graphic stating the MSRPs still reads the same (section 7.11); and read the FAQ, whose
@@ -417,6 +435,11 @@ item's own.
 The campaign publishes its shipping table as an image, so `app/domain/shipping.ts` is typed out
 by hand from it. It prices pledges only. The same image says add-on shipping "will be calculated
 in pledge manager", so an add-on has no shipping price and none is invented.
+
+Update #16 is more specific about the standalone Legacy Big Box without giving a number:
+shipping it will be high, less than shipping a Standard or Special Edition pledge but more than
+a normal add-on. An order containing it repeats that warning. The solver still leaves all add-on
+shipping out of its comparison, and the quote leaves the box's shipping unpriced.
 
 The table typed out is the image under the "Estimated shipping" heading of the project page,
 whose file is `richtext/bb49167e-50e2-4402-a582-4746e52022fc.png`. Gamefound gives a replaced
@@ -557,10 +580,13 @@ as not priced, never both, and nothing else has either.
   reason: it makes sixteen switches, an even number of cards. It was briefly under Acrylic
   Packs, before anything was pushed. Being Legacy's alone, the switch takes them with any
   games or none, as the Dice Tray's does.
-- **[reading]** The Legacy Big Box is not sold by itself, only inside the Vengeance pledge with
-  it. It is under its switch like any other, so asking for it brings that whole pledge (€489),
-  with the rest as bonuses. Its row says "Only sold in the Nemesis Legacy Vengeance pledge
-  with BIG BOX", and "Pledge only" where a price would be (`ExtraItem.soldIn`).
+- Update #16 reversed the pledge-only rule for the Legacy Big Box. The switch now asks for the
+  standalone €89 product `130111`; the box inside the Vengeance pledge remains `125556` and
+  provides the same requirement. Asking for the game and Big Box alone therefore brings the
+  €129 Core Pledge and the add-on (€218), not the €489 Vengeance pledge. A single-item pick in
+  an older shared link is migrated from the old id to the new one when it is read. All four
+  games with every extra now brings the ULTIMATE Pledge and six add-ons for €1,674, down from
+  €1,727.
 - "ADDITIONAL Recharge Pack for FREE", inside the three new pledges, stands in for the Legacy
   Recharge Pack (`PROVIDES`), which they also hold: a second copy, at nothing. It is the only
   product priced at nothing, and a test allows that only for a part of a pledge.
@@ -1188,16 +1214,16 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 20 October 2026, and the campaign runs to
+8. **The prices go stale.** They are a snapshot from 23 October 2026, and the campaign runs to
    27 October. Capture again (section 6) whenever Gamefound changes something, and check after
-   each update. Update #15 said it was the last to add pledges or cosmetic add-ons, but for a
-   possible small Endgame add-on. The pledge manager will later publish add-on shipping, which
-   the site does not have.
+   each update. Update #16 already reversed Update #15's statement that cosmetic add-ons were
+   finished. The pledge manager will later publish add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
    then the site counts the least it can be, the Vengeance pledge's, and says so.
-10. **Asking for the Legacy Big Box brings the €489 pledge it is sold in.** That is the only way
-    to have it, so the site is right to, but it may surprise.
+10. **The standalone Legacy Big Box has no shipping figure.** Update #16 only bounds it between
+    normal add-on shipping and a Standard or Special Edition pledge's shipping. The quote repeats
+    that instead of inventing a number.
 11. **The MSRP rule** (section 7.11) is largely a reading. The points most worth a second
     look: taking the oldest campaign's price rather than the latest; the region standing in
     for the city; and the range quoted beside the assumed uplift.

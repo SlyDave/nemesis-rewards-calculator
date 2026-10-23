@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { LEGACY_BIG_BOX_ID } from '~/domain/classification'
+
 import type { Quote } from '~/domain/quote'
 
 const props = defineProps<{
@@ -11,6 +13,11 @@ const bonusNames = computed<string>(() =>
 
 const unpricedPledgeNames = computed<string>(() =>
   props.quote.unpricedPledges.map((pledge) => pledge.name).join(' or the '),
+)
+
+// Update #16 says this add-on's shipping will be high, though it gives no final figure.
+const hasLegacyBigBox = computed<boolean>(() =>
+  props.quote.unpricedShipping.some((product) => product.id === LEGACY_BIG_BOX_ID),
 )
 </script>
 
@@ -75,7 +82,12 @@ const unpricedPledgeNames = computed<string>(() =>
         <p class="text-toned">
           <span class="font-semibold text-highlighted">Add-on shipping is not final.</span>
           The campaign publishes shipping for pledges only, and says shipping for add-ons “will be
-          calculated in pledge manager”. Expect a little more on top for the add-ons in this order.
+          calculated in pledge manager”.
+          <template v-if="hasLegacyBigBox">
+            It specifically says the Legacy Big Box will cost less to send than a Standard or
+            Special Edition pledge, but more than a normal add-on.
+          </template>
+          <template v-else> Expect a little more on top for the add-ons in this order. </template>
         </p>
       </li>
 

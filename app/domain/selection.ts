@@ -115,9 +115,8 @@ export interface ExtraItem {
    */
   readonly included: string | null
   /**
-   * The pledges it comes in, for an item Gamefound does not sell by itself: the Legacy Big Box,
-   * which is only in the Vengeance pledge with it. Taking it means taking such a pledge. Null
-   * for the rest.
+   * The pledges it comes in, for an item Gamefound does not sell by itself. Taking it means
+   * taking such a pledge. Null for the rest.
    */
   readonly soldIn: string | null
   /**

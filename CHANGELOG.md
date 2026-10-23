@@ -10,6 +10,30 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-23]
+
+### Added
+
+- Campaign Update #16's standalone Big Box Nemesis Legacy add-on, for €89. The Vengeance pledge
+  still contains the same box under its older internal product listing.
+- Orders with that add-on repeat the campaign's specific shipping warning: it has no final figure,
+  will cost less to send than a Standard or Special Edition pledge, and more than a normal add-on.
+- Links made while the Big Box was pledge-only carry a single-item pick over to the new add-on.
+
+### Changed
+
+- Asking for the Legacy Big Box with the game now brings the €129 Core Pledge and the €89 add-on,
+  €218 in rewards, where it had to bring the €489 Vengeance pledge with BIG BOX. It may use split
+  shipping; the box's part of that shipping remains unpriced.
+- All four games with every extra now brings the ULTIMATE Pledge and six add-ons for €1,674 in
+  rewards, where the pledge-only Big Box made the answer €1,727.
+- The catalogue was captured again after Update #16. The standalone Big Box is the only product
+  added, and no existing product's price, bundle, picture or option changed. The exchange rates
+  the site falls back on are those of 23 October.
+- `CONTEXT.md` records Update #16's other announcements: Maria as the Xeno-Hunter, Erik moving to
+  the Alternative Character Sculpts, and twenty free Metagorgers. None is a separately priced
+  product.
+
 ## [2026-10-21]
 
 ### Added
@@ -342,6 +366,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-23]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-23&until=2026-10-23
 [2026-10-21]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-21&until=2026-10-21
 [2026-10-20]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-20&until=2026-10-20
 [2026-10-18]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-18&until=2026-10-18
