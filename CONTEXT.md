@@ -9,12 +9,11 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 23 October 2026, after campaign Update #16 made the Legacy Big Box a separate
-add-on. On 21 October the campaign reissued its shipping table with two of Update #15's three
-new pledges in it and the whole campaign page was checked again. On 10 October the returning
-backer's gift was brought into line with the campaign's FAQ, and the "What's New?" list and the
-changelog were added. Everything below is built and tested, but the 23 October work is not
-pushed unless the git history says otherwise.
+State described: 26 October 2026, after campaign Update #17 completed the free Evolved
+Carnomorph race and added ten more Infinity Mode cards. Update #16 made the Legacy Big Box a
+separate add-on; on 21 October the campaign reissued its shipping table with two of Update
+#15's three new pledges in it. Everything below is built and tested, but the 26 October work is
+not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
@@ -26,7 +25,7 @@ pushed unless the git history says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 23 October 2026, 08:48 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue        | Captured 26 October 2026, 09:29 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 110 products: 19 pledges (sets), 79 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
 | Tests            | 185, all passing (`bun test`)                                                           |
@@ -125,6 +124,7 @@ called `nemesis-rewards-calculator`:
 36. The Classic Crew only for Retaliation, not for Legacy (section 7.3).
 37. Campaign Update #16: read it and update the calculator as required (sections 6 and 7.1).
 38. Show the tax applied to each cart item under its price (sections 7.7 and 8.2).
+39. The campaign's new updates checked and the calculator updated as required (section 6).
 
 ### Where each decision came from
 
@@ -422,6 +422,16 @@ Update #15: the Legacy Big Box is now a separate add-on, after backer feedback. 
 size is 660 × 380 × 280 mm. Its shipping has no final figure; the update says it will be less
 than a Standard or Special Edition pledge's and more than a normal add-on's. The campaign page
 still uses the 21 October shipping-table image, and no FAQ entry was edited after 19 October.
+
+What the 26 October capture changed, after campaign Update #17: nothing in any product, price,
+bundle, main picture, category, option or finish. Only Gamefound's own exchange rates changed.
+Update #17, published 24 October, adds the free Infinity Variety Pack Vol. 2 — ten more Infinity
+Mode cards — and announces the first Metagorger sculpt as the vote winner. It completes the
+reveal of the Evolved Carnomorph race, including its cards, events, mutations, attacks,
+adaptations and tokens; the race also works with Infinity Mode and Retaliation. None is a
+separately priced product. The update promises a Monday announcement about Endgame, but no
+subsequent update was live when checked at 09:30 UTC on Monday 26 October. The shipping-table
+image is still the 21 October file, and no FAQ entry was edited after 19 October.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
@@ -1218,10 +1228,10 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 23 October 2026, and the campaign runs to
+8. **The prices go stale.** They are a snapshot from 26 October 2026, and the campaign runs to
    27 October. Capture again (section 6) whenever Gamefound changes something, and check after
-   each update. Update #16 already reversed Update #15's statement that cosmetic add-ons were
-   finished. The pledge manager will later publish add-on shipping, which the site does not have.
+   each update. Update #17 promises an Endgame announcement before the campaign ends. The pledge
+   manager will later publish add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
    then the site counts the least it can be, the Vengeance pledge's, and says so.
@@ -1244,28 +1254,28 @@ From the catalogue as captured, delivering to the UK with Split shipping and VAT
 stated. Use them to check that a rebuild or a refactor still agrees. They change when the
 catalogue is captured again.
 
-| Choices                                     | Code            | Cart                                                                              | Rewards | Shipping | Total   |
-| ------------------------------------------- | --------------- | --------------------------------------------------------------------------------- | ------- | -------- | ------- |
-| Defaults: Legacy, Special                   | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                                      | 129.00  | 39.00    | 201.60  |
-| Legacy, Standard                            | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                                     | 89.00   | 39.00    | 153.60  |
-| Defaults, Single shipping                   | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                                      | 129.00  | 27.00    | 187.20  |
-| Defaults, Painted                           | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish                                  | 129.00  | 39.00    | 350.40  |
-| All four games, either edition              | `af-GB-EUR-`    | 4 x Core Pledge                                                                   | 419.00  | 97.00    | 619.20  |
-| Legacy and the Dice Tray                    | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                                             | 139.00  | 39.00    | 213.60  |
-| No game, the Dice Tray                      | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                                                 | 10.00   | 0.00     | 12.00   |
-| Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                                    | 129.00  | 39.00    | 201.60  |
-| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Alien Kings; no Classic Crew         | 317.00  | 63.00    | 456.00  |
-| All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                           | 541.00  | 97.00    | 765.60  |
-| All four games, every extra                 | `mh33r-GB-EUR-` | Vengeance with BIG BOX, Veteran, Martian, Intruder and 5 add-ons; single shipping | 1727.00 | 161.00*  | 2265.60 |
-| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Vengeance pledge with BIG BOX; single shipping                                    | 489.00  | 49.00*   | 645.60  |
-| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards                   | 1378.00 | 165.00   | 1851.60 |
-| Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders                    | 212.00  | 24.00    | 283.20  |
-| Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic                      | 217.00  | 24.00    | 289.20  |
-| Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                          | 145.00  | 24.00    | 202.80  |
-| Legacy, Metal Markers                       | `eze3r-GB-EUR-` | Legacy Core Pledge, Metal Malfunction Markers                                     | 134.00  | 39.00    | 207.60  |
+| Choices                                     | Code            | Cart                                                                      | Rewards | Shipping | Total   |
+| ------------------------------------------- | --------------- | ------------------------------------------------------------------------- | ------- | -------- | ------- |
+| Defaults: Legacy, Special                   | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                              | 129.00  | 39.00    | 201.60  |
+| Legacy, Standard                            | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                             | 89.00   | 39.00    | 153.60  |
+| Defaults, Single shipping                   | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                              | 129.00  | 27.00    | 187.20  |
+| Defaults, Painted                           | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish                          | 129.00  | 39.00    | 350.40  |
+| All four games, either edition              | `af-GB-EUR-`    | 4 x Core Pledge                                                           | 419.00  | 97.00    | 619.20  |
+| Legacy and the Dice Tray                    | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                                     | 139.00  | 39.00    | 213.60  |
+| No game, the Dice Tray                      | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                                         | 10.00   | 0.00     | 12.00   |
+| Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                            | 129.00  | 39.00    | 201.60  |
+| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Alien Kings; no Classic Crew | 317.00  | 63.00    | 456.00  |
+| All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                   | 541.00  | 97.00    | 765.60  |
+| All four games, every extra                 | `mh33r-GB-EUR-` | ULTIMATE, SAM, four Big Boxes and Retaliation Synthetic Cards             | 1674.00 | 165.00   | 2206.80 |
+| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Legacy Core Pledge, Big Box Nemesis Legacy                                | 218.00  | 39.00    | 308.40  |
+| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards           | 1378.00 | 165.00   | 1851.60 |
+| Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders            | 212.00  | 24.00    | 283.20  |
+| Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic              | 217.00  | 24.00    | 289.20  |
+| Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                  | 145.00  | 24.00    | 202.80  |
+| Legacy, Metal Markers                       | `eze3r-GB-EUR-` | Legacy Core Pledge, Metal Malfunction Markers                             | 134.00  | 39.00    | 207.60  |
 
-\* With the Vengeance pledge with BIG BOX, whose shipping is not priced and is counted at the
-least it can be: the Vengeance pledge's 49, single (section 6).
+The standalone Legacy Big Box's add-on shipping remains unpriced in the two rows that contain
+it (section 6).
 
 ## 15. Working on it
 

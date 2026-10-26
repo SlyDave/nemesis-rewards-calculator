@@ -25,6 +25,13 @@ export const CHANGELOG_URL =
 
 export const CHANGES: readonly ChangeDay[] = [
   {
+    date: '2026-10-26',
+    highlights: [
+      'Prices and bundles read again from Gamefound after campaign Update #17. No product or price has changed.',
+    ],
+    minor: 0,
+  },
+  {
     date: '2026-10-23',
     highlights: [
       'Campaign Update #16’s Legacy Big Box is a standalone €89 add-on. With the game and Big Box alone, the answer is now the €129 Core Pledge plus that add-on — €218 instead of the €489 Vengeance pledge with BIG BOX.',

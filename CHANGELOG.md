@@ -10,6 +10,16 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-26]
+
+### Changed
+
+- The catalogue was captured again after campaign Update #17. No product, price, bundle,
+  picture or option changed; the exchange rates the site falls back on are those of 26 October.
+- `CONTEXT.md` records Update #17's second free Infinity Variety Pack and the completed Evolved
+  Carnomorph race. Neither is a separately priced product. The shipping table and FAQ remain
+  unchanged.
+
 ## [2026-10-23]
 
 ### Added
@@ -368,6 +378,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-26]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-26&until=2026-10-26
 [2026-10-23]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-23&until=2026-10-23
 [2026-10-21]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-21&until=2026-10-21
 [2026-10-20]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-20&until=2026-10-20
