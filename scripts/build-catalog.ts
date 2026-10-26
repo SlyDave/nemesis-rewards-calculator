@@ -142,7 +142,7 @@ const storeImage = async (product: CapturedProduct): Promise<string | null> => {
 /**
  * The exchange rates the site starts with, until the browser has fetched the day's own
  * (app/composables/useRates.ts): central banks' reference rates for the day of the capture,
- * from Frankfurter. Gamefound's own rates would do for the dozen currencies its menu offers,
+ * from Frankfurter. Gamefound's own rates would do for the thirteen currencies its menu offers,
  * but the site also offers those of the other places the campaign ships to.
  */
 const ratesOn = async (day: string): Promise<Record<string, number>> => {

@@ -69,7 +69,7 @@ everything separately.
   pledge's stretch goals take the finish of its Core Box (campaign Update #10); only
   Retaliation's are priced for it separately on Gamefound, and so here.
 - **Currency**: everything is in euros, as Gamefound charges it. The total can be read in any
-  currency the campaign lists, or that is spent somewhere it ships to — twenty-seven in all —
+  currency the campaign lists, or that is spent somewhere it ships to — twenty-eight in all —
   at central banks' reference rates, fetched by the browser from
   [Frankfurter](https://frankfurter.dev), falling back to the rates of the day the catalogue
   was captured.

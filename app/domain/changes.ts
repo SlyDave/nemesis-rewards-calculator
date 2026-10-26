@@ -27,7 +27,8 @@ export const CHANGES: readonly ChangeDay[] = [
   {
     date: '2026-10-26',
     highlights: [
-      'Prices and bundles read again from Gamefound after campaign Update #17. No product or price has changed.',
+      'Prices and bundles read again from Gamefound after campaign Updates #17 and #18. No product or price has changed.',
+      'Totals can be read in Mexican pesos, which Gamefound’s own currency menu now offers.',
     ],
     minor: 0,
   },

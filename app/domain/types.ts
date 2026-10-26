@@ -44,6 +44,7 @@ export type CurrencyCode =
   | 'JPY'
   | 'KRW'
   | 'MOP'
+  | 'MXN'
   | 'MYR'
   | 'NOK'
   | 'NZD'

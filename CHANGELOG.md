@@ -12,13 +12,28 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
 ## [2026-10-26]
 
+### Added
+
+- The Mexican peso (MXN), which Gamefound's own currency menu now offers, is one of the
+  currencies a total can be read in: twenty-eight in all.
+
 ### Changed
 
+- The catalogue was captured again after campaign Update #18. No product, price, bundle,
+  picture, option or finish changed, inside the pledges or out. Update #18's Space Bober
+  first-player token is a free stretch goal, and the optional Endgame add-on it announces is not
+  on sale yet. `CONTEXT.md` records both.
 - The catalogue was captured again after campaign Update #17. No product, price, bundle,
   picture or option changed; the exchange rates the site falls back on are those of 26 October.
 - `CONTEXT.md` records Update #17's second free Infinity Variety Pack and the completed Evolved
   Carnomorph race. Neither is a separately priced product. The shipping table and FAQ remain
   unchanged.
+
+### Fixed
+
+- The capture script reads Gamefound's currency menu under the page's new name for it, which
+  now lists the euro too and gives a commission rate in place of the commissioned rate. It
+  failed at the last step without this.
 
 ## [2026-10-23]
 

@@ -3,7 +3,7 @@ import type { CurrencyCode } from './types'
 /**
  * The currencies a total can be read in.
  *
- * Gamefound charges in euros and nothing else. Its own currency menu offers a dozen more to
+ * Gamefound charges in euros and nothing else. Its own currency menu offers thirteen more to
  * read the prices in, which are marked `listed` here; the rest are the currencies of the
  * other places the campaign ships to (destinations.ts), so that anyone it delivers to can
  * read the total in their own money. A test holds the list to exactly those two sources.
@@ -62,6 +62,7 @@ export const CURRENCIES: readonly Currency[] = [
   currency('JPY', 'Japanese Yen', '¥', { decimals: 0 }),
   currency('MOP', 'Macanese Pataca', 'MOP$'),
   currency('MYR', 'Malaysian Ringgit', 'RM'),
+  currency('MXN', 'Mexican Peso', 'Mex$', LISTED),
   currency('TWD', 'New Taiwan Dollar', 'NT$', { decimals: 0 }),
   currency('NZD', 'New Zealand Dollar', 'NZ$', LISTED),
   currency('NOK', 'Norwegian Krone', 'kr', { placement: 'after', listed: true }),

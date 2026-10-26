@@ -9,10 +9,11 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: 26 October 2026, after campaign Update #17 completed the free Evolved
-Carnomorph race and added ten more Infinity Mode cards. Update #16 made the Legacy Big Box a
-separate add-on; on 21 October the campaign reissued its shipping table with two of Update
-#15's three new pledges in it. Everything below is built and tested, but the 26 October work is
+State described: the evening of 26 October 2026, after campaign Update #18 revealed the last
+stretch goal and announced an optional Endgame add-on for 27 October. Update #17 completed the
+free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16 made the Legacy
+Big Box a separate add-on; on 21 October the campaign reissued its shipping table with two of
+Update #15's three new pledges in it. Everything below is built and tested, but the 26 October work is
 not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
@@ -25,7 +26,7 @@ not pushed unless the git history says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 26 October 2026, 09:29 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
+| Catalogue        | Captured 26 October 2026, 20:36 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
 | Catalogue size   | 110 products: 19 pledges (sets), 79 sold singly, 12 parts sold only inside pledges      |
 | Classified items | 86 requirements in `app/domain/classification.ts`                                       |
 | Tests            | 185, all passing (`bun test`)                                                           |
@@ -125,6 +126,7 @@ called `nemesis-rewards-calculator`:
 37. Campaign Update #16: read it and update the calculator as required (sections 6 and 7.1).
 38. Show the tax applied to each cart item under its price (sections 7.7 and 8.2).
 39. The campaign's new updates checked and the calculator updated as required (section 6).
+40. Campaign Update #18: check it and update as required (sections 6 and 7.8).
 
 ### Where each decision came from
 
@@ -432,6 +434,29 @@ adaptations and tokens; the race also works with Infinity Mode and Retaliation. 
 separately priced product. The update promises a Monday announcement about Endgame, but no
 subsequent update was live when checked at 09:30 UTC on Monday 26 October. The shipping-table
 image is still the 21 October file, and no FAQ entry was edited after 19 October.
+
+What the evening capture of 26 October changed, after campaign Update #18: nothing in any
+product, price, bundle, main picture, category, option or finish, and each of the 245 items
+inside the pledges has the same options as it has on its own. Gamefound's currency menu has
+gained the Mexican peso (MXN), which the site now offers too (section 7.8). The page's state
+also changed shape: the menu is now `globalDisplayCurrencies`, lists the euro among the others,
+and gives each a `factor` and a `commissionRate` where it gave `relativeFactor` and
+`relativeFactorWithCommission`. The capture script reads either, leaves the euro out as before,
+and works out the commissioned figure as `factor / (1 + commissionRate)`, which gives exactly the
+figures Gamefound used to state. The site uses only the codes.
+
+Update #18, published 26 October at 20:20 CET, reveals the last main-campaign stretch goal, the
+Space Bober first-player token (a miniature in the Special Edition, a standee in both), free
+inside the Legacy pledges. It spotlights Zenith of Ruin, which the catalogue already has, with
+its component list and no price. It explains the Endgame: one more Infinity Mode card for each
+hour it lasts, some chosen by vote; those cards are free stretch goals. An optional Endgame
+add-on, "a fun keepsake", is to be revealed on 27 October between 17:00 and 19:00 CET and put on
+sale within the first minute of the Endgame, at about 20:00 CET; it is not a product yet. The
+graphic stating the Legacy MSRPs was reissued with the Space Bober and the Endgame Adventure on
+it, and the same figures (section 7.11). Twenty-four of the campaign page's graphics have file
+names not recorded here before: that graphic, and the stretch-goal spotlights of every day of
+the campaign. None carries a price. The shipping-table image is still the 21 October file, and
+no FAQ entry was edited after 19 October.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
@@ -793,11 +818,13 @@ All sums are in euro cents.
 
 - **[owner]** Euros are the base, and the default. Every other currency is a way of reading
   the same sum.
-- **[owner]** The currencies are all those the campaign supports: the twelve its own menu
-  lists beside the euro (AUD, CAD, CHF, DKK, GBP, HKD, NOK, NZD, PLN, SEK, SGD, USD), and the
-  currency of every place it ships to that is not among them (CNY, CZK, HUF, IDR, ISK, JPY,
-  KRW, MOP, MYR, PHP, RON, THB, TWD, VND). Twenty-seven in all. Each destination records its
-  currency, and a test holds the list to exactly those two sources.
+- **[owner]** The currencies are all those the campaign supports: the thirteen its own menu
+  lists beside the euro (AUD, CAD, CHF, DKK, GBP, HKD, MXN, NOK, NZD, PLN, SEK, SGD, USD), and
+  the currency of every place it ships to that is not among them (CNY, CZK, HUF, IDR, ISK, JPY,
+  KRW, MOP, MYR, PHP, RON, THB, TWD, VND). Twenty-eight in all. Each destination records its
+  currency, and a test holds the list to exactly those two sources. The Mexican peso joined
+  Gamefound's menu on 26 October 2026, and the site's list with it; **[reading]** its symbol is
+  Gamefound's "Mex$", written "$" at home but told apart here as the other dollars are.
 - **[owner]** They are chosen from a searchable menu, with EUR, USD and GBP at the top and the
   rest by name. It searches the code, the symbol and the name.
 - **[owner]** The symbols were looked up — XE's list of currency symbols, the ISO 4217 tables
@@ -814,7 +841,7 @@ All sums are in euro cents.
   which have no TWD, VND or MOP.
 - A reply is used only if it has a sound rate for every currency. Otherwise the rates the site
   was built with stay: `catalog:build` fetches them from the same service for the day of the
-  capture. They replaced Gamefound's own display rates, which cover only its twelve.
+  capture. They replaced Gamefound's own display rates, which cover only its own menu.
 - Figures are written with one fixed locale (`en-GB`) so that the pre-rendered page and the
   browser agree to the character.
 
@@ -1230,8 +1257,10 @@ Nothing requested is outstanding. These were raised and left with the owner:
    repository.
 8. **The prices go stale.** They are a snapshot from 26 October 2026, and the campaign runs to
    27 October. Capture again (section 6) whenever Gamefound changes something, and check after
-   each update. Update #17 promises an Endgame announcement before the campaign ends. The pledge
-   manager will later publish add-on shipping, which the site does not have.
+   each update. Update #18 promises an optional Endgame add-on, revealed on 27 October between
+   17:00 and 19:00 CET and on sale as the Endgame starts: capture again once it is listed, and
+   classify it. The pledge manager will later publish add-on shipping, which the site does not
+   have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
    then the site counts the least it can be, the Vengeance pledge's, and says so.

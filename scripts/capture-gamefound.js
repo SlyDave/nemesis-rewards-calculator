@@ -71,12 +71,19 @@
     projectId,
     baseCurrency: 'EUR',
     campaignEnd: state.projectContext.project.campaignEnd,
-    displayCurrencies: state.displayCurrencies.map((currency) => ({
-      code: currency.shortName,
-      symbol: currency.symbol.trim(),
-      eurPerUnit: currency.relativeFactor,
-      eurPerUnitWithCommission: currency.relativeFactorWithCommission,
-    })),
+    // The other currencies Gamefound's menu shows prices in. Since late October 2026 the page
+    // lists the euro among them too, and gives a commission rate in place of the commissioned
+    // factor; either form is read.
+    displayCurrencies: (state.globalDisplayCurrencies ?? state.displayCurrencies)
+      .filter((currency) => currency.shortName !== 'EUR')
+      .map((currency) => ({
+        code: currency.shortName,
+        symbol: currency.symbol.trim(),
+        eurPerUnit: currency.factor ?? currency.relativeFactor,
+        eurPerUnitWithCommission:
+          currency.relativeFactorWithCommission ??
+          Number((currency.factor / (1 + (currency.commissionRate ?? 0))).toFixed(8)),
+      })),
     categories: [
       { id: rewards.data.rewards[0].categoryID, name: 'Rewards', parentId: null, sortOrder: 0 },
       ...addons.data.addonCategories.map(({ category }) => ({
