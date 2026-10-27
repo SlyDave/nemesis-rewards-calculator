@@ -10,6 +10,32 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-27]
+
+### Added
+
+- Campaign Update #20's Endgame add-on, the Xyrian Collector, for €8 (Sundrop €1 more, fully
+  painted €2 more). It is Infinity Mode content and in no pledge, so it is under Legacy's
+  Expansions switch.
+
+### Changed
+
+- With Legacy and its Expansions the cart now holds the Xyrian Collector too. All four games
+  with every extra comes to €1,682 in rewards, up from €1,674; with every extra but the Big
+  Boxes, €1,386, up from €1,378.
+- The catalogue was captured again as the Endgame began, after campaign Updates #19 and #20.
+  The Xyrian Collector is the only product added, and no existing product's price, bundle,
+  picture, option or finish changed. The exchange rates the site falls back on are those of 27
+  October.
+- `CONTEXT.md` records Update #19's €10 million stretch goal, narration in every language
+  edition, and the Endgame's rules, and Update #20's free Infinity Mode card for every hour of
+  the Endgame. None is a separately priced product. The shipping table and FAQ remain
+  unchanged.
+
+### Fixed
+
+- `CONTEXT.md` gave Update #18's time as 20:20 CET. It was published at 20:20 UTC, 21:20 CET.
+
 ## [2026-10-26]
 
 ### Added
@@ -393,6 +419,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-27]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-27&until=2026-10-27
 [2026-10-26]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-26&until=2026-10-26
 [2026-10-23]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-23&until=2026-10-23
 [2026-10-21]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-21&until=2026-10-21

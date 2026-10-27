@@ -14,6 +14,7 @@ const FOUR_CORE = 125606
 const OG_PLEDGE = 125507
 const PROMO_BUNDLE = 125513
 const SAM = 128018
+const XYRIAN_COLLECTOR = 130479
 const SLEEVES_WITH_ADDONS = 128437
 const LEGACY_CORE_BOX = 120365
 const OG_CORE_BOX = 125508
@@ -84,19 +85,21 @@ describe('the best combination', () => {
     expect(quote.itemsTotal).toBe(19200)
   })
 
-  // Salvation (269) + SAM (8) = 277, against 289.50 for the same things one by one.
+  // Salvation (269) + SAM (8) = 277, against 289.50 for the same things one by one. The
+  // Endgame's Xyrian Collector (8), in no pledge, is bought beside it either way.
   test('is the Salvation Pledge for the gameplay expansions and terrain', () => {
     const quote = buildQuote(preferencesWith({ ...itemsOnly, extras: ['gameplay', 'terrain'] }))
-    expect(cart(quote)).toEqual([SALVATION, SAM])
-    expect(quote.itemsTotal).toBe(27700)
+    expect(cart(quote)).toEqual([SALVATION, SAM, XYRIAN_COLLECTOR])
+    expect(quote.itemsTotal).toBe(27700 + 800)
   })
 
   // Salvation with the Terrain Pack thrown in (277) still beats the expansions alone (250.50)?
-  // No: 129 + 65 + 3.50 + 10 + 35 + 8 = 250.50, so it is bought one by one.
+  // No: 129 + 65 + 3.50 + 10 + 35 + 8 = 250.50, so it is bought one by one; and the Xyrian
+  // Collector (8) with them.
   test('does not take the Salvation Pledge when the Terrain Pack is not wanted', () => {
     const quote = buildQuote(preferencesWith({ ...itemsOnly, extras: ['gameplay'] }))
     expect(cart(quote)).not.toContain(SALVATION)
-    expect(quote.itemsTotal).toBe(25050)
+    expect(quote.itemsTotal).toBe(25050 + 800)
   })
 
   test('takes the promo bundle rather than four promo packs', () => {

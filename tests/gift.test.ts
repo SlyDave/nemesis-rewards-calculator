@@ -15,6 +15,7 @@ import type { Quote } from '../app/domain/quote'
 const SAM = 128018
 const SPECIAL_PLEDGE = 120364
 const SALVATION_PLEDGE = 125558
+const XYRIAN_COLLECTOR = 130479
 
 const sam = (quote: Quote): Quote['lines'][number] | undefined =>
   quote.lines.find((line) => line.product.id === SAM)
@@ -64,8 +65,12 @@ describe('the returning backer’s gift', () => {
     const quote = buildQuote(
       preferencesWith({ ...plain, returningBacker: true, extras: ['gameplay', 'terrain'] }),
     )
-    expect(quote.lines.map((line) => line.product.id)).toEqual([SALVATION_PLEDGE, SAM])
-    expect(quote.itemsTotal).toBe(26900)
+    expect(quote.lines.map((line) => line.product.id)).toEqual([
+      SALVATION_PLEDGE,
+      SAM,
+      XYRIAN_COLLECTOR,
+    ])
+    expect(quote.itemsTotal).toBe(26900 + 800)
   })
 
   test('is not added without Legacy, the game it is played in', () => {

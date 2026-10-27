@@ -129,6 +129,7 @@ describe('the order of the cart', () => {
       'Evolved Void Seeders',
       'Nemesis Legacy Crew Logs',
       'SAM - Support and Maintenace Robot add-on',
+      'Xyrian Collector (Endgame add-on)',
       'Zenith of Ruin - a Prequel Campaign Expansion',
       'Zenith of Ruin Recharge Pack',
       'Acrylic Pack for Nemesis Legacy',

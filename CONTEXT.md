@@ -9,27 +9,28 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: the evening of 26 October 2026, after campaign Update #18 revealed the last
-stretch goal and announced an optional Endgame add-on for 27 October. Update #17 completed the
-free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16 made the Legacy
-Big Box a separate add-on; on 21 October the campaign reissued its shipping table with two of
-Update #15's three new pledges in it. Everything below is built and tested, but the 26 October work is
-not pushed unless the git history says otherwise.
+State described: the evening of 27 October 2026, as the Endgame began. Campaign Update #19
+added a €10 million stretch goal and revealed the Xyrian Collector, an optional Endgame add-on;
+Update #20 put it on sale. Update #18 revealed the last main-campaign stretch goal. Update #17
+completed the free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16
+made the Legacy Big Box a separate add-on; on 21 October the campaign reissued its shipping
+table with two of Update #15's three new pledges in it. Everything below is built and tested,
+but the 27 October work is not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
-|                  |                                                                                         |
-| ---------------- | --------------------------------------------------------------------------------------- |
-| What it is       | A static site that works out the cheapest way to back Nemesis Legacy on Gamefound       |
-| Live at          | <https://nemesis.slydave.com/>                                                          |
-| Repository       | <https://github.com/SlyDave/nemesis-rewards-calculator> — public, default branch `main` |
-| Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)           |
-| Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server             |
-| Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                |
-| Catalogue        | Captured 26 October 2026, 20:36 UTC. The campaign ends 27 October 2026, 19:00 UTC       |
-| Catalogue size   | 110 products: 19 pledges (sets), 79 sold singly, 12 parts sold only inside pledges      |
-| Classified items | 86 requirements in `app/domain/classification.ts`                                       |
-| Tests            | 185, all passing (`bun test`)                                                           |
+|                  |                                                                                                |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| What it is       | A static site that works out the cheapest way to back Nemesis Legacy on Gamefound              |
+| Live at          | <https://nemesis.slydave.com/>                                                                 |
+| Repository       | <https://github.com/SlyDave/nemesis-rewards-calculator> — public, default branch `main`        |
+| Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)                  |
+| Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                    |
+| Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                       |
+| Catalogue        | Captured 27 October 2026, 19:24 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
+| Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges             |
+| Classified items | 87 requirements in `app/domain/classification.ts`                                              |
+| Tests            | 187, all passing (`bun test`)                                                                  |
 
 ## 2. The brief
 
@@ -127,6 +128,7 @@ called `nemesis-rewards-calculator`:
 38. Show the tax applied to each cart item under its price (sections 7.7 and 8.2).
 39. The campaign's new updates checked and the calculator updated as required (section 6).
 40. Campaign Update #18: check it and update as required (sections 6 and 7.8).
+41. The latest updates, #19 and #20: check them and update as required (sections 6 and 7.1).
 
 ### Where each decision came from
 
@@ -445,18 +447,43 @@ and gives each a `factor` and a `commissionRate` where it gave `relativeFactor` 
 and works out the commissioned figure as `factor / (1 + commissionRate)`, which gives exactly the
 figures Gamefound used to state. The site uses only the codes.
 
-Update #18, published 26 October at 20:20 CET, reveals the last main-campaign stretch goal, the
-Space Bober first-player token (a miniature in the Special Edition, a standee in both), free
-inside the Legacy pledges. It spotlights Zenith of Ruin, which the catalogue already has, with
-its component list and no price. It explains the Endgame: one more Infinity Mode card for each
-hour it lasts, some chosen by vote; those cards are free stretch goals. An optional Endgame
-add-on, "a fun keepsake", is to be revealed on 27 October between 17:00 and 19:00 CET and put on
-sale within the first minute of the Endgame, at about 20:00 CET; it is not a product yet. The
+Update #18, published 26 October at 20:20 UTC (21:20 CET), reveals the last main-campaign
+stretch goal, the Space Bober first-player token (a miniature in the Special Edition, a standee
+in both), free inside the Legacy pledges. It spotlights Zenith of Ruin, which the catalogue
+already has, with its component list and no price. It explains the Endgame: one more Infinity
+Mode card for each hour it lasts, some chosen by vote; those cards are free stretch goals. An
+optional Endgame add-on, "a fun keepsake", is to be revealed on 27 October between 17:00 and
+19:00 CET and put on sale within the first minute of the Endgame, at about 20:00 CET. The
 graphic stating the Legacy MSRPs was reissued with the Space Bober and the Endgame Adventure on
 it, and the same figures (section 7.11). Twenty-four of the campaign page's graphics have file
 names not recorded here before: that graphic, and the stretch-goal spotlights of every day of
 the campaign. None carries a price. The shipping-table image is still the 21 October file, and
 no FAQ entry was edited after 19 October.
+
+What the capture of 27 October changed, taken at 19:24 UTC as the Endgame began, after
+campaign Updates #19 and #20: one product was added, `130479 Xyrian Collector (Endgame
+add-on)`, €8 in a new "Endgame" category inside the Nemesis Legacy add-ons, with Sundrop at
+€1 more, fully painted at €2 more, and a choice of language. It is in no pledge. The new
+category comes first among the Legacy add-ons, which moved the Legacy gameplay and cosmetic
+categories one place down Gamefound's order and so changed most products' place in the
+listing; nothing else about them changed. No existing product's price, bundle, main picture,
+option or finish changed, and each of the 245 items inside the pledges has the same options
+as it has on its own. In the Endgame the page's `campaignEnd` is the moving deadline (19:33
+UTC when captured), and `campaignEndScheduledAt` keeps the main campaign's 19:00 UTC; the
+site uses neither.
+
+Update #19, published 27 October at 16:42 UTC, marks €10 million with a stretch goal: the
+narrated companion app of Update #13 in every language the campaign sells (English, Polish,
+German, French, Italian, Spanish and Czech). It explains the Endgame: once the main campaign
+ends at 20:00 CET, a new backer or an addition to a pledge resets a ten-minute countdown, once
+per backer. And it reveals the Xyrian Collector: a miniature and a standee, 25 Xyrian
+Interaction and Event cards and 5 tokens, "created specifically for Infinity Mode" and in no
+pledge. Update #20, published at 19:14 UTC, says the campaign is now Gamefound's most funded
+in euros, puts the Xyrian Collector on sale, and begins the Endgame Adventure: one more free
+Infinity Mode card for each completed hour, the first 24 prepared, with a vote choosing what
+the next batch is about. The graphic stating the Legacy MSRPs was reissued again with the same
+figures (section 7.11). The shipping-table image is still the 21 October file, and the FAQ has
+not changed.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
@@ -623,6 +650,10 @@ as not priced, never both, and nothing else has either.
   an older shared link is migrated from the old id to the new one when it is read. All four
   games with every extra now brings the ULTIMATE Pledge and six add-ons for €1,674, down from
   €1,727.
+- **[reading]** The Xyrian Collector, Update #20's Endgame add-on, is under Expansions as a
+  Legacy item: its cards and tokens are "created specifically for Infinity Mode", which every
+  Legacy pledge holds, and no pledge includes it. Expansions with Legacy now always adds its
+  €8, so all four games with every extra comes to €1,682, up from €1,674.
 - "ADDITIONAL Recharge Pack for FREE", inside the three new pledges, stands in for the Legacy
   Recharge Pack (`PROVIDES`), which they also hold: a second copy, at nothing. It is the only
   product priced at nothing, and a test allows that only for a part of a pledge.
@@ -1255,12 +1286,11 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 26 October 2026, and the campaign runs to
-   27 October. Capture again (section 6) whenever Gamefound changes something, and check after
-   each update. Update #18 promises an optional Endgame add-on, revealed on 27 October between
-   17:00 and 19:00 CET and on sale as the Endgame starts: capture again once it is listed, and
-   classify it. The pledge manager will later publish add-on shipping, which the site does not
-   have.
+8. **The prices go stale.** They are a snapshot from 27 October 2026, as the Endgame began,
+   which lasts as long as backers keep resetting its ten-minute countdown. Capture again
+   (section 6) whenever Gamefound changes something, and check after each update. Update #20
+   promises the next around 20:00 CET on 28 October, if the Endgame lasts that long. The pledge
+   manager will later publish add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
    then the site counts the least it can be, the Vengeance pledge's, and says so.
@@ -1283,25 +1313,25 @@ From the catalogue as captured, delivering to the UK with Split shipping and VAT
 stated. Use them to check that a rebuild or a refactor still agrees. They change when the
 catalogue is captured again.
 
-| Choices                                     | Code            | Cart                                                                      | Rewards | Shipping | Total   |
-| ------------------------------------------- | --------------- | ------------------------------------------------------------------------- | ------- | -------- | ------- |
-| Defaults: Legacy, Special                   | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                              | 129.00  | 39.00    | 201.60  |
-| Legacy, Standard                            | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                             | 89.00   | 39.00    | 153.60  |
-| Defaults, Single shipping                   | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                              | 129.00  | 27.00    | 187.20  |
-| Defaults, Painted                           | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish                          | 129.00  | 39.00    | 350.40  |
-| All four games, either edition              | `af-GB-EUR-`    | 4 x Core Pledge                                                           | 419.00  | 97.00    | 619.20  |
-| Legacy and the Dice Tray                    | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                                     | 139.00  | 39.00    | 213.60  |
-| No game, the Dice Tray                      | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                                         | 10.00   | 0.00     | 12.00   |
-| Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                            | 129.00  | 39.00    | 201.60  |
-| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Alien Kings; no Classic Crew | 317.00  | 63.00    | 456.00  |
-| All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                   | 541.00  | 97.00    | 765.60  |
-| All four games, every extra                 | `mh33r-GB-EUR-` | ULTIMATE, SAM, four Big Boxes and Retaliation Synthetic Cards             | 1674.00 | 165.00   | 2206.80 |
-| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Legacy Core Pledge, Big Box Nemesis Legacy                                | 218.00  | 39.00    | 308.40  |
-| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Retaliation's Premium Synthetic Cards           | 1378.00 | 165.00   | 1851.60 |
-| Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders            | 212.00  | 24.00    | 283.20  |
-| Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic              | 217.00  | 24.00    | 289.20  |
-| Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                  | 145.00  | 24.00    | 202.80  |
-| Legacy, Metal Markers                       | `eze3r-GB-EUR-` | Legacy Core Pledge, Metal Malfunction Markers                             | 134.00  | 39.00    | 207.60  |
+| Choices                                     | Code            | Cart                                                                              | Rewards | Shipping | Total   |
+| ------------------------------------------- | --------------- | --------------------------------------------------------------------------------- | ------- | -------- | ------- |
+| Defaults: Legacy, Special                   | `13-GB-EUR-`    | Legacy Core Pledge (Special)                                                      | 129.00  | 39.00    | 201.60  |
+| Legacy, Standard                            | `10-GB-EUR-`    | Legacy Core Pledge (Standard)                                                     | 89.00   | 39.00    | 153.60  |
+| Defaults, Single shipping                   | `19-GB-EUR-`    | Legacy Core Pledge (Special)                                                      | 129.00  | 27.00    | 187.20  |
+| Defaults, Painted                           | `15-GB-EUR-`    | Legacy Core Pledge (Special), plus 124.00 finish                                  | 129.00  | 39.00    | 350.40  |
+| All four games, either edition              | `af-GB-EUR-`    | 4 x Core Pledge                                                                   | 419.00  | 97.00    | 619.20  |
+| Legacy and the Dice Tray                    | `1vfaf-GB-EUR-` | Legacy Core Pledge, Nemesis Dice Tray                                             | 139.00  | 39.00    | 213.60  |
+| No game, the Dice Tray                      | `1vf9r-GB-EUR-` | Nemesis Dice Tray                                                                 | 10.00   | 0.00     | 12.00   |
+| Legacy, returning backer                    | `7hp2f-GB-EUR-` | Legacy Core Pledge, SAM (free)                                                    | 129.00  | 39.00    | 201.60  |
+| Legacy and OG, Alternative Sculpts          | `8fl3-GB-EUR-`  | Two core pledges, Legacy's two sculpt packs, Alien Kings; no Classic Crew         | 317.00  | 63.00    | 456.00  |
+| All four games, Alternative Sculpts         | `8fp3-GB-EUR-`  | 4 x Core Pledge and six sculpt add-ons; no Classic Crew                           | 541.00  | 97.00    | 765.60  |
+| All four games, every extra                 | `mh33r-GB-EUR-` | ULTIMATE, SAM, Xyrian Collector, four Big Boxes, Retaliation Synthetic Cards      | 1682.00 | 165.00   | 2216.40 |
+| Legacy, BIG BOX(es)                         | `47qf-GB-EUR-`  | Legacy Core Pledge, Big Box Nemesis Legacy                                        | 218.00  | 39.00    | 308.40  |
+| All four games, every extra but BIG BOX(es) | `mcvef-GB-EUR-` | The ULTIMATE Pledge, SAM, Xyrian Collector, Retaliation's Premium Synthetic Cards | 1386.00 | 165.00   | 1861.20 |
+| Retaliation, Expansions                     | `cf-GB-EUR-`    | Retaliation pledge, its three expansions, Evolved Void Seeders                    | 212.00  | 24.00    | 283.20  |
+| Lockdown, Expansions                        | `dr-GB-EUR-`    | Lockdown pledge, Aftermath, Void Seeders, Carnomorphs, Medic                      | 217.00  | 24.00    | 289.20  |
+| Lockdown, Terrain Pack(s)                   | `j1r-GB-EUR-`   | Lockdown pledge, Nemesis Constructs Pack                                          | 145.00  | 24.00    | 202.80  |
+| Legacy, Metal Markers                       | `eze3r-GB-EUR-` | Legacy Core Pledge, Metal Malfunction Markers                                     | 134.00  | 39.00    | 207.60  |
 
 The standalone Legacy Big Box's add-on shipping remains unpriced in the two rows that contain
 it (section 6).

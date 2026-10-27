@@ -111,6 +111,9 @@ export const REQUIREMENTS: readonly Requirement[] = [
   ...extra('legacy', 'bigbox', LEGACY_BIG_BOX_ID),
   ...extra('legacy', 'plush', 129734), // Space Bober Plushie
   ...extra('legacy', 'hoodie', 129735), // Space Bober Hoodie
+  // The Xyrian Collector, the Endgame add-on put on sale with campaign Update #20: "created
+  // specifically for Infinity Mode", and in no pledge.
+  ...extra('legacy', 'gameplay', 130479),
 
   // --- Nemesis (the original) -------------------------------------------------------------
   ...core('og', 125508), // Core Box

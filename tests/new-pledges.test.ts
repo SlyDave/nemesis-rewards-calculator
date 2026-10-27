@@ -18,6 +18,7 @@ const RECHARGE_PACK = 125536
 const ADDITIONAL_RECHARGE_PACK = 125605
 const METAL_MARKERS = 129736
 const SAM = 128018
+const XYRIAN_COLLECTOR = 130479
 const RETALIATION_SYNTHETIC = 128009
 const FOUR_CORE = 125606
 
@@ -43,14 +44,14 @@ const LEGACY_EXTRAS = [
 
 // Campaign Update #15 added three pledges and six add-ons.
 describe('the Vengeance pledge', () => {
-  test('is everything Legacy sells, but the Big Box and the SAM Robot Pack', () => {
+  test('is everything Legacy sells, but the Big Box, the SAM Robot Pack and the Endgame add-on', () => {
     const quote = buildQuote(
       preferencesWith({
         ...plain,
         lines: ['legacy'],
         extras: [...LEGACY_EXTRAS],
-        // The robot is not in it.
-        overrides: { [SAM]: false },
+        // The robot is not in it, nor the Xyrian Collector, which came after it.
+        overrides: { [SAM]: false, [XYRIAN_COLLECTOR]: false },
       }),
     )
     expect(cart(quote)).toEqual([VENGEANCE])
@@ -121,13 +122,33 @@ describe('the Legacy Big Box', () => {
     expect(cart(quote)).toEqual([
       ULTIMATE,
       SAM,
+      XYRIAN_COLLECTOR,
       LEGACY_BIG_BOX,
       RETALIATION_SYNTHETIC,
       125268,
       125246,
       125235,
     ])
-    expect(quote.itemsTotal).toBe(167400)
+    expect(quote.itemsTotal).toBe(167400 + 800)
+  })
+})
+
+// Put on sale as the Endgame began, with campaign Update #20.
+describe('the Xyrian Collector', () => {
+  test('is a Legacy expansion for €8, in no pledge', () => {
+    const item = describeExtra(preferencesWith({ lines: ['legacy'] }), 'gameplay').items.find(
+      (candidate) => candidate.id === XYRIAN_COLLECTOR,
+    )
+    expect(item?.price).toBe(800)
+    expect(item?.soldIn).toBeNull()
+  })
+
+  test('costs €1 more in Sundrop and €2 more fully painted', () => {
+    const extraFinish = (finish: 'sundrop' | 'painted'): number =>
+      buildQuote(preferencesWith({ ...plain, finish, overrides: { [XYRIAN_COLLECTOR]: true } }))
+        .finishTotal - buildQuote(preferencesWith({ ...plain, finish })).finishTotal
+    expect(extraFinish('sundrop')).toBe(100)
+    expect(extraFinish('painted')).toBe(200)
   })
 })
 
@@ -140,9 +161,10 @@ describe('the Ultimate Pledge', () => {
         extras: ALL_EXTRAS.filter((tag) => tag !== 'bigbox'),
       }),
     )
-    // It leaves out the robot and Retaliation's synthetic cards; nothing else is needed.
-    expect(cart(quote)).toEqual([ULTIMATE, SAM, RETALIATION_SYNTHETIC])
-    expect(quote.itemsTotal).toBe(135000 + 800 + 2000)
+    // It leaves out the robot, the Endgame's Xyrian Collector and Retaliation's synthetic
+    // cards; nothing else is needed.
+    expect(cart(quote)).toEqual([ULTIMATE, SAM, XYRIAN_COLLECTOR, RETALIATION_SYNTHETIC])
+    expect(quote.itemsTotal).toBe(135000 + 800 + 800 + 2000)
   })
 })
 
@@ -158,7 +180,7 @@ describe('the shipping of the new pledges', () => {
     ...plain,
     lines: ALL_LINES,
     extras: everythingButBigBoxes,
-    overrides: { [SAM]: false, [RETALIATION_SYNTHETIC]: false },
+    overrides: { [SAM]: false, [XYRIAN_COLLECTOR]: false, [RETALIATION_SYNTHETIC]: false },
   }
 
   // "ULTIMATE PLEDGE … EU €145 … UK €145" under single shipping; €165 under split.
