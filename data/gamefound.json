@@ -1,87 +1,87 @@
 {
-  "capturedAt": "2026-10-27T19:24:57.256Z",
+  "capturedAt": "2026-10-28T21:12:57.736Z",
   "source": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards",
   "projectId": 8524,
   "baseCurrency": "EUR",
-  "campaignEnd": "2026-10-27T19:33:31.507Z",
+  "campaignEnd": "2026-10-28T21:21:21.957Z",
   "displayCurrencies": [
     {
       "code": "AUD",
       "symbol": "A$",
-      "eurPerUnit": 0.63067608,
-      "eurPerUnitWithCommission": 0.61649666
+      "eurPerUnit": 0.63171194,
+      "eurPerUnitWithCommission": 0.61750923
     },
     {
       "code": "CAD",
       "symbol": "C$",
-      "eurPerUnit": 0.63954976,
-      "eurPerUnitWithCommission": 0.62517083
+      "eurPerUnit": 0.63946796,
+      "eurPerUnitWithCommission": 0.62509087
     },
     {
       "code": "CHF",
       "symbol": "Fr.",
-      "eurPerUnit": 1.08236822,
-      "eurPerUnitWithCommission": 1.05803345
+      "eurPerUnit": 1.08143182,
+      "eurPerUnitWithCommission": 1.0571181
     },
     {
       "code": "DKK",
       "symbol": "kr.",
-      "eurPerUnit": 0.13379358,
-      "eurPerUnitWithCommission": 0.13078551
+      "eurPerUnit": 0.13379537,
+      "eurPerUnitWithCommission": 0.13078726
     },
     {
       "code": "GBP",
       "symbol": "£",
-      "eurPerUnit": 1.19534294,
-      "eurPerUnitWithCommission": 1.16846817
+      "eurPerUnit": 1.19353106,
+      "eurPerUnitWithCommission": 1.16669703
     },
     {
       "code": "HKD",
       "symbol": "HK$",
-      "eurPerUnit": 0.11433014,
-      "eurPerUnitWithCommission": 0.11175967
+      "eurPerUnit": 0.11449639,
+      "eurPerUnitWithCommission": 0.11192218
     },
     {
       "code": "MXN",
       "symbol": "Mex$",
-      "eurPerUnit": 0.0481232,
-      "eurPerUnitWithCommission": 0.0481232
+      "eurPerUnit": 0.04821229,
+      "eurPerUnitWithCommission": 0.04821229
     },
     {
       "code": "NOK",
       "symbol": "kr",
-      "eurPerUnit": 0.09626029,
-      "eurPerUnitWithCommission": 0.09409608
+      "eurPerUnit": 0.0966417,
+      "eurPerUnitWithCommission": 0.09446891
     },
     {
       "code": "NZD",
       "symbol": "NZ$",
-      "eurPerUnit": 0.51145663,
-      "eurPerUnitWithCommission": 0.49995761
+      "eurPerUnit": 0.50421015,
+      "eurPerUnitWithCommission": 0.49287405
     },
     {
       "code": "PLN",
       "symbol": "zł",
-      "eurPerUnit": 0.22716947,
-      "eurPerUnitWithCommission": 0.22206204
+      "eurPerUnit": 0.22704053,
+      "eurPerUnitWithCommission": 0.221936
     },
     {
       "code": "SEK",
       "symbol": "kr",
-      "eurPerUnit": 0.09025678,
-      "eurPerUnitWithCommission": 0.08822755
+      "eurPerUnit": 0.09044863,
+      "eurPerUnitWithCommission": 0.08841508
     },
     {
       "code": "SGD",
       "symbol": "S$",
-      "eurPerUnit": 0.700035,
-      "eurPerUnitWithCommission": 0.68429619
+      "eurPerUnit": 0.70057447,
+      "eurPerUnitWithCommission": 0.68482353
     },
     {
       "code": "USD",
       "symbol": "$",
-      "eurPerUnit": 0.89686099,
-      "eurPerUnitWithCommission": 0.87669696
+      "eurPerUnit": 0.89823049,
+      "eurPerUnitWithCommission": 0.87803567
     }
   ],
   "categories": [

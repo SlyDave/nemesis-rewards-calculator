@@ -9,13 +9,14 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: the evening of 27 October 2026, as the Endgame began. Campaign Update #19
-added a €10 million stretch goal and revealed the Xyrian Collector, an optional Endgame add-on;
-Update #20 put it on sale. Update #18 revealed the last main-campaign stretch goal. Update #17
+State described: the evening of 28 October 2026, a day into the Endgame. Campaign Update #21
+unlocked its first 24 free Infinity Mode cards. Update #19 added a €10 million stretch goal and
+revealed the Xyrian Collector, an optional Endgame add-on; Update #20 put it on sale as the
+Endgame began. Update #18 revealed the last main-campaign stretch goal. Update #17
 completed the free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16
 made the Legacy Big Box a separate add-on; on 21 October the campaign reissued its shipping
 table with two of Update #15's three new pledges in it. Everything below is built and tested,
-but the 27 October work is not pushed unless the git history says otherwise.
+but the 28 October work is not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
@@ -27,7 +28,7 @@ but the 27 October work is not pushed unless the git history says otherwise.
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)                  |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                    |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                       |
-| Catalogue        | Captured 27 October 2026, 19:24 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
+| Catalogue        | Captured 28 October 2026, 21:12 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
 | Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges             |
 | Classified items | 87 requirements in `app/domain/classification.ts`                                              |
 | Tests            | 187, all passing (`bun test`)                                                                  |
@@ -129,6 +130,7 @@ called `nemesis-rewards-calculator`:
 39. The campaign's new updates checked and the calculator updated as required (section 6).
 40. Campaign Update #18: check it and update as required (sections 6 and 7.8).
 41. The latest updates, #19 and #20: check them and update as required (sections 6 and 7.1).
+42. Campaign Update #21: check it and update as required (section 6).
 
 ### Where each decision came from
 
@@ -484,6 +486,20 @@ Infinity Mode card for each completed hour, the first 24 prepared, with a vote c
 the next batch is about. The graphic stating the Legacy MSRPs was reissued again with the same
 figures (section 7.11). The shipping-table image is still the 21 October file, and the FAQ has
 not changed.
+
+What the capture of 28 October changed, taken at 21:12 UTC with the Endgame still running,
+after campaign Update #21: nothing in any product, price, bundle, main picture, category,
+option, finish or place in the listing, and each of the 245 items inside the pledges has the
+same options as it has on its own. Only Gamefound's own exchange rates and the Endgame's moving
+deadline changed. Update #21, published 28 October at 19:00 UTC, says the campaign is now the
+most funded board game crowdfunding ever, and unlocks the first 24 Endgame Infinity Mode
+cards, shown on the campaign page as one stretch goal, the "Day 1 Endgame Adventure Deck". The
+first vote chose crew support and cooperation, with contagion and parasites, for the next 24.
+A second vote chooses between 24 more regular cards and 6 HOLO cards, one for every four hours.
+All of it is free stretch-goal content, not products. The graphic stating the Legacy MSRPs is
+now two images, of which the first, `richtext/bce4edfa-5305-4fff-8237-4da7949dc7d5.png`, still
+reads €199 and €99 (section 7.11). The shipping-table image is still the 21 October file, and
+the FAQ has not changed.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
@@ -1286,10 +1302,10 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 27 October 2026, as the Endgame began,
+8. **The prices go stale.** They are a snapshot from 28 October 2026, a day into the Endgame,
    which lasts as long as backers keep resetting its ten-minute countdown. Capture again
-   (section 6) whenever Gamefound changes something, and check after each update. Update #20
-   promises the next around 20:00 CET on 28 October, if the Endgame lasts that long. The pledge
+   (section 6) whenever Gamefound changes something, and check after each update. Update #21
+   promises the next around 20:00 CET on 29 October, if the Endgame lasts that long. The pledge
    manager will later publish add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until

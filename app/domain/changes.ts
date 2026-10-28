@@ -25,6 +25,13 @@ export const CHANGELOG_URL =
 
 export const CHANGES: readonly ChangeDay[] = [
   {
+    date: '2026-10-28',
+    highlights: [
+      'Prices and bundles read again from Gamefound after campaign Update #21. No product or price has changed.',
+    ],
+    minor: 0,
+  },
+  {
     date: '2026-10-27',
     highlights: [
       'Campaign Update #20’s Endgame add-on, the Xyrian Collector, is in: €8, in no pledge, under Legacy’s Expansions. All four games with every extra now costs €1,682 in rewards, up from €1,674.',
