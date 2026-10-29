@@ -82,9 +82,10 @@ everything separately.
 
 ## Security
 
-There is no server, no accounts and nothing collected; the one secret, the Font Awesome token,
-never reaches the repository or the built site. [SECURITY.md](SECURITY.md) has the detail and
-how to report a problem.
+There is no server, no accounts and no cookies. Visits are counted with Cloudflare Web
+Analytics, which keeps nothing in the browser, and nothing else is collected. The one secret,
+the Font Awesome token, never reaches the repository or the built site.
+[SECURITY.md](SECURITY.md) has the detail and how to report a problem.
 
 ## Development
 

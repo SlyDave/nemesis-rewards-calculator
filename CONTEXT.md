@@ -15,8 +15,9 @@ stretch goal and revealed the Xyrian Collector, an optional Endgame add-on; Upda
 sale as the Endgame began. Update #18 revealed the last main-campaign stretch goal. Update #17
 completed the free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16
 made the Legacy Big Box a separate add-on; on 21 October the campaign reissued its shipping
-table with two of Update #15's three new pledges in it. Everything below is built and tested,
-but the 29 October work is not pushed unless the git history says otherwise.
+table with two of Update #15's three new pledges in it. Since 29 October the site counts visits
+with Cloudflare Web Analytics (section 11). Everything below is built and tested, but the 29
+October work is not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
@@ -27,6 +28,7 @@ but the 29 October work is not pushed unless the git history says otherwise.
 | Repository       | <https://github.com/SlyDave/nemesis-rewards-calculator> — public, default branch `main`        |
 | Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)                  |
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                    |
+| Analytics        | Cloudflare Web Analytics: no cookies, nothing in the browser, built site only (section 11)     |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                       |
 | Catalogue        | Captured 29 October 2026, 20:33 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
 | Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges             |
@@ -132,6 +134,9 @@ called `nemesis-rewards-calculator`:
 41. The latest updates, #19 and #20: check them and update as required (sections 6 and 7.1).
 42. Campaign Update #21: check it and update as required (section 6).
 43. Campaign Update #22: process it, then push (section 6).
+44. "Some basic analytics for the site, number of visits etc.": of the options offered, Cloudflare
+    Web Analytics, with the snippet from Cloudflare's dashboard. "Please add, update everything
+    needed then push" (section 11).
 
 ### Where each decision came from
 
@@ -898,9 +903,9 @@ All sums are in euro cents.
 - **[reading]** The first-visit guess no longer touches the currency: a British visitor used to
   be started in pounds, which is not "EUR the default". It still guesses the destination.
 - Rates are central banks' reference rates from Frankfurter, fetched by the browser from
-  `https://api.frankfurter.dev/v2/rates?base=EUR&quotes=…` — no key, and still the only
-  outside request the page makes. Version 2 is needed: version 1 is the ECB's rates alone,
-  which have no TWD, VND or MOP.
+  `https://api.frankfurter.dev/v2/rates?base=EUR&quotes=…` — no key. The only other outside
+  request the page makes is the analytics beacon's (section 11). Version 2 is needed: version 1
+  is the ECB's rates alone, which have no TWD, VND or MOP.
 - A reply is used only if it has a sound rate for every currency. Otherwise the rates the site
   was built with stay: `catalog:build` fetches them from the same service for the day of the
   capture. They replaced Gamefound's own display rates, which cover only its own menu.
@@ -1052,7 +1057,8 @@ to the bottom carries the total and a link down to the cart.
 The header (`AppHeader`) has the logo with the "What's New?" button across from it
 (`WhatsNew`, section 8.6), then the Style and Currency choices, Reset, and a Donate link that
 takes whatever of the row is left. The footer says when the
-prices were read, that the tool is unofficial, and links to the source.
+prices were read, that the tool is unofficial, that visits are counted with Cloudflare Web
+Analytics (section 11), and links to the source.
 
 ### 8.2 Decisions
 
@@ -1253,15 +1259,31 @@ The repository and the site are both public. The rules:
 - **The project must build without the token.** The Pro packages are optional dependencies,
   and without them the icons come from Font Awesome Free. A fork's pull request gets no
   secrets and still passes CI. Keep it that way.
-- **No server, accounts, cookies or analytics.** Choices live in the visitor's browser.
+- **No server, accounts or cookies.** Choices live in the visitor's browser.
+- **[owner] Visits are counted with Cloudflare Web Analytics, and nothing else is collected.**
+  The owner asked for basic analytics, "number of visits etc.", and chose it from the options
+  offered: Cloudflare is already in front of the site, and its beacon sets no cookies, keeps
+  nothing in the browser and does not fingerprint visitors. Cloudflare does not log query
+  strings, where the choices are (`?c=…`). The beacon is the owner's snippet from Cloudflare's
+  dashboard, with its token, which is public. It is added under `$production` in
+  `nuxt.config.ts`, so the built site has it and the dev server does not. It is set to
+  `"spa": false`: the page rewrites its address with every choice (section 7.9), and SPA mode
+  could count each as another page view. The footer says visits are counted. Cloudflare's
+  automatic setup, which injects the beacon at the edge, would be blocked by the policy below;
+  the snippet is in the page instead. Blocklists that filter `cloudflareinsights.com` stop
+  the beacon, and the owner's own connection is one of them, so the figures are a floor and the
+  owner's own visits are not in them.
 - **Nothing a visitor supplies is written into the page as HTML.** The address-bar code and
   the stored values are decoded against fixed lists. `v-html` is forbidden by lint.
 - **Content Security Policy**: GitHub Pages cannot send custom headers, so each built page
   carries the policy as a `<meta>` tag, added in a Nitro `prerender:generate` hook. It allows
-  the site's own files, the exchange-rate origin, and the inline scripts present at build time,
-  each by its SHA-256 hash. A new outside origin must be added to the policy in
-  `nuxt.config.ts` or the browser will block it. The dev server has no policy, so test
-  anything that touches it with `bun run build` and `bun run preview`.
+  the site's own files, the exchange-rate origin, the analytics beacon's script
+  (`static.cloudflareinsights.com`) and reports (`cloudflareinsights.com`, or the site's own
+  `/cdn-cgi/rum` behind Cloudflare), and the inline scripts present at build time, each by its
+  SHA-256 hash. A new outside origin must be added to the policy in `nuxt.config.ts` or the
+  browser will block it. The dev server has no policy, so test anything that touches it with
+  `bun run build` and `bun run preview` (or the "built" configuration in `.claude/launch.json`,
+  on port 3211; `npx serve` takes a few seconds to start).
 - **Workflows** use least-privilege `permissions` and `persist-credentials: false`.
 - A sweep of the whole history, the lockfile, the data and the live site found no secret.
 

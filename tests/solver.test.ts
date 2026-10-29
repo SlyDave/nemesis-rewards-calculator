@@ -121,28 +121,37 @@ describe('solve, against the real catalogue', () => {
     expect(compareCosts(solution.cost, reference), `${description}: cost`).toBe(0)
   }
 
-  test('every game on its own and all together, with nothing and with everything', () => {
-    for (const lines of [...ALL_LINES.map((line) => [line]), ALL_LINES]) {
-      for (const extras of [[], ALL_EXTRAS]) {
-        for (const edition of ['standard', 'special'] as const) {
-          check(
-            `${lines.join('+')} ${edition} ${extras.length === 0 ? 'bare' : 'everything'}`,
-            preferencesWith({ lines, extras, edition }),
-          )
+  // The brute force tries every combination of the bundles, and the pledges of campaign
+  // Update #15 took them from sixteen to nineteen: these take some seconds now, not one. The
+  // Endgame's Xyrian Collector took the first past Bun's five-second default.
+  const SLOW_CHECK_MS = 60_000
+
+  test(
+    'every game on its own and all together, with nothing and with everything',
+    () => {
+      for (const lines of [...ALL_LINES.map((line) => [line]), ALL_LINES]) {
+        for (const extras of [[], ALL_EXTRAS]) {
+          for (const edition of ['standard', 'special'] as const) {
+            check(
+              `${lines.join('+')} ${edition} ${extras.length === 0 ? 'bare' : 'everything'}`,
+              preferencesWith({ lines, extras, edition }),
+            )
+          }
         }
       }
-    }
-  })
+    },
+    SLOW_CHECK_MS,
+  )
 
-  test('each extra on its own, across all four games', () => {
-    for (const tag of ALL_EXTRAS) {
-      check(`only ${tag}`, preferencesWith({ lines: ALL_LINES, extras: [tag] }))
-    }
-  })
-
-  // The brute force tries every combination of the bundles, and the pledges of campaign
-  // Update #15 took them from sixteen to nineteen: these take some seconds now, not one.
-  const SLOW_CHECK_MS = 60_000
+  test(
+    'each extra on its own, across all four games',
+    () => {
+      for (const tag of ALL_EXTRAS) {
+        check(`only ${tag}`, preferencesWith({ lines: ALL_LINES, extras: [tag] }))
+      }
+    },
+    SLOW_CHECK_MS,
+  )
 
   test(
     'random combinations of the switches',

@@ -10,17 +10,21 @@ rather than in a public issue.
 
 Very little, by design:
 
-- The site is static files. There is no server, no database, no accounts and no cookies, and
-  it collects nothing: a visitor's choices stay in their own browser (`localStorage`) and in
-  the address bar.
-- The only request the page makes beyond its own files is for exchange rates, from
-  [Frankfurter](https://frankfurter.dev). The reply is checked before it is used, and a bad or
-  missing one falls back to the rates the site was built with.
+- The site is static files. There is no server, no database, no accounts and no cookies: a
+  visitor's choices stay in their own browser (`localStorage`) and in the address bar.
+- Visits are counted with [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/).
+  Its beacon sets no cookies, keeps nothing in the browser and does not fingerprint visitors,
+  and Cloudflare does not log query strings, where the address bar keeps the choices. The site
+  collects nothing else.
+- Beyond its own files, the page makes two kinds of request: it loads that beacon from
+  Cloudflare, which reports the visit to Cloudflare, and it fetches exchange rates from
+  [Frankfurter](https://frankfurter.dev). The rates are checked before they are used, and a bad
+  or missing reply falls back to the rates the site was built with.
 - Everything read from the address bar or from storage is decoded against a fixed list of
   known values; anything else is ignored. Nothing a visitor supplies is ever written into the
   page as HTML.
-- Each built page carries a Content Security Policy that allows this site's own files and
-  exactly the inline scripts it was built with (`nuxt.config.ts`).
+- Each built page carries a Content Security Policy that allows this site's own files, those
+  two services, and exactly the inline scripts it was built with (`nuxt.config.ts`).
 
 ## Secrets
 

@@ -29,6 +29,10 @@ const capturedAt = new Intl.DateTimeFormat('en-GB', {
       Nemesis and all product names and images belong to their owners.
     </p>
     <p>
+      Visits are counted with Cloudflare Web Analytics, which sets no cookies and keeps nothing in
+      your browser.
+    </p>
+    <p>
       <ULink
         :to="REPOSITORY"
         target="_blank"

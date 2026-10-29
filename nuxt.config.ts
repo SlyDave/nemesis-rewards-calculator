@@ -7,8 +7,18 @@ const SITE_URL = 'https://nemesis.slydave.com/'
 const SITE_DESCRIPTION =
   'Find the cheapest combination of Nemesis Legacy pledges and add-ons on Gamefound for exactly what you want — with shipping, VAT and currency.'
 
-/** The one place besides this site the page talks to: the exchange rates (useRates). */
+/** Where the exchange rates come from (useRates). */
 const RATES_ORIGIN = 'https://api.frankfurter.dev'
+
+/**
+ * Cloudflare Web Analytics, which counts visits without cookies or anything kept in the
+ * browser: its beacon is loaded from the first origin and reports to the second, or to this
+ * site's own `/cdn-cgi/rum` when Cloudflare is in front of it. The token is public; it names
+ * the site in Cloudflare's dashboard.
+ */
+const ANALYTICS_SCRIPT_ORIGIN = 'https://static.cloudflareinsights.com'
+const ANALYTICS_REPORT_ORIGIN = 'https://cloudflareinsights.com'
+const ANALYTICS_TOKEN = 'd22dc7268f334a1d8c25e87434b7a0b9'
 
 /** Inline scripts that run, as opposed to the JSON data blocks Nuxt also writes inline. */
 const INLINE_SCRIPT =
@@ -18,10 +28,11 @@ const INLINE_SCRIPT =
  * Adds a Content Security Policy to a generated page.
  *
  * GitHub Pages cannot send response headers of our choosing, so the policy travels in the
- * page as a meta tag. It allows this site's own files, the exchange-rate service, and exactly
- * the inline scripts the page was built with, each named by its hash — so a script that
- * was not there at build time does not run, whatever put it there. Styles are allowed inline
- * because the component library sets them on elements as it positions things.
+ * page as a meta tag. It allows this site's own files, the exchange-rate service, Cloudflare's
+ * analytics beacon, and exactly the inline scripts the page was built with, each named by its
+ * hash — so a script that was not there at build time does not run, whatever put it there.
+ * Styles are allowed inline because the component library sets them on elements as it
+ * positions things.
  */
 const withContentSecurityPolicy = (html: string): string => {
   const hashes = new Set(
@@ -31,11 +42,11 @@ const withContentSecurityPolicy = (html: string): string => {
   )
   const policy = [
     "default-src 'self'",
-    ["script-src 'self'", ...hashes].join(' '),
+    ["script-src 'self'", ANALYTICS_SCRIPT_ORIGIN, ...hashes].join(' '),
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
     "font-src 'self'",
-    `connect-src 'self' ${RATES_ORIGIN}`,
+    `connect-src 'self' ${RATES_ORIGIN} ${ANALYTICS_REPORT_ORIGIN}`,
     "base-uri 'self'",
     "form-action 'none'",
     "object-src 'none'",
@@ -99,6 +110,24 @@ export default defineNuxtConfig({
             "try{var t=localStorage.getItem('nemesis-rewards:theme');if(t==='lockdown'||t==='retaliation'||t==='legacy')document.documentElement.dataset.theme=t}catch{}",
         },
       ],
+    },
+  },
+
+  // The analytics beacon goes only into the built site, so the dev server counts no visits.
+  $production: {
+    app: {
+      head: {
+        script: [
+          {
+            key: 'analytics',
+            type: 'module',
+            src: `${ANALYTICS_SCRIPT_ORIGIN}/beacon.min.js`,
+            // The address changes with every choice (usePreferences), and in SPA mode each
+            // change could count as another page view: one load is one view.
+            'data-cf-beacon': JSON.stringify({ token: ANALYTICS_TOKEN, spa: false }),
+          },
+        ],
+      },
     },
   },
 

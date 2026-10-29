@@ -12,8 +12,21 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
 ## [2026-10-29]
 
+### Added
+
+- Visits are counted with Cloudflare Web Analytics, which sets no cookies and keeps nothing in
+  the browser. Its beacon is in the built site only, not the dev server, and counts one view
+  per page load (`"spa": false`), because the address changes with every choice. The footer
+  says visits are counted.
+- `.claude/launch.json` has a second configuration, which serves the built site, to check
+  the Content Security Policy.
+
 ### Changed
 
+- The Content Security Policy allows the beacon's script, from `static.cloudflareinsights.com`,
+  and its reports, to `cloudflareinsights.com`.
+- `SECURITY.md`, `README.md` and `CONTEXT.md` no longer say the site collects nothing: they
+  say what the analytics collects, and that nothing else is collected.
 - The catalogue was captured again after campaign Update #22. No product, price, bundle,
   picture, option or finish changed, inside the pledges or out; only the Salvation Pledge's
   description, which the site does not show, now names the Void Seeders add-on. The exchange
@@ -22,6 +35,12 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
   for the third day, and regular cards again after it. None is a separately priced product.
   The graphic stating the Legacy MSRPs is one image again, with the same figures; the shipping
   table and FAQ remain unchanged.
+
+### Fixed
+
+- Two of the solver's checks against the brute force had Bun's five-second default, and since
+  the Xyrian Collector the first took 4.8 seconds in CI and 6 on a slower machine, so a deploy
+  could fail at random. They have a minute, like the others.
 
 ## [2026-10-28]
 

@@ -6,6 +6,12 @@
       "runtimeExecutable": "bun",
       "runtimeArgs": ["--bun", "nuxt", "dev", "--port", "3210"],
       "port": 3210
+    },
+    {
+      "name": "nemesis-rewards-calculator (built)",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["--bun", "nuxt", "preview", "--port", "3211"],
+      "port": 3211
     }
   ]
 }
