@@ -1,87 +1,87 @@
 {
-  "capturedAt": "2026-10-28T21:12:57.736Z",
+  "capturedAt": "2026-10-29T20:33:23.512Z",
   "source": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards",
   "projectId": 8524,
   "baseCurrency": "EUR",
-  "campaignEnd": "2026-10-28T21:21:21.957Z",
+  "campaignEnd": "2026-10-29T20:42:20.273Z",
   "displayCurrencies": [
     {
       "code": "AUD",
       "symbol": "A$",
-      "eurPerUnit": 0.63171194,
-      "eurPerUnitWithCommission": 0.61750923
+      "eurPerUnit": 0.63123343,
+      "eurPerUnitWithCommission": 0.61704148
     },
     {
       "code": "CAD",
       "symbol": "C$",
-      "eurPerUnit": 0.63946796,
-      "eurPerUnitWithCommission": 0.62509087
+      "eurPerUnit": 0.64197214,
+      "eurPerUnitWithCommission": 0.62753875
     },
     {
       "code": "CHF",
       "symbol": "Fr.",
-      "eurPerUnit": 1.08143182,
-      "eurPerUnitWithCommission": 1.0571181
+      "eurPerUnit": 1.08436348,
+      "eurPerUnitWithCommission": 1.05998385
     },
     {
       "code": "DKK",
       "symbol": "kr.",
-      "eurPerUnit": 0.13379537,
-      "eurPerUnitWithCommission": 0.13078726
+      "eurPerUnit": 0.13380432,
+      "eurPerUnitWithCommission": 0.13079601
     },
     {
       "code": "GBP",
       "symbol": "£",
-      "eurPerUnit": 1.19353106,
-      "eurPerUnitWithCommission": 1.16669703
+      "eurPerUnit": 1.19648711,
+      "eurPerUnitWithCommission": 1.16958662
     },
     {
       "code": "HKD",
       "symbol": "HK$",
-      "eurPerUnit": 0.11449639,
-      "eurPerUnitWithCommission": 0.11192218
+      "eurPerUnit": 0.11450819,
+      "eurPerUnitWithCommission": 0.11193371
     },
     {
       "code": "MXN",
       "symbol": "Mex$",
-      "eurPerUnit": 0.04821229,
-      "eurPerUnitWithCommission": 0.04821229
+      "eurPerUnit": 0.04792462,
+      "eurPerUnitWithCommission": 0.04792462
     },
     {
       "code": "NOK",
       "symbol": "kr",
-      "eurPerUnit": 0.0966417,
-      "eurPerUnitWithCommission": 0.09446891
+      "eurPerUnit": 0.09679137,
+      "eurPerUnitWithCommission": 0.09461522
     },
     {
       "code": "NZD",
       "symbol": "NZ$",
-      "eurPerUnit": 0.50421015,
-      "eurPerUnitWithCommission": 0.49287405
+      "eurPerUnit": 0.50461725,
+      "eurPerUnitWithCommission": 0.49327199
     },
     {
       "code": "PLN",
       "symbol": "zł",
-      "eurPerUnit": 0.22704053,
-      "eurPerUnitWithCommission": 0.221936
+      "eurPerUnit": 0.22759343,
+      "eurPerUnitWithCommission": 0.22247647
     },
     {
       "code": "SEK",
       "symbol": "kr",
-      "eurPerUnit": 0.09044863,
-      "eurPerUnitWithCommission": 0.08841508
+      "eurPerUnit": 0.09091322,
+      "eurPerUnitWithCommission": 0.08886923
     },
     {
       "code": "SGD",
       "symbol": "S$",
-      "eurPerUnit": 0.70057447,
-      "eurPerUnitWithCommission": 0.68482353
+      "eurPerUnit": 0.70101647,
+      "eurPerUnitWithCommission": 0.68525559
     },
     {
       "code": "USD",
       "symbol": "$",
-      "eurPerUnit": 0.89823049,
-      "eurPerUnitWithCommission": 0.87803567
+      "eurPerUnit": 0.8984726,
+      "eurPerUnitWithCommission": 0.87827234
     }
   ],
   "categories": [
@@ -3902,7 +3902,7 @@
       "buyable": true,
       "listed": true,
       "listOrder": 3,
-      "abstract": "The choice for players who want Nemesis: Legacy gameplay content: the Special Edition & Zenith of Ruin Prequel Campaign Expansion with respective Recharge Packs, Crew Logs, the SECRET add-on, and the Terrain Pack.",
+      "abstract": "The choice for players who want Nemesis: Legacy gameplay content: the Special Edition & Zenith of Ruin Prequel Campaign Expansion with respective Recharge Packs, Crew Logs, the Void Seeders add-on, and the Terrain Pack.",
       "description": null,
       "image": "https://imgcdn.gamefound.com/productimage/projects/8524/3fb8fcd5-1d6e-4461-8af1-60efe678e2a4.jpg",
       "thumb": "https://imgcdn.gamefound.com/productimagethumb/projects/8524/3fb8fcd5-1d6e-4461-8af1-60efe678e2a4.jpg",
