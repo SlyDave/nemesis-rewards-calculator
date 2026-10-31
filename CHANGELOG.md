@@ -10,6 +10,18 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-10-31]
+
+### Changed
+
+- The catalogue was captured again after campaign Updates #23 and #24. No product, price,
+  bundle, picture, option or finish changed, inside the pledges or out. The exchange rates the
+  site falls back on are those of 31 October.
+- `CONTEXT.md` records Updates #23 and #24: six free HOLO Infinity Mode cards and 24 more, 78
+  in the Endgame so far, and the votes on the cards to come. None is a separately priced
+  product. The graphic stating the Legacy MSRPs was reissued with the same figures; the
+  shipping table and FAQ remain unchanged.
+
 ## [2026-10-29]
 
 ### Added
@@ -463,6 +475,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-10-31]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-31&until=2026-10-31
 [2026-10-29]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-29&until=2026-10-29
 [2026-10-28]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-28&until=2026-10-28
 [2026-10-27]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-10-27&until=2026-10-27
