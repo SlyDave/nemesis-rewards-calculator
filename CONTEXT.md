@@ -9,15 +9,15 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: the evening of 31 October 2026, four days into the Endgame, whose first 78
-free Infinity Mode cards campaign Updates #21 to #24 unlocked. Update #19 added a €10 million
+State described: the morning of 2 November 2026, five and a half days into the Endgame, whose
+first 102 free Infinity Mode cards campaign Updates #21 to #25 unlocked. Update #19 added a €10 million
 stretch goal and revealed the Xyrian Collector, an optional Endgame add-on; Update #20 put it on
 sale as the Endgame began. Update #18 revealed the last main-campaign stretch goal. Update #17
 completed the free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16
 made the Legacy Big Box a separate add-on; on 21 October the campaign reissued its shipping
 table with two of Update #15's three new pledges in it. Since 29 October the site counts visits
-with Cloudflare Web Analytics (section 11). Everything below is built and tested, but the 31
-October work is not pushed unless the git history says otherwise.
+with Cloudflare Web Analytics (section 11). Everything below is built and tested, but the 2
+November work is not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
@@ -30,7 +30,7 @@ October work is not pushed unless the git history says otherwise.
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                    |
 | Analytics        | Cloudflare Web Analytics: no cookies, nothing in the browser, built site only (section 11)     |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                       |
-| Catalogue        | Captured 31 October 2026, 21:19 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
+| Catalogue        | Captured 2 November 2026, 08:57 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
 | Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges             |
 | Classified items | 87 requirements in `app/domain/classification.ts`                                              |
 | Tests            | 187, all passing (`bun test`)                                                                  |
@@ -138,6 +138,7 @@ called `nemesis-rewards-calculator`:
     Web Analytics, with the snippet from Cloudflare's dashboard. "Please add, update everything
     needed then push" (section 11).
 45. Campaign Updates #23 and #24: process them, then push (section 6).
+46. Campaign Update #25: fetch it and do what needs to be done (section 6).
 
 ### Where each decision came from
 
@@ -536,6 +537,21 @@ after 120 hours are about the traitor mechanic. All of it is free stretch-goal c
 products. The graphic stating the Legacy MSRPs was reissued again,
 `richtext/86f2505c-5d0f-4208-8f6b-de165255d08c.png`, with the same €199 and €99 (section
 7.11). The shipping-table image is still the 21 October file, and the FAQ has not changed.
+
+What the capture of 2 November changed, taken at 08:57 UTC with the Endgame still running,
+after campaign Update #25: nothing in any product, price, bundle, main picture, category,
+option, finish or place in the listing, and each of the 245 items inside the 19 pledges has the
+same options as it has on its own. Gamefound's own exchange rates had not moved either; only
+the capture time and the Endgame's moving deadline changed. Update #25, published 1 November
+at 19:03 UTC, marks 120 hours, with over 15,500 backers having extended the Endgame, and
+unlocks 24 more cards, the "Day 5 Endgame Adventure Deck", 102 in all, as the page's own
+graphic says. The fifth vote named the Surgeon as the traitor, with 57.18% of 7,824 votes. The
+sixth chooses how to face two Reapers at the wormhole, and so whether the cards after 144
+hours lean toward crew interactions, objectives and missions, or legendary actions. All of it
+is free stretch-goal content, not products. The graphic stating the Legacy MSRPs was reissued
+again, `richtext/abff0f6b-7495-4bb2-8fb4-3fa12e238d9d.png`, with the same €199 and €99
+(section 7.11). The shipping-table image is still the 21 October file. The FAQ has not changed:
+27 entries, the most recently edited on 13 October.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
@@ -1355,10 +1371,10 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from 31 October 2026, four days into the
-   Endgame, which lasts as long as backers keep resetting its ten-minute countdown. Capture
+8. **The prices go stale.** They are a snapshot from 2 November 2026, five and a half days into
+   the Endgame, which lasts as long as backers keep resetting its ten-minute countdown. Capture
    again (section 6) whenever Gamefound changes something, and check after each update. The
-   next update is promised around 20:00 CET on 1 November, if the Endgame lasts that long. The
+   next update is promised around 20:00 CET on 2 November, or sooner if the Endgame ends. The
    pledge manager will later publish add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
