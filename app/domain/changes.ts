@@ -27,7 +27,7 @@ export const CHANGES: readonly ChangeDay[] = [
   {
     date: '2026-11-02',
     highlights: [
-      'Prices and bundles read again from Gamefound after campaign Update #25. No product or price has changed.',
+      'Prices and bundles read again from Gamefound after campaign Updates #25 and #26. No product or price has changed.',
     ],
     minor: 0,
   },

@@ -21,6 +21,12 @@ would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
   the result of the traitor vote, and the vote on the cards to come. None is a separately
   priced product. The graphic stating the Legacy MSRPs was reissued with the same figures; the
   shipping table and FAQ remain unchanged.
+- The catalogue was captured again in the evening, after campaign Update #26, with the same
+  result: no product, price, bundle, picture, option or finish changed.
+- `CONTEXT.md` records Update #26: 24 more free Infinity Mode cards, 126 in the Endgame so far,
+  the result of the Reaper vote, and the vote on the cards to come. None is a separately priced
+  product. The graphic stating the Legacy MSRPs was reissued again with the same figures; the
+  shipping table and FAQ remain unchanged.
 
 ## [2026-10-31]
 
