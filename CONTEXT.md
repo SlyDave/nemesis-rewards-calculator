@@ -9,8 +9,8 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: the evening of 2 November 2026, six days into the Endgame, whose first 126
-free Infinity Mode cards campaign Updates #21 to #26 unlocked. Update #19 added a €10 million
+State described: the evening of 3 November 2026, seven days into the Endgame, whose first 150
+free Infinity Mode cards campaign Updates #21 to #27 unlocked. Update #19 added a €10 million
 stretch goal and revealed the Xyrian Collector, an optional Endgame add-on; Update #20 put it on
 sale as the Endgame began. Update #18 revealed the last main-campaign stretch goal. Update #17
 completed the free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16
@@ -30,7 +30,7 @@ November work is not pushed unless the git history says otherwise.
 | Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                    |
 | Analytics        | Cloudflare Web Analytics: no cookies, nothing in the browser, built site only (section 11)     |
 | Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                       |
-| Catalogue        | Captured 2 November 2026, 19:37 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
+| Catalogue        | Captured 3 November 2026, 19:34 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
 | Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges             |
 | Classified items | 87 requirements in `app/domain/classification.ts`                                              |
 | Tests            | 187, all passing (`bun test`)                                                                  |
@@ -140,6 +140,7 @@ called `nemesis-rewards-calculator`:
 45. Campaign Updates #23 and #24: process them, then push (section 6).
 46. Campaign Update #25: fetch it and do what needs to be done (section 6).
 47. Campaign Update #26: check it and update as required (section 6).
+48. Campaign Update #27: process it (section 6).
 
 ### Where each decision came from
 
@@ -565,6 +566,23 @@ all, as the page's own graphic says. The sixth vote chose to duel the Reapers, w
 personal objectives, or equipment, crafting and scavenging. All of it is free stretch-goal
 content, not products. The graphic stating the Legacy MSRPs was reissued once more,
 `richtext/5bc23cfd-9fc1-4170-8685-2c8159313285.png`, with the same €199 and €99 (section
+7.11). The shipping-table image is still the 21 October file, and the FAQ has not changed.
+
+What the capture of 3 November changed, taken at 19:34 UTC with the Endgame still running,
+after campaign Update #27: nothing in any product, price, bundle, main picture, category,
+option, finish or place in the listing, and each of the 245 items inside the pledges has the
+same options as it has on its own. Only Gamefound's own exchange rates and the Endgame's moving
+deadline changed. Update #27, published 3 November at 19:22 UTC, marks 168 hours, with over
+17,000 backers having extended the Endgame, and unlocks the seventh day's 24 cards, 150 in all,
+as the campaign page's graphic says. The seventh vote chose the narrow corridors, with 61.06% of
+8,261 votes, so the eighth day's cards lean toward equipment, crafting and scavenging. They are
+the last: cards stop at 20:00 CET on 4 November, 174 at most. The eighth and final vote, on
+saving the Scrapper or taking the Starburner, chooses only how the story ends. Should the
+Endgame outlast The Witcher: Legacy's record of 7 days, 6 hours and 20 minutes, at 02:20 CET on
+4 November, Awaken Realms promise an update that morning. All of it is free stretch-goal
+content, not products. The update's one graphic is the Endgame Adventure's; the campaign page's
+graphic stating the Legacy MSRPs was reissued once more,
+`richtext/a21a2764-c04c-41bd-a81a-d9ddf41b5eb8.png`, with the same €199 and €99 (section
 7.11). The shipping-table image is still the 21 October file, and the FAQ has not changed.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
@@ -1385,11 +1403,12 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from the evening of 2 November 2026, six days
+8. **The prices go stale.** They are a snapshot from the evening of 3 November 2026, seven days
    into the Endgame, which lasts as long as backers keep resetting its ten-minute countdown.
    Capture again (section 6) whenever Gamefound changes something, and check after each update.
-   The next update is promised around 20:00 CET on 3 November, or sooner if the Endgame ends. The
-   pledge manager will later publish add-on shipping, which the site does not have.
+   The next update is promised on the morning of 4 November if the Endgame breaks the record at
+   02:20 CET, or sooner if it ends; its last cards unlock at 20:00 CET that day. The pledge
+   manager will later publish add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
    then the site counts the least it can be, the Vengeance pledge's, and says so.
