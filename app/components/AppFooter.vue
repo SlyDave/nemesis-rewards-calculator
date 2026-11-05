@@ -21,8 +21,8 @@ const capturedAt = new Intl.DateTimeFormat('en-GB', {
         class="text-primary hover:underline"
         >Nemesis Legacy rewards page on Gamefound</ULink
       >
-      on {{ capturedAt }} UTC; shipping is from the campaign’s shipping table. Both can change while
-      the campaign runs, and Gamefound’s checkout is always the final word.
+      on {{ capturedAt }} UTC; shipping is from the campaign’s shipping table. The campaign has
+      ended; Gamefound’s checkout is always the final word.
     </p>
     <p>
       An unofficial fan-made tool. Not affiliated with, or endorsed by, Awaken Realms or Gamefound.

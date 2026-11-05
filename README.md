@@ -54,7 +54,7 @@ everything separately.
 ### What the numbers are
 
 - **Prices and bundle contents** are Gamefound's, captured on the date shown in the site's
-  footer. They change while the campaign runs; see below for refreshing them.
+  footer. The campaign has ended; see below for refreshing them if Gamefound restates something.
 - **Shipping** is the campaign's shipping table, typed out from the image it is published as.
   Split shipping is only offered for an order with something in each of the campaign's two
   shipments; one that all goes out together is priced as single. One pledge of campaign

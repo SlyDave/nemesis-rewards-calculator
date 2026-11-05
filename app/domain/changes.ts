@@ -25,6 +25,14 @@ export const CHANGELOG_URL =
 
 export const CHANGES: readonly ChangeDay[] = [
   {
+    date: '2026-11-05',
+    highlights: [
+      'The campaign has ended. A banner below the style and currency choices says when, how much it raised, and how long the Endgame ran — in the selected style, with a glow on its frame.',
+      'Prices and bundles read again from Gamefound after it closed. No product or price has changed.',
+    ],
+    minor: 1,
+  },
+  {
     date: '2026-11-04',
     highlights: [
       'Prices and bundles read again from Gamefound after campaign Updates #28 and #29. No product or price has changed.',

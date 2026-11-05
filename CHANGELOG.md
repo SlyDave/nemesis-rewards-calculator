@@ -10,6 +10,26 @@ Each date links to that day's commits.
 The "What's New?" list on the site is the short version of this file, with only what a visitor
 would notice. It is kept in [`app/domain/changes.ts`](app/domain/changes.ts).
 
+## [2026-11-05]
+
+### Added
+
+- A banner below the style and currency row, above the returning backer, lined up with Donate
+  and the answer column: the campaign ended at 07:49 UTC on 5 November 2026, when the Endgame’s
+  ten-minute countdown ran out; 34,789 backers raised €13,229,316.31; the Endgame ran for 8
+  days, 12 hours and 49 minutes; and a link to the campaign page for further details. It is
+  lit in the selected style, with a glow on its frame like the total.
+
+### Changed
+
+- The catalogue was captured again after the campaign closed. No product, price, bundle,
+  picture, option or finish changed, inside the pledges or out. The exchange rates the site
+  falls back on are those of 5 November. The capture’s `campaignEnd` is now the real close
+  rather than the Endgame’s moving deadline.
+- The footer no longer speaks as if the campaign were still running.
+- `CONTEXT.md` records the close: no Update #30, shipping table and FAQ unchanged, and the
+  Endgame’s 8 days, 12 hours and 49 minutes from 19:00 UTC on 27 October.
+
 ## [2026-11-04]
 
 ### Changed
@@ -517,6 +537,7 @@ The first release.
   where it used to fail.
 - A capture may only contain Gamefound addresses.
 
+[2026-11-05]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-11-05&until=2026-11-05
 [2026-11-04]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-11-04&until=2026-11-04
 [2026-11-03]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-11-03&until=2026-11-03
 [2026-11-02]: https://github.com/SlyDave/nemesis-rewards-calculator/commits/main/?since=2026-11-02&until=2026-11-02

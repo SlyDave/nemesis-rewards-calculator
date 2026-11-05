@@ -148,6 +148,7 @@ const ICONS: Readonly<Record<string, IconSource>> = {
   list: light('faListCheck'),
   donate: light('faHandHoldingHeart'),
   news: light('faBullhorn'),
+  'flag-checkered': solid('faFlagCheckered'),
 }
 
 type Package = Readonly<Record<string, unknown>>

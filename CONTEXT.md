@@ -9,32 +9,31 @@ It is a companion to three shorter files: [README.md](README.md) is the develope
 changed and when. Where they overlap, this file has the
 reasoning and they have the summary.
 
-State described: the late evening of 4 November 2026, eight days into the Endgame, whose 174
-free Infinity Mode cards campaign Updates #21 to #29 unlocked, the last it will. Update #28
-marked the record with the Alternative Intruder Queen Deck. Update #19 added a €10 million
-stretch goal and revealed the Xyrian Collector, an optional Endgame add-on; Update #20 put it on
-sale as the Endgame began. Update #18 revealed the last main-campaign stretch goal. Update #17
-completed the free Evolved Carnomorph race and added ten more Infinity Mode cards. Update #16
-made the Legacy Big Box a separate add-on; on 21 October the campaign reissued its shipping
-table with two of Update #15's three new pledges in it. Since 29 October the site counts visits
-with Cloudflare Web Analytics (section 11). Everything below is built and tested, but the 4
-November work is not pushed unless the git history says otherwise.
+State described: 5 November 2026, after the campaign closed. The Endgame's ten-minute countdown
+ran out at 07:49 UTC; 34,789 backers raised €13,229,316.31, and the Endgame itself lasted 8
+days, 12 hours and 49 minutes from the main campaign's 19:00 UTC close on 27 October. Updates
+#21 to #29 unlocked its 174 free Infinity Mode cards, the last it would. Update #28 marked the
+record with the Alternative Intruder Queen Deck. Update #19 added a €10 million stretch goal
+and revealed the Xyrian Collector, an optional Endgame add-on; Update #20 put it on sale as the
+Endgame began. Update #16 made the Legacy Big Box a separate add-on. Since 29 October the site
+counts visits with Cloudflare Web Analytics (section 11). Everything below is built and tested,
+but the 5 November work is not pushed unless the git history says otherwise.
 
 ## 1. Snapshot
 
-|                  |                                                                                                |
-| ---------------- | ---------------------------------------------------------------------------------------------- |
-| What it is       | A static site that works out the cheapest way to back Nemesis Legacy on Gamefound              |
-| Live at          | <https://nemesis.slydave.com/>                                                                 |
-| Repository       | <https://github.com/SlyDave/nemesis-rewards-calculator> — public, default branch `main`        |
-| Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)                  |
-| Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                    |
-| Analytics        | Cloudflare Web Analytics: no cookies, nothing in the browser, built site only (section 11)     |
-| Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                       |
-| Catalogue        | Captured 4 November 2026, 22:50 UTC, in the Endgame that followed the campaign's 19:00 UTC end |
-| Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges             |
-| Classified items | 87 requirements in `app/domain/classification.ts`                                              |
-| Tests            | 187, all passing (`bun test`)                                                                  |
+|                  |                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| What it is       | A static site that works out the cheapest way to back Nemesis Legacy on Gamefound          |
+| Live at          | <https://nemesis.slydave.com/>                                                             |
+| Repository       | <https://github.com/SlyDave/nemesis-rewards-calculator> — public, default branch `main`    |
+| Hosting          | GitHub Pages, built by GitHub Actions, custom domain (DNS through Cloudflare)              |
+| Stack            | Nuxt 4.5 + Nuxt UI 4 (Tailwind 4), TypeScript, Bun; pre-rendered, no server                |
+| Analytics        | Cloudflare Web Analytics: no cookies, nothing in the browser, built site only (section 11) |
+| Campaign         | <https://gamefound.com/en/projects/awaken-realms/nemesis-legacy/rewards>                   |
+| Catalogue        | Captured 5 November 2026, 10:02 UTC, after the campaign closed at 07:49 UTC                |
+| Catalogue size   | 111 products: 19 pledges (sets), 80 sold singly, 12 parts sold only inside pledges         |
+| Classified items | 87 requirements in `app/domain/classification.ts`                                          |
+| Tests            | 190, all passing (`bun test`)                                                              |
 
 ## 2. The brief
 
@@ -143,6 +142,12 @@ called `nemesis-rewards-calculator`:
 47. Campaign Update #26: check it and update as required (section 6).
 48. Campaign Update #27: process it (section 6).
 49. Check for updates. Campaign Updates #28 and #29 had come out (section 6).
+50. Pull the latest, check for updates, note that the campaign has ended, and add a banner
+    below the style and currency row with how and when it ended, how much it reached, how long
+    it spent in Endgame, and a link to the campaign (sections 6 and 8.2).
+51. Highlight the ended banner more: a colour that complements the selected style, and a glow
+    on its frame like the Total to pay text; then try matching the selected style instead, with
+    the glow to make it stand out (section 8.2).
 
 ### Where each decision came from
 
@@ -603,6 +608,25 @@ eighth day's cards the last. All of it is free stretch-goal content, not product
 page's graphic stating the Legacy MSRPs was reissued once more,
 `richtext/23dfefcf-df11-4842-ba39-c647b6cca694.png`, with the same €199 and €99 (section
 7.11). The shipping-table image is still the 21 October file, and the FAQ has not changed.
+
+What the capture of 5 November changed, taken at 10:02 UTC after the campaign had ended:
+nothing in any product, price, bundle, main picture, category, option, finish or place in the
+listing, and each of the 245 items inside the pledges has the same options as it has on its
+own. Only Gamefound's own exchange rates and `campaignEnd` changed. That field is now the real
+close, `2026-11-05T07:49:42.443Z`, rather than the Endgame's moving deadline;
+`campaignEndScheduledAt` is still 27 October 19:00 UTC. Gamefound's page has `isOpenForOrders`
+false, `endgameState` null, and `projectPhaseChangedAt` of 07:50 UTC. It shows €13,229,316.31
+raised by 34,789 backers, 26,458.63% of the €50,000 goal, of which 18,233 backers and
+€2,249,764.40 came in the Endgame. There is no Update #30: the updates list still ends at #29.
+The shipping-table image is still the 21 October file
+(`richtext/bb49167e-50e2-4402-a582-4746e52022fc.png`). The graphic stating the Legacy MSRPs is
+still `richtext/23dfefcf-df11-4842-ba39-c647b6cca694.png`, with the same €199 and €99
+(section 7.11). The FAQ has not changed: 27 entries, the most recently edited on 13 October.
+
+The Endgame ran from 19:00 UTC on 27 October to 07:49:42 UTC on 5 November: 8 days, 12 hours
+and 49 minutes. The site reports those figures on a banner below the style and currency row
+(`CampaignEndedBanner`, section 8.2), with a link to the campaign page. The banner follows the
+selected style, with a glow on its frame like the total.
 
 How an update is checked, as these were: read its text and look at its graphics; capture
 again and compare; see that the shipping table's file name has not changed (below) and that
@@ -1139,9 +1163,10 @@ to the bottom carries the total and a link down to the cart.
 
 The header (`AppHeader`) has the logo with the "What's New?" button across from it
 (`WhatsNew`, section 8.6), then the Style and Currency choices, Reset, and a Donate link that
-takes whatever of the row is left. The footer says when the
-prices were read, that the tool is unofficial, that visits are counted with Cloudflare Web
-Analytics (section 11), and links to the source.
+takes whatever of the row is left. Below that row is a banner that the campaign has ended
+(`CampaignEndedBanner`), lined up with Donate and the answer column’s right edge. The footer says when the
+prices were read, that the campaign has ended, that the tool is unofficial, that visits are
+counted with Cloudflare Web Analytics (section 11), and links to the source.
 
 ### 8.2 Decisions
 
@@ -1175,6 +1200,12 @@ Analytics (section 11), and links to the source.
   games are the item's own and any `alsoWith`, as Gamefound describes them (`ExtraItem.fits`,
   tested). The Classic Crew's is "compatible with Nemesis Retaliation", so that is all it says
   (and all the rule takes it for: section 7.3).
+- **[owner]** Once the campaign had ended, a banner sits below the style and currency row and
+  above the returning backer: how and when it ended, how much it reached, how long it spent in
+  Endgame, and a link to the campaign for further details. Its right edge matches Donate, What’s
+  New, and Your best order — the same reserved scrollbar as those rows. **[owner]** It follows
+  the selected style, with a glow on the frame like the total (`hud-banner`). The figures are
+  Gamefound's at the first capture after close (`campaign.ts`).
 
 ### 8.3 Wording the owner dictated
 
@@ -1228,7 +1259,7 @@ and has not yet said (section 13).
 
 - Components use semantic names — `i-fa-legacy`, `i-fa-dicetray`, `i-fa-cart`. The mapping to
   Font Awesome icons is the `ICONS` table in `scripts/generate-fa-icons.ts`.
-- That script writes each of the 68 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
+- That script writes each of the 69 icons to `app/assets/icons/fa/` as an SVG. Nuxt Icon loads the folder
   as a local collection (`provider: 'none'`) and bundles what the page uses, because there is
   no server to fetch icons from.
 - Nuxt UI's own internal icons are pointed at the same collection in `app.config.ts`.
@@ -1422,11 +1453,8 @@ Nothing requested is outstanding. These were raised and left with the owner:
    is; strangers can only open pull requests.
 7. **The author's name and email are public** in the commit history, as with any public
    repository.
-8. **The prices go stale.** They are a snapshot from the late evening of 4 November 2026, eight
-   days into the Endgame, which lasts as long as backers keep resetting its ten-minute countdown.
-   Capture again (section 6) whenever Gamefound changes something, and check after each update.
-   Its cards are all unlocked, and no further update has a date; expect one when the Endgame
-   ends. The pledge manager will later publish add-on shipping, which the site does not have.
+8. **The prices are a snapshot of the closed campaign**, captured at 10:02 UTC on 5 November 2026. Gamefound is no longer taking orders. Capture again (section 6) if it restates a
+   product, and when the pledge manager publishes add-on shipping, which the site does not have.
 9. **The Vengeance pledge with BIG BOX has no shipping price** (section 6); the reissued table
    prices the other two new pledges. Watch the table's file name and the FAQ for one; until
    then the site counts the least it can be, the Vengeance pledge's, and says so.

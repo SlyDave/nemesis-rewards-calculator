@@ -130,5 +130,17 @@ const currency = computed<CurrencyCode>({
         class="invisible -ml-3 hidden hud-scroll overflow-y-scroll lg:block"
       />
     </div>
+
+    <!-- Lined up with Donate, What’s New, and the answer column: the same gap and reserved
+         scrollbar as the row above (pages/index.vue). -->
+    <div class="flex lg:pr-2">
+      <div class="min-w-0 flex-1">
+        <CampaignEndedBanner />
+      </div>
+      <span
+        aria-hidden="true"
+        class="invisible hidden hud-scroll overflow-y-scroll lg:block"
+      />
+    </div>
   </header>
 </template>

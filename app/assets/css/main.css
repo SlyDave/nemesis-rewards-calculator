@@ -256,6 +256,20 @@ body::before {
 }
 
 /*
+ * The ended-campaign banner: the selected style's own accent, with a glow on the frame like
+ * the total's so it still stands out from the other panels.
+ */
+@utility hud-banner {
+  filter: drop-shadow(0 0 9px var(--hud-glow)) drop-shadow(0 0 2px var(--hud-line));
+}
+
+.hud-banner .hud-title {
+  text-shadow:
+    0 0 18px var(--hud-glow),
+    0 0 2px var(--hud-glow);
+}
+
+/*
  * A framed panel with two corners cut off. The frame is the outer element's background
  * showing round the inner one, since a clipped element cannot carry a border of its own.
  */
